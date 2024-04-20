@@ -7,8 +7,8 @@
 	<object type="ProjectData" id="1">
 	    <field name="name">default</field>
 	    <field name="fileNameLastSavedAs">ECSDI.pd</field>
-	    <field name="filePathLastSavedIn">/Users/miquelamorin/Projects/ECSDI</field>
-	    <field name="openedAs">/Users/miquelamorin/Projects/ECSDI/ECSDI.pd</field>
+	    <field name="filePathLastSavedIn">/Users/mmostazo/Developer/ECSDI/ECSDI</field>
+	    <field name="openedAs">/Users/mmostazo/Developer/ECSDI/ECSDI/ECSDI.pd</field>
 	    <field name="applicationVersion">3.3b_internal</field>
 	</object>
     </field>
@@ -136,8 +136,8 @@
 					<object type="Percept" id="14">
 					    <base type="Interaction">
 						<base type="Entity">
-						    <field name="name">Valoraci�n del usuario</field>
-						    <field name="description">Se recibe la valoraci�n del usuario de un producto determinado</field>
+						    <field name="name">Valoración del usuario</field>
+						    <field name="description">Se recibe la valoración del usuario de un producto determinado</field>
 						    <field name="uniqueId">69</field>
 						    <field name="connectTo"><list>
 							<object type="Actor" id="15">
