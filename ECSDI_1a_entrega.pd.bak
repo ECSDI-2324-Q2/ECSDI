@@ -482,8 +482,8 @@ Este agente se encarga de organizar el proceso de envío, desde la división de 
 
 																																	    <object type="Protocol" id="42">
 																																		<base type="Entity">
-																																		    <field name="name">Envío finalizado</field>
-																																		    <field name="description">Se indica que el envío ha sido finalizado para realizar los cobros y pagos pertinentes.</field>
+																																		    <field name="name">Pedido finalizado</field>
+																																		    <field name="description">Se indica que el pedido ha sido finalizado para realizar los cobros y pagos pertinentes.</field>
 																																		    <field name="uniqueId">364</field>
 																																		</base>
 
