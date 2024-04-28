@@ -36,34 +36,34 @@
 				    <base type="Interaction">
 					<base type="Entity">
 					    <field name="name">Informe reintegro completado</field>
-					    <field name="description">Se informa al usuario que el reintegro se ha realizado con éxito</field>
+					    <field name="description">Se informa al usuario que el reintegro se ha realizado con exito</field>
 					    <field name="uniqueId">293</field>
 					    <field name="connectTo"><list>
 						<object type="Actor" id="7">
 						    <base type="Entity">
 							<field name="name">Cliente</field>
-							<field name="description">El Cliente es el actor que hará búsquedas, compras y valoraciones en el sistema.
+							<field name="description">El Cliente es el actor que hara busquedas, compras y valoraciones en el sistema.
 </field>
 							<field name="uniqueId">202</field>
 							<field name="connectTo"><list>
 							    <object type="Percept" id="8">
 								<base type="Interaction">
 								    <base type="Entity">
-									<field name="name">Valoración del usuario</field>
+									<field name="name">Valoracion del usuario</field>
 									<field name="description">Se recibe la valoraci�n del usuario de un producto determinado</field>
 									<field name="uniqueId">69</field>
 									<field name="connectTo"><list>
 									    <object type="Actor" id="9">
 										<base type="Entity">
 										    <field name="name">Gestor tienda</field>
-										    <field name="description">Este actor representa la tienda que gestionará todas las peticiones hechas a está sobre sus productos.</field>
+										    <field name="description">Este actor representa la tienda que gestionara todas las peticiones hechas a esta sobre sus productos.</field>
 										    <field name="uniqueId">205</field>
 										    <field name="connectTo"><list>
 											<object type="Action" id="10">
 											    <base type="Interaction">
 												<base type="Entity">
-												    <field name="name">Pide información de pago y envio</field>
-												    <field name="description">Se pide la información de pago y envío al cliente</field>
+												    <field name="name">Pide informacion de pago y envio</field>
+												    <field name="description">Se pide la informacion de pago y envio al cliente</field>
 												    <field name="uniqueId">79</field>
 												    <field name="connectTo"><list>
 													<object ref="7"/>
@@ -107,7 +107,7 @@
 											    <base type="Interaction">
 												<base type="Entity">
 												    <field name="name">Enviar factura</field>
-												    <field name="description">Se envía la factura de la compra al cliente</field>
+												    <field name="description">Se envia la factura de la compra al cliente</field>
 												    <field name="uniqueId">80</field>
 												    <field name="connectTo"><list>
 													<object ref="7"/>
@@ -129,7 +129,7 @@
 											    <base type="Interaction">
 												<base type="Entity">
 												    <field name="name">Muestra productos filtrados</field>
-												    <field name="description">Se muestran al cliente los productos que cumplen con los criterios de búsqueda</field>
+												    <field name="description">Se muestran al cliente los productos que cumplen con los criterios de busqueda</field>
 												    <field name="uniqueId">61</field>
 												    <field name="connectTo"><list>
 													<object ref="7"/>
@@ -151,7 +151,7 @@
 											    <base type="Interaction">
 												<base type="Entity">
 												    <field name="name">Muestra recomendaciones</field>
-												    <field name="description">Se recomiendan productos al usuario según sus hábitos de compra e intereses</field>
+												    <field name="description">Se recomiendan productos al usuario segun sus habitos de compra e intereses</field>
 												    <field name="uniqueId">68</field>
 												    <field name="connectTo"><list>
 													<object ref="7"/>
@@ -245,21 +245,21 @@
 											<object type="Action" id="19">
 											    <base type="Interaction">
 												<base type="Entity">
-												    <field name="name">Informar elección</field>
-												    <field name="description">Se informa a los transportistas si han sido elegidos o no junto con la información del envío.</field>
+												    <field name="name">Informar eleccion</field>
+												    <field name="description">Se informa a los transportistas si han sido elegidos o no junto con la informacion del envio.</field>
 												    <field name="uniqueId">272</field>
 												    <field name="connectTo"><list>
 													<object type="Actor" id="20">
 													    <base type="Entity">
 														<field name="name">Transportista</field>
-														<field name="description">Actor que representa a una empresa de paquetería la cual se podrá contactar para enviar productos desde los centros logísticos.</field>
+														<field name="description">Actor que representa a una empresa de paqueteria la cual se podra contactar para enviar productos desde los centros logisticos.</field>
 														<field name="uniqueId">204</field>
 														<field name="connectTo"><list>
 														    <object type="Percept" id="21">
 															<base type="Interaction">
 															    <base type="Entity">
-																<field name="name">Fecha devolución</field>
-																<field name="description">El transportista informa de la fecha de recogida de la devolución</field>
+																<field name="name">Fecha devolucion</field>
+																<field name="description">El transportista informa de la fecha de recogida de la devolucion</field>
 																<field name="uniqueId">73</field>
 																<field name="connectTo"><list>
 																    <object ref="9"/>
@@ -286,10 +286,10 @@
 															    <object type="Agent" id="23">
 																<base type="Entity">
 																    <field name="name">Agente Gestor de Devoluciones</field>
-																    <field name="description">Encargado de gestionar las solicitudes de devolución de la tienda y de realizar todo el trámite correspondiente a la devolución.
+																    <field name="description">Encargado de gestionar las solicitudes de devolucion de la tienda y de realizar todo el tramite correspondiente a la devolucion.
 Roles: 10. Gestor de devoluciones
 
-Este agente se dedica exclusivamente a manejar solicitudes de devolución y todos los procedimientos asociados, lo que garantiza una respuesta rápida y eficiente a las necesidades de los clientes en este aspecto.
+Este agente se dedica exclusivamente a manejar solicitudes de devolucion y todos los procedimientos asociados, lo que garantiza una respuesta rapida y eficiente a las necesidades de los clientes en este aspecto.
 </field>
 																    <field name="uniqueId">310</field>
 																</base>
@@ -368,10 +368,10 @@ Este agente se dedica exclusivamente a manejar solicitudes de devolución y todo
 																				    <object type="Agent" id="29">
 																					<base type="Entity">
 																					    <field name="name">Agente Financiero</field>
-																					    <field name="description">Encargado de gestionar pagos y reembolsos de las transacciones de la tienda. También se encarga de la transferencia del importe a los vendedores externos, si procede.
+																					    <field name="description">Encargado de gestionar pagos y reembolsos de las transacciones de la tienda. Tambien se encarga de la transferencia del importe a los vendedores externos, si procede.
 Roles: 6. Gestor de pagos y cobros y 7. Gestor de facturas.
 
-Agrupar estos roles en un agente financiero permite una gestión eficiente de las transacciones financieras de la tienda, incluyendo el procesamiento de pagos, reembolsos y la coordinación con vendedores externos si es necesario. Agrupar estas responsabilidades en el agente financiero facilita el seguimiento y la organización  de las facturas relacionadas con las ventas y los pagos.
+Agrupar estos roles en un agente financiero permite una gestion eficiente de las transacciones financieras de la tienda, incluyendo el procesamiento de pagos, reembolsos y la coordinacion con vendedores externos si es necesario. Agrupar estas responsabilidades en el agente financiero facilita el seguimiento y la organizacion  de las facturas relacionadas con las ventas y los pagos.
 </field>
 																					    <field name="uniqueId">305</field>
 																					</base>
@@ -442,11 +442,11 @@ Agrupar estos roles en un agente financiero permite una gestión eficiente de la
 																										<field name="fromEntities"><list>
 																										    <object type="Agent" id="35">
 																											<base type="Entity">
-																											    <field name="name">Agente Centro Logístico</field>
-																											    <field name="description">Encargado de representar  un centro  logístico, gestionar sus productos dividiendo los pedidos en paquetes/lotes, organizar y programar los envios y encargado de la comunicación con los transportistas.
-Roles: 4. Gestor de paquetes, 5. Gestor de transportistas y 13. Gestor de envíos.
+																											    <field name="name">Agente Centro Logistico</field>
+																											    <field name="description">Encargado de representar  un centro  logistico, gestionar sus productos dividiendo los pedidos en paquetes/lotes, organizar y programar los envios y encargado de la comunicacion con los transportistas.
+Roles: 4. Gestor de paquetes, 5. Gestor de transportistas y 13. Gestor de envios.
 
-Este agente se encarga de organizar el proceso de envío, desde la división de pedidos en paquetes hasta la comunicación con los transportistas, asegurando una entrega oportuna y eficiente de los productos.
+Este agente se encarga de organizar el proceso de envio, desde la division de pedidos en paquetes hasta la comunicacion con los transportistas, asegurando una entrega oportuna y eficiente de los productos.
 </field>
 																											    <field name="uniqueId">304</field>
 																											</base>
@@ -469,7 +469,7 @@ Este agente se encarga de organizar el proceso de envío, desde la división de 
 																													<base type="Interaction">
 																													    <base type="Entity">
 																														<field name="name">Momento de organizar</field>
-																														<field name="description">A ciertas horas cada día hay que decidir qué lotes hay que enviar</field>
+																														<field name="description">A ciertas horas cada dia hay que decidir que lotes hay que enviar</field>
 																														<field name="uniqueId">264</field>
 																													    </base>
 
@@ -520,7 +520,7 @@ Este agente se encarga de organizar el proceso de envío, desde la división de 
 																														    <object type="Message" id="41">
 																															<base type="Interaction">
 																															    <base type="Entity">
-																																<field name="name">Productos a enviar y dirección del cliente</field>
+																																<field name="name">Productos a enviar y direccion del cliente</field>
 																																<field name="description"></field>
 																																<field name="uniqueId">360</field>
 																															    </base>
@@ -546,9 +546,9 @@ Este agente se encarga de organizar el proceso de envío, desde la división de 
 																																	<base type="Entity">
 																																	    <field name="name">Agente Comerciante</field>
 																																	    <field name="description">Encargado de gestionar los diferentes centros logisticos y los pedidos realizados en la tienda.
-Roles: 3. Gestor centros logísticos y 14. Gestor de pedidos
+Roles: 3. Gestor centros logisticos y 14. Gestor de pedidos
 
-Este agente gestiona los diferentes centros logísticos y los pedidos realizados en la tienda, coordinando la logística interna y asegurando que los pedidos se procesen y entreguen correctamente.
+Este agente gestiona los diferentes centros logisticos y los pedidos realizados en la tienda, coordinando la logistica interna y asegurando que los pedidos se procesen y entreguen correctamente.
 </field>
 																																	    <field name="uniqueId">306</field>
 																																	</base>
@@ -559,7 +559,7 @@ Este agente gestiona los diferentes centros logísticos y los pedidos realizados
 																																	<field name="includedCapabilities"><list>
 																																	    <object type="Capability" id="44">
 																																		<base type="Entity">
-																																		    <field name="name">Capacidad elegir centro logístico</field>
+																																		    <field name="name">Capacidad elegir centro logistico</field>
 																																		    <field name="description"></field>
 																																		    <field name="uniqueId">441</field>
 																																		</base>
@@ -570,8 +570,8 @@ Este agente gestiona los diferentes centros logísticos y los pedidos realizados
 																																		    <object type="Action" id="45">
 																																			<base type="Interaction">
 																																			    <base type="Entity">
-																																				<field name="name">Notificar centro logístico</field>
-																																				<field name="description">Se informa al cliente del centro logístico elegido para enviar su pedido</field>
+																																				<field name="name">Notificar centro logistico</field>
+																																				<field name="description">Se informa al cliente del centro logistico elegido para enviar su pedido</field>
 																																				<field name="uniqueId">455</field>
 																																			    </base>
 
@@ -588,7 +588,7 @@ Este agente gestiona los diferentes centros logísticos y los pedidos realizados
 																																		<field name="includedPlans"><list>
 																																		    <object type="Plan" id="46">
 																																			<base type="Entity">
-																																			    <field name="name">Plan elegir centro logístico</field>
+																																			    <field name="name">Plan elegir centro logistico</field>
 																																			    <field name="description"></field>
 																																			    <field name="uniqueId">459</field>
 																																			</base>
@@ -694,7 +694,7 @@ Este agente gestiona los diferentes centros logísticos y los pedidos realizados
 																																				    <object type="Message" id="53">
 																																					<base type="Interaction">
 																																					    <base type="Entity">
-																																						<field name="name">Notificación usuario centro logístico</field>
+																																						<field name="name">Notificacion usuario centro logistico</field>
 																																						<field name="description"></field>
 																																						<field name="uniqueId">462</field>
 																																					    </base>
@@ -714,7 +714,7 @@ Este agente gestiona los diferentes centros logísticos y los pedidos realizados
 																																						<field name="toEntities"><list>
 																																						    <object type="Plan" id="55">
 																																							<base type="Entity">
-																																							    <field name="name">Plan informar usuario centro logístico</field>
+																																							    <field name="name">Plan informar usuario centro logistico</field>
 																																							    <field name="description"></field>
 																																							    <field name="uniqueId">460</field>
 																																							</base>
@@ -796,8 +796,8 @@ Este agente gestiona los diferentes centros logísticos y los pedidos realizados
 																																				<field name="type">
 																																				    <object type="Data" id="58">
 																																					<base type="Entity">
-																																					    <field name="name">Centros logísticos</field>
-																																					    <field name="description">Esta base de datos contiene la información referente a los centros logísticos de la tienda y sus stocks.</field>
+																																					    <field name="name">Centros logisticos</field>
+																																					    <field name="description">Esta base de datos contiene la informacion referente a los centros logisticos de la tienda y sus stocks.</field>
 																																					    <field name="uniqueId">93</field>
 																																					</base>
 
@@ -918,7 +918,7 @@ Este agente gestiona los diferentes centros logísticos y los pedidos realizados
 																																				    <object type="Data" id="64">
 																																					<base type="Entity">
 																																					    <field name="name">Pedidos pendientes</field>
-																																					    <field name="description">Esta base de datos contiene toda la información referente a los pedidos realizados pendientes de clasificar en los centros logísticos.</field>
+																																					    <field name="description">Esta base de datos contiene toda la informacion referente a los pedidos realizados pendientes de clasificar en los centros logisticos.</field>
 																																					    <field name="uniqueId">392</field>
 																																					</base>
 
@@ -962,8 +962,8 @@ Este agente gestiona los diferentes centros logísticos y los pedidos realizados
 																																						    <object type="Percept" id="67">
 																																							<base type="Interaction">
 																																							    <base type="Entity">
-																																								<field name="name">Información de pago y envío</field>
-																																								<field name="description">El cliente da sus datos e información de pago y envío</field>
+																																								<field name="name">Informacion de pago y envio</field>
+																																								<field name="description">El cliente da sus datos e informacion de pago y envio</field>
 																																								<field name="uniqueId">208</field>
 																																								<field name="connectTo"><list>
 																																								    <object ref="9"/>
@@ -1020,7 +1020,7 @@ Este agente gestiona los diferentes centros logísticos y los pedidos realizados
 																																						<field name="includedPlans"><list>
 																																						    <object type="Plan" id="70">
 																																							<base type="Entity">
-																																							    <field name="name">Plan obtener información pedido, pago y envio</field>
+																																							    <field name="name">Plan obtener informacion pedido, pago y envio</field>
 																																							    <field name="description"></field>
 																																							    <field name="uniqueId">467</field>
 																																							</base>
@@ -1182,7 +1182,7 @@ Este agente gestiona los diferentes centros logísticos y los pedidos realizados
 																																																	    <object type="Data" id="83">
 																																																		<base type="Entity">
 																																																		    <field name="name">Facturas</field>
-																																																		    <field name="description">Esta base de datos contiene la información referente a todas las facturas de los pedidos realizados en la tienda.</field>
+																																																		    <field name="description">Esta base de datos contiene la informacion referente a todas las facturas de los pedidos realizados en la tienda.</field>
 																																																		    <field name="uniqueId">300</field>
 																																																		</base>
 
@@ -1554,7 +1554,7 @@ finish</field>
 																																																					<base type="Interaction">
 																																																					    <base type="Entity">
 																																																						<field name="name">Pedido vendedor externo</field>
-																																																						<field name="description">En caso que el vendedor externo se encargue del envío</field>
+																																																						<field name="description">En caso que el vendedor externo se encargue del envio</field>
 																																																						<field name="uniqueId">486</field>
 																																																					    </base>
 
@@ -1609,7 +1609,7 @@ finish</field>
 																																																								    <object type="Message" id="108">
 																																																									<base type="Interaction">
 																																																									    <base type="Entity">
-																																																										<field name="name">Productos externos a enviar y dirección del cliente</field>
+																																																										<field name="name">Productos externos a enviar y direccion del cliente</field>
 																																																										<field name="description"></field>
 																																																										<field name="uniqueId">378</field>
 																																																									    </base>
@@ -1633,7 +1633,7 @@ finish</field>
 																																																											    <field name="description">Encargado de gestionar las relaciones con los vendedores externos y la tienda.
 Roles: 13. Gestor de productos externos
 
-Este agente se ocupa de gestionar las relaciones con los vendedores externos y coordinar la venta de sus productos en la tienda. Estos pueden tener necesidades y procesos específicos que requieren de una comunicación y coordinación dedicadas. Este agente actúa como punto de contacto entre la tienda y los vendedores externos, asegurando una relación fluida y eficiente.
+Este agente se ocupa de gestionar las relaciones con los vendedores externos y coordinar la venta de sus productos en la tienda. Estos pueden tener necesidades y procesos especificos que requieren de una comunicacion y coordinacion dedicadas. Este agente actua como punto de contacto entre la tienda y los vendedores externos, asegurando una relacion fluida y eficiente.
 </field>
 																																																											    <field name="uniqueId">307</field>
 																																																											</base>
@@ -1644,7 +1644,7 @@ Este agente se ocupa de gestionar las relaciones con los vendedores externos y c
 																																																											<field name="protocols"><list>
 																																																											    <object type="Protocol" id="111">
 																																																												<base type="Entity">
-																																																												    <field name="name">Tramitar envío externo</field>
+																																																												    <field name="name">Tramitar envio externo</field>
 																																																												    <field name="description">El agente comerciante avisa al agente vendedor externo que el pedido es de un vendedor externo.</field>
 																																																												    <field name="uniqueId">376</field>
 																																																												</base>
@@ -1679,10 +1679,10 @@ Este agente se ocupa de gestionar las relaciones con los vendedores externos y c
 																																																												    </list>
 																																																												</field>
 																																																												<field name="notes"></field>
-																																																												<field name="aumlText">start Tramitar envío externo
+																																																												<field name="aumlText">start Tramitar envio externo
 agent A Agente Comerciante
 agent B Agente Vendedor Externo
-message A B Productos externos a enviar y dirección del cliente
+message A B Productos externos a enviar y direccion del cliente
 finish</field>
 																																																												<field name="aumlInteractions"><list>
 																																																												    <object type="InteractionDistributionPair" id="113">
@@ -1875,7 +1875,7 @@ finish</field>
 																																																												    </list>
 																																																												</field>
 																																																												<field name="aumlText">start Pedido finalizado
-agent A Agente Centro Logístico
+agent A Agente Centro Logistico
 agent B Agente Vendedor Externo
 agent C Agente Financiero
 message A C Pedido X finalizado
@@ -1955,7 +1955,7 @@ finish</field>
 																																																											    <object type="Goal" id="128">
 																																																												<base type="Entity">
 																																																												    <field name="name">Gestionar venta externa</field>
-																																																												    <field name="description">Gestionar la venta de un producto de un vendedor externo. Se debe cumplir alguno los siguientes subobjetivos dependiendo si el producto ya se ha enviado desde uno de nuestros centros logísticos:
+																																																												    <field name="description">Gestionar la venta de un producto de un vendedor externo. Se debe cumplir alguno los siguientes subobjetivos dependiendo si el producto ya se ha enviado desde uno de nuestros centros logisticos:
 </field>
 																																																												    <field name="uniqueId">210</field>
 																																																												</base>
@@ -1964,7 +1964,7 @@ finish</field>
 																																																												    <object type="Goal" id="129">
 																																																													<base type="Entity">
 																																																													    <field name="name">Notificar vendedor</field>
-																																																													    <field name="description">Se notifica al vendedor externo del pedido del comprador para que gestione el envío del pedido.
+																																																													    <field name="description">Se notifica al vendedor externo del pedido del comprador para que gestione el envio del pedido.
 </field>
 																																																													    <field name="uniqueId">216</field>
 																																																													</base>
@@ -1992,8 +1992,8 @@ finish</field>
 																																																											    <object type="Percept" id="131">
 																																																												<base type="Interaction">
 																																																												    <base type="Entity">
-																																																													<field name="name">Información de productos externos</field>
-																																																													<field name="description">Una tienda externa envia la petición junto la información de los productos que quiere que se añadan a la tienda.</field>
+																																																													<field name="name">Informacion de productos externos</field>
+																																																													<field name="description">Una tienda externa envia la peticion junto la informacion de los productos que quiere que se añadan a la tienda.</field>
 																																																													<field name="uniqueId">65</field>
 																																																													<field name="connectTo"><list>
 																																																													    <object ref="9"/>
@@ -2026,7 +2026,7 @@ finish</field>
 																																																											    <object type="Percept" id="133">
 																																																												<base type="Interaction">
 																																																												    <base type="Entity">
-																																																													<field name="name">Fecha envío externo</field>
+																																																													<field name="name">Fecha envio externo</field>
 																																																													<field name="description">La tienda externa informa de la fecha de entrega</field>
 																																																													<field name="uniqueId">296</field>
 																																																													<field name="connectTo"><list>
@@ -2063,7 +2063,7 @@ finish</field>
 																																																													    <object type="Actor" id="135">
 																																																														<base type="Entity">
 																																																														    <field name="name">Empresa externa</field>
-																																																														    <field name="description">Actor que representa una tienda externa que decide anunciar sus productos en nuestra tienda electrónica.</field>
+																																																														    <field name="description">Actor que representa una tienda externa que decide anunciar sus productos en nuestra tienda electronica.</field>
 																																																														    <field name="uniqueId">207</field>
 																																																														    <field name="connectTo"><list>
 																																																															<object ref="131"/>
@@ -2116,7 +2116,7 @@ finish</field>
 																																																											    <object type="Role" id="137">
 																																																												<base type="Entity">
 																																																												    <field name="name">Gestor de productos externos</field>
-																																																												    <field name="description">Se encarga de obtener la información de los productos externos que un vendedor externo quiere vender en nuestra tienda y de añadir estos productos al catálogo de productos de la tienda. También notifica al vendedor externo en caso que tenga que enviar un pedido.</field>
+																																																												    <field name="description">Se encarga de obtener la informacion de los productos externos que un vendedor externo quiere vender en nuestra tienda y de añadir estos productos al catalogo de productos de la tienda. Tambien notifica al vendedor externo en caso que tenga que enviar un pedido.</field>
 																																																												    <field name="uniqueId">57</field>
 																																																												</base>
 
@@ -2150,7 +2150,7 @@ finish</field>
 																																																												    <object type="Data" id="138">
 																																																													<base type="Entity">
 																																																													    <field name="name">Productos</field>
-																																																													    <field name="description">Esta base de datos contiene la información referente a todos los productos (tanto propios como externos) que la tienda ofrece a los clientes para poder comprar en la tienda.</field>
+																																																													    <field name="description">Esta base de datos contiene la informacion referente a todos los productos (tanto propios como externos) que la tienda ofrece a los clientes para poder comprar en la tienda.</field>
 																																																													    <field name="uniqueId">99</field>
 																																																													</base>
 
@@ -2165,7 +2165,7 @@ finish</field>
 
 																																																													    <object type="Agent" id="139">
 																																																														<base type="Entity">
-																																																														    <field name="name">Agente Gestor de Búsquedas</field>
+																																																														    <field name="name">Agente Gestor de Busquedas</field>
 																																																														    <field name="description"></field>
 																																																														    <field name="uniqueId">397</field>
 																																																														</base>
@@ -2191,8 +2191,8 @@ finish</field>
 																																																															    <object type="Percept" id="141">
 																																																																<base type="Interaction">
 																																																																    <base type="Entity">
-																																																																	<field name="name">Petición de búsqueda</field>
-																																																																	<field name="description">El cliente especifica y envía sus criterios de búsqueda</field>
+																																																																	<field name="name">Peticion de busqueda</field>
+																																																																	<field name="description">El cliente especifica y envia sus criterios de busqueda</field>
 																																																																	<field name="uniqueId">58</field>
 																																																																	<field name="connectTo"><list>
 																																																																	    <object ref="9"/>
@@ -2364,7 +2364,7 @@ finish</field>
 																																																																									    <object type="Message" id="155">
 																																																																										<base type="Interaction">
 																																																																										    <base type="Entity">
-																																																																											<field name="name">resultado de la búsqueda y usuario</field>
+																																																																											<field name="name">resultado de la busqueda y usuario</field>
 																																																																											<field name="description"></field>
 																																																																											<field name="uniqueId">405</field>
 																																																																										    </base>
@@ -2391,8 +2391,8 @@ finish</field>
 																																																																												<field name="protocols"><list>
 																																																																												    <object type="Protocol" id="158">
 																																																																													<base type="Entity">
-																																																																													    <field name="name">Búsqueda realizada</field>
-																																																																													    <field name="description">Protocolo que indica las características de la búsqueda que el usuario ha realizado</field>
+																																																																													    <field name="name">Busqueda realizada</field>
+																																																																													    <field name="description">Protocolo que indica las caracteristicas de la busqueda que el usuario ha realizado</field>
 																																																																													    <field name="uniqueId">403</field>
 																																																																													</base>
 
@@ -2426,10 +2426,10 @@ finish</field>
 																																																																													    </list>
 																																																																													</field>
 																																																																													<field name="notes"></field>
-																																																																													<field name="aumlText">start Búsqueda realizada
-agent A Agente Gestor de Búsquedas
+																																																																													<field name="aumlText">start Busqueda realizada
+agent A Agente Gestor de Busquedas
 agent B Agente Promotor
-message A B Resultado de la búsqueda y usuario
+message A B Resultado de la busqueda y usuario
 finish</field>
 																																																																													<field name="aumlInteractions"><list>
 																																																																													    <object type="InteractionDistributionPair" id="160">
@@ -2463,8 +2463,8 @@ finish</field>
 
 																																																																												    <object type="Goal" id="162">
 																																																																													<base type="Entity">
-																																																																													    <field name="name">Obtener historial de búsqueda y compras</field>
-																																																																													    <field name="description">Hay que obtener el historial de búsqueda y compras de un usuario
+																																																																													    <field name="name">Obtener historial de busqueda y compras</field>
+																																																																													    <field name="description">Hay que obtener el historial de busqueda y compras de un usuario
 </field>
 																																																																													    <field name="uniqueId">27</field>
 																																																																													</base>
@@ -2474,7 +2474,7 @@ finish</field>
 																																																																												    <object type="Goal" id="163">
 																																																																													<base type="Entity">
 																																																																													    <field name="name">Analizar historiales</field>
-																																																																													    <field name="description">Se debe analizar el historial de búsquedas y compras para calcular las recomendaciones.
+																																																																													    <field name="description">Se debe analizar el historial de busquedas y compras para calcular las recomendaciones.
 </field>
 																																																																													    <field name="uniqueId">28</field>
 																																																																													</base>
@@ -2505,7 +2505,7 @@ finish</field>
 																																																																												    <object type="Percept" id="165">
 																																																																													<base type="Interaction">
 																																																																													    <base type="Entity">
-																																																																														<field name="name">Recomendación de productos periódica</field>
+																																																																														<field name="name">Recomendacion de productos periodica</field>
 																																																																														<field name="description">Momento de recomendar productos al usuario.</field>
 																																																																														<field name="uniqueId">67</field>
 																																																																													    </base>
@@ -2544,7 +2544,7 @@ finish</field>
 																																																																												    <object type="Role" id="167">
 																																																																													<base type="Entity">
 																																																																													    <field name="name">Gestor de recomendaciones</field>
-																																																																													    <field name="description">Se encarga de procesar las recomendaciones de los productos bien valorados por otros clientes  y por el propio cliente y de mostrar estos al cliente en base a sus anteriores búsquedas y compras en la tienda.
+																																																																													    <field name="description">Se encarga de procesar las recomendaciones de los productos bien valorados por otros clientes  y por el propio cliente y de mostrar estos al cliente en base a sus anteriores busquedas y compras en la tienda.
 </field>
 																																																																													    <field name="uniqueId">56</field>
 																																																																													</base>
@@ -2571,7 +2571,7 @@ finish</field>
 																																																																													    <object type="Data" id="168">
 																																																																														<base type="Entity">
 																																																																														    <field name="name">Caracteristicas pedidos</field>
-																																																																														    <field name="description">Esta base de datos contiene la información referente a las caracteristicas de los pedidos de los usuarios para hacer recomendaciones.</field>
+																																																																														    <field name="description">Esta base de datos contiene la informacion referente a las caracteristicas de los pedidos de los usuarios para hacer recomendaciones.</field>
 																																																																														    <field name="uniqueId">393</field>
 																																																																														</base>
 
@@ -2623,8 +2623,8 @@ finish</field>
 
 																																																																													    <object type="Data" id="171">
 																																																																														<base type="Entity">
-																																																																														    <field name="name">Búsquedas</field>
-																																																																														    <field name="description">Esta base de datos contiene la información referente a todas las búsquedas que los clientes han realizado en el sistema de la tienda.</field>
+																																																																														    <field name="name">Busquedas</field>
+																																																																														    <field name="description">Esta base de datos contiene la informacion referente a todas las busquedas que los clientes han realizado en el sistema de la tienda.</field>
 																																																																														    <field name="uniqueId">394</field>
 																																																																														</base>
 
@@ -3084,8 +3084,8 @@ finish</field>
 																																																														<field name="goals"><list>
 																																																														    <object type="Goal" id="187">
 																																																															<base type="Entity">
-																																																															    <field name="name">Procesar petición</field>
-																																																															    <field name="description">El sistema procesa la petición de búsqueda de productos.
+																																																															    <field name="name">Procesar peticion</field>
+																																																															    <field name="description">El sistema procesa la peticion de busqueda de productos.
 </field>
 																																																															    <field name="uniqueId">16</field>
 																																																															</base>
@@ -3095,7 +3095,7 @@ finish</field>
 																																																														    <object type="Goal" id="188">
 																																																															<base type="Entity">
 																																																															    <field name="name">Filtrar productos</field>
-																																																															    <field name="description">Buscar en la lista de productos los que coincidan con los parámetros de búsqueda.
+																																																															    <field name="description">Buscar en la lista de productos los que coincidan con los parametros de busqueda.
 </field>
 																																																															    <field name="uniqueId">17</field>
 																																																															</base>
@@ -3104,8 +3104,8 @@ finish</field>
 
 																																																														    <object type="Goal" id="189">
 																																																															<base type="Entity">
-																																																															    <field name="name">Guardar filtros de búsqueda</field>
-																																																															    <field name="description">Guardar los filtros de la búsqueda para próximas recomendaciones.</field>
+																																																															    <field name="name">Guardar filtros de busqueda</field>
+																																																															    <field name="description">Guardar los filtros de la busqueda para proximas recomendaciones.</field>
 																																																															    <field name="uniqueId">18</field>
 																																																															</base>
 
@@ -3114,7 +3114,7 @@ finish</field>
 																																																														    <object type="Goal" id="190">
 																																																															<base type="Entity">
 																																																															    <field name="name">Buscar productos</field>
-																																																															    <field name="description">Mostrar productos que coincidan con los parámetros de búsqueda al cliente. Hay que cumplir los siguientes subobjetivos.</field>
+																																																															    <field name="description">Mostrar productos que coincidan con los parametros de busqueda al cliente. Hay que cumplir los siguientes subobjetivos.</field>
 																																																															    <field name="uniqueId">1</field>
 																																																															</base>
 
@@ -3153,7 +3153,7 @@ finish</field>
 																																																														    <object type="Role" id="192">
 																																																															<base type="Entity">
 																																																															    <field name="name">Buscador de productos</field>
-																																																															    <field name="description">Dados unas condiciones / requisitos especificadas por el cliente, se encarga de buscar entre todos los productos de la tienda aquellos que cumplan con las condiciones / requisitos indicados. Además se encarga de guardar el historial de búsqueda / filtros.
+																																																															    <field name="description">Dados unas condiciones / requisitos especificadas por el cliente, se encarga de buscar entre todos los productos de la tienda aquellos que cumplan con las condiciones / requisitos indicados. Ademas se encarga de guardar el historial de busqueda / filtros.
 </field>
 																																																															    <field name="uniqueId">45</field>
 																																																															</base>
@@ -3722,7 +3722,7 @@ finish</field>
 																																								    <object type="Data" id="207">
 																																									<base type="Entity">
 																																									    <field name="name">Clientes</field>
-																																									    <field name="description">Esta base de datos contiene toda la información referente a los clientes.</field>
+																																									    <field name="description">Esta base de datos contiene toda la informacion referente a los clientes.</field>
 																																									    <field name="uniqueId">391</field>
 																																									</base>
 
@@ -3918,8 +3918,8 @@ finish</field>
 
 																																	    <object type="Protocol" id="210">
 																																		<base type="Entity">
-																																		    <field name="name">Tramitar envío</field>
-																																		    <field name="description">El agente comerciante avisa al centro logístico que empiece a preparar en envío de un pedido.</field>
+																																		    <field name="name">Tramitar envio</field>
+																																		    <field name="description">El agente comerciante avisa al centro logistico que empiece a preparar en envio de un pedido.</field>
 																																		    <field name="uniqueId">358</field>
 																																		</base>
 
@@ -3953,10 +3953,10 @@ finish</field>
 																																		    </list>
 																																		</field>
 																																		<field name="notes"></field>
-																																		<field name="aumlText">start Tramitar envío
+																																		<field name="aumlText">start Tramitar envio
 agent A Agente Comerciante
-agent B Agente Centro Logístico
-message A B Productos a enviar y la dirección del cliente
+agent B Agente Centro Logistico
+message A B Productos a enviar y la direccion del cliente
 finish</field>
 																																		<field name="aumlInteractions"><list>
 																																		    <object type="InteractionDistributionPair" id="212">
@@ -3983,14 +3983,14 @@ finish</field>
 																																	    <object type="Goal" id="213">
 																																		<base type="Entity">
 																																		    <field name="name">Vender productos</field>
-																																		    <field name="description">Se debe poder comprar uno o más productos de nuestra plataforma. Se deben cumplir los todos subobjetivos exceptuando ‘Elegir centro logístico del envío’ que se cumple si el producto se envía desde uno de nuestros centros logísticos y ‘Gestionar pedido vendedor externo’ en el caso que el pedido sea de un vendedor externo</field>
+																																		    <field name="description">Se debe poder comprar uno o mas productos de nuestra plataforma. Se deben cumplir los todos subobjetivos exceptuando ‘Elegir centro logistico del envio’ que se cumple si el producto se envia desde uno de nuestros centros logisticos y ‘Gestionar pedido vendedor externo’ en el caso que el pedido sea de un vendedor externo</field>
 																																		    <field name="uniqueId">3</field>
 																																		</base>
 
 																																		<field name="subGoals"><list>
 																																		    <object type="Goal" id="214">
 																																			<base type="Entity">
-																																			    <field name="name">Registrar forma de pago/envío</field>
+																																			    <field name="name">Registrar forma de pago/envio</field>
 																																			    <field name="description">Al pagar el producto debe registrarse la forma en la que se realiza el pago.</field>
 																																			    <field name="uniqueId">32</field>
 																																			</base>
@@ -4027,8 +4027,8 @@ finish</field>
 
 																																		    <object type="Goal" id="218">
 																																			<base type="Entity">
-																																			    <field name="name">Elegir centro logístico del envío</field>
-																																			    <field name="description">Decidir el centro logístico que realizará el envío del pedido.
+																																			    <field name="name">Elegir centro logistico del envio</field>
+																																			    <field name="description">Decidir el centro logistico que realizara el envio del pedido.
 </field>
 																																			    <field name="uniqueId">213</field>
 																																			</base>
@@ -4038,7 +4038,7 @@ finish</field>
 																																		    <object type="Goal" id="219">
 																																			<base type="Entity">
 																																			    <field name="name">Gestionar pedido vendedor externo</field>
-																																			    <field name="description">El pedido es de un vendedor externo por lo tanto o lo envía el o se le transfiere el dinero del pedido.</field>
+																																			    <field name="description">El pedido es de un vendedor externo por lo tanto o lo envia el o se le transfiere el dinero del pedido.</field>
 																																			    <field name="uniqueId">214</field>
 																																			</base>
 
@@ -4076,7 +4076,7 @@ finish</field>
 																																		    <object type="Goal" id="222">
 																																			<base type="Entity">
 																																			    <field name="name">Escoger lotes a enviar</field>
-																																			    <field name="description">Escoger qué lotes a enviar en ciertas horas.
+																																			    <field name="description">Escoger que lotes a enviar en ciertas horas.
 </field>
 																																			    <field name="uniqueId">39</field>
 																																			</base>
@@ -4085,8 +4085,8 @@ finish</field>
 
 																																		    <object type="Goal" id="223">
 																																			<base type="Entity">
-																																			    <field name="name">Negociar transportista envío</field>
-																																			    <field name="description">Negociar que transportista se encargará de enviar cada lote.
+																																			    <field name="name">Negociar transportista envio</field>
+																																			    <field name="description">Negociar que transportista se encargara de enviar cada lote.
 </field>
 																																			    <field name="uniqueId">40</field>
 																																			</base>
@@ -4096,7 +4096,7 @@ finish</field>
 																																		    <object type="Goal" id="224">
 																																			<base type="Entity">
 																																			    <field name="name">Escoger transportista</field>
-																																			    <field name="description">​Escoger el transportista que más se ajuste a la entrega del lote.</field>
+																																			    <field name="description">​Escoger el transportista que mas se ajuste a la entrega del lote.</field>
 																																			    <field name="uniqueId">41</field>
 																																			</base>
 
@@ -4105,7 +4105,7 @@ finish</field>
 																																		    <object type="Goal" id="225">
 																																			<base type="Entity">
 																																			    <field name="name">Registrar detalles de entrega</field>
-																																			    <field name="description">Se debe poder registrar y almacenar todos los detalles de la entrega determinada para así poder tener un seguimiento de los mismos.
+																																			    <field name="description">Se debe poder registrar y almacenar todos los detalles de la entrega determinada para asi poder tener un seguimiento de los mismos.
 </field>
 																																			    <field name="uniqueId">42</field>
 																																			</base>
@@ -4206,8 +4206,8 @@ finish</field>
 
 																																	    <object type="Role" id="229">
 																																		<base type="Entity">
-																																		    <field name="name">Gestor de centros logísticos</field>
-																																		    <field name="description">Dado un pedido de ciertos productos decide qué centro logístico envía qué productos.
+																																		    <field name="name">Gestor de centros logisticos</field>
+																																		    <field name="description">Dado un pedido de ciertos productos decide que centro logistico envia que productos.
 </field>
 																																		    <field name="uniqueId">47</field>
 																																		</base>
@@ -4356,8 +4356,8 @@ finish</field>
 																														<field name="type">
 																														    <object type="Data" id="233">
 																															<base type="Entity">
-																															    <field name="name">Envíos</field>
-																															    <field name="description">Esta base de datos contiene la información referente a todos los envíos de productos que se realizan en cada centro logístico.</field>
+																															    <field name="name">Envios</field>
+																															    <field name="description">Esta base de datos contiene la informacion referente a todos los envios de productos que se realizan en cada centro logistico.</field>
 																															    <field name="uniqueId">389</field>
 																															</base>
 
@@ -4455,8 +4455,8 @@ finish</field>
 																														<field name="type">
 																														    <object type="Data" id="237">
 																															<base type="Entity">
-																															    <field name="name">Paquetes pendientes de envío</field>
-																															    <field name="description">Esta base de datos contiene la información referente a los paquetes pendientes de entrega de un centro logístico.</field>
+																															    <field name="name">Paquetes pendientes de envio</field>
+																															    <field name="description">Esta base de datos contiene la informacion referente a los paquetes pendientes de entrega de un centro logistico.</field>
 																															    <field name="uniqueId">102</field>
 																															</base>
 
@@ -4480,8 +4480,8 @@ finish</field>
 																																    <object type="Action" id="239">
 																																	<base type="Interaction">
 																																	    <base type="Entity">
-																																		<field name="name">Proponer envío</field>
-																																		<field name="description">Se informa a los transportistas del envío a realizar</field>
+																																		<field name="name">Proponer envio</field>
+																																		<field name="description">Se informa a los transportistas del envio a realizar</field>
 																																		<field name="uniqueId">267</field>
 																																		<field name="connectTo"><list>
 																																		    <object ref="20"/>
@@ -4509,7 +4509,7 @@ finish</field>
 																																	<base type="Interaction">
 																																	    <base type="Entity">
 																																		<field name="name">Ofertas de precios</field>
-																																		<field name="description">Los transportistas indican las ofertas de precios para realizar el envío</field>
+																																		<field name="description">Los transportistas indican las ofertas de precios para realizar el envio</field>
 																																		<field name="uniqueId">269</field>
 																																		<field name="connectTo"><list>
 																																		    <object ref="9"/>
@@ -4822,7 +4822,7 @@ finish</field>
 																																		    <object type="Data" id="255">
 																																			<base type="Entity">
 																																			    <field name="name">Transportistas</field>
-																																			    <field name="description">Esta base de datos contiene la información referente a los diferentes transportistas que se puedan encargar de los de los centros logísticos.</field>
+																																			    <field name="description">Esta base de datos contiene la informacion referente a los diferentes transportistas que se puedan encargar de los de los centros logisticos.</field>
 																																			    <field name="uniqueId">303</field>
 																																			</base>
 
@@ -5040,7 +5040,7 @@ finish</field>
 																											    <object type="Role" id="259">
 																												<base type="Entity">
 																												    <field name="name">Gestor paquetes</field>
-																												    <field name="description">Dado un envío de productos divide estos en paquetes para facilitar su entrega/envío.
+																												    <field name="description">Dado un envio de productos divide estos en paquetes para facilitar su entrega/envio.
 </field>
 																												    <field name="uniqueId">48</field>
 																												</base>
@@ -5075,7 +5075,7 @@ finish</field>
 																											    <object type="Role" id="260">
 																												<base type="Entity">
 																												    <field name="name">Gestor transportistas</field>
-																												    <field name="description">Dado un envío pendiente, negocia y llega a un acuerdo con los transportistas para enviar los productos.
+																												    <field name="description">Dado un envio pendiente, negocia y llega a un acuerdo con los transportistas para enviar los productos.
 </field>
 																												    <field name="uniqueId">49</field>
 																												</base>
@@ -5109,7 +5109,7 @@ finish</field>
 
 																											    <object type="Role" id="261">
 																												<base type="Entity">
-																												    <field name="name">Gestor de envíos</field>
+																												    <field name="name">Gestor de envios</field>
 																												    <field name="description"></field>
 																												    <field name="uniqueId">53</field>
 																												</base>
@@ -5315,7 +5315,7 @@ finish</field>
 																								    <object type="Data" id="268">
 																									<base type="Entity">
 																									    <field name="name">Pagos y cobros</field>
-																									    <field name="description">Esta base de datos contiene la información referente a las transacciones monetarias que se efectúan en toda la tienda</field>
+																									    <field name="description">Esta base de datos contiene la informacion referente a las transacciones monetarias que se efectuan en toda la tienda</field>
 																									    <field name="uniqueId">98</field>
 																									</base>
 
@@ -5490,7 +5490,7 @@ finish</field>
 																					    <object type="Goal" id="274">
 																						<base type="Entity">
 																						    <field name="name">Devolver importe</field>
-																						    <field name="description">Una vez recibida la devolución, se tiene que devolver el importe del producto al cliente.</field>
+																						    <field name="description">Una vez recibida la devolucion, se tiene que devolver el importe del producto al cliente.</field>
 																						    <field name="uniqueId">23</field>
 																						</base>
 
@@ -5503,7 +5503,7 @@ finish</field>
 																					    <object type="Percept" id="275">
 																						<base type="Interaction">
 																						    <base type="Entity">
-																							<field name="name">Confirmación producto recogido</field>
+																							<field name="name">Confirmacion producto recogido</field>
 																							<field name="description">El transportista informa de que el paquete ha sido recogido
 
 </field>
@@ -5559,7 +5559,7 @@ finish</field>
 																						<base type="Entity">
 																						    <field name="name">Gestor de pagos y cobros</field>
 																						    <field name="description">Dada una factura sobre una compra, el gestor de pagos se encarga de asegurar el cobro de los productos solicitados y de confirmar el pago.
-Además se encarga de transferir el importe establecido al vendedor externo cuando la venta se trata de un producto de este o de reembolsar el importe de una devolución al cliente que la solicite.
+Ademas se encarga de transferir el importe establecido al vendedor externo cuando la venta se trata de un producto de este o de reembolsar el importe de una devolucion al cliente que la solicite.
 </field>
 																						    <field name="uniqueId">50</field>
 																						</base>
@@ -5601,7 +5601,7 @@ Además se encarga de transferir el importe establecido al vendedor externo cuan
 																					    <object type="Role" id="278">
 																						<base type="Entity">
 																						    <field name="name">Gestor de facturas</field>
-																						    <field name="description">Dada una solicitud de productos a comprar el gestor de facturas será el encargado de generar una factura acorde al pedido.
+																						    <field name="description">Dada una solicitud de productos a comprar el gestor de facturas sera el encargado de generar una factura acorde al pedido.
 </field>
 																						    <field name="uniqueId">51</field>
 																						</base>
@@ -5739,8 +5739,8 @@ finish</field>
 																<field name="goals"><list>
 																    <object type="Goal" id="282">
 																	<base type="Entity">
-																	    <field name="name">Procesar devolución</field>
-																	    <field name="description">Se ha de decidir si la devolución es aceptada o no.
+																	    <field name="name">Procesar devolucion</field>
+																	    <field name="description">Se ha de decidir si la devolucion es aceptada o no.
 </field>
 																	    <field name="uniqueId">20</field>
 																	</base>
@@ -5749,8 +5749,8 @@ finish</field>
 
 																    <object type="Goal" id="283">
 																	<base type="Entity">
-																	    <field name="name">Gestionar envío</field>
-																	    <field name="description">Si la devolución es aceptada, se notifica a una empresa de transporte que tiene que recoger un paquete en la dirección del cliente y enviarlo a la tienda.
+																	    <field name="name">Gestionar envio</field>
+																	    <field name="description">Si la devolucion es aceptada, se notifica a una empresa de transporte que tiene que recoger un paquete en la direccion del cliente y enviarlo a la tienda.
 </field>
 																	    <field name="uniqueId">21</field>
 																	</base>
@@ -5759,8 +5759,8 @@ finish</field>
 
 																    <object type="Goal" id="284">
 																	<base type="Entity">
-																	    <field name="name">Registrar devolución</field>
-																	    <field name="description">Se tiene que poder guardar la información de la devolución.
+																	    <field name="name">Registrar devolucion</field>
+																	    <field name="description">Se tiene que poder guardar la informacion de la devolucion.
 </field>
 																	    <field name="uniqueId">22</field>
 																	</base>
@@ -5793,7 +5793,7 @@ finish</field>
 																    <object type="Percept" id="286">
 																	<base type="Interaction">
 																	    <base type="Entity">
-																		<field name="name">Petición de devolución</field>
+																		<field name="name">Peticion de devolucion</field>
 																		<field name="description">El cliente solicita devolver productos</field>
 																		<field name="uniqueId">71</field>
 																		<field name="connectTo"><list>
@@ -5828,8 +5828,8 @@ finish</field>
 																    <object type="Action" id="287">
 																	<base type="Interaction">
 																	    <base type="Entity">
-																		<field name="name">Informar fecha devolución</field>
-																		<field name="description">Se informa al cliente sobre la fecha de recogida de la devolución
+																		<field name="name">Informar fecha devolucion</field>
+																		<field name="description">Se informa al cliente sobre la fecha de recogida de la devolucion
 
 </field>
 																		<field name="uniqueId">74</field>
@@ -5854,7 +5854,7 @@ finish</field>
 																    <object type="Role" id="288">
 																	<base type="Entity">
 																	    <field name="name">Gestor de devoluciones</field>
-																	    <field name="description">Se encarga de gestionar todo el trámite de la devolución de productos.
+																	    <field name="description">Se encarga de gestionar todo el tramite de la devolucion de productos.
 </field>
 																	    <field name="uniqueId">54</field>
 																	</base>
@@ -5885,7 +5885,7 @@ finish</field>
 																	    <object type="Data" id="289">
 																		<base type="Entity">
 																		    <field name="name">Pedidos</field>
-																		    <field name="description">Esta base de datos contiene la información completa de los pedidos de los usuarios</field>
+																		    <field name="description">Esta base de datos contiene la informacion completa de los pedidos de los usuarios</field>
 																		    <field name="uniqueId">395</field>
 																		</base>
 
@@ -5898,7 +5898,7 @@ finish</field>
 																			    <field name="description">Encargado de gestionar el feedback de los clientes sobre productos de la tienda.
 Roles: 11. Gestor de valoraciones
 
-Este agente se encarga de recopilar y gestionar el feedback de los clientes sobre los productos de la tienda, lo que permite mejorar la calidad de los productos y la satisfacción al cliente en general.
+Este agente se encarga de recopilar y gestionar el feedback de los clientes sobre los productos de la tienda, lo que permite mejorar la calidad de los productos y la satisfaccion al cliente en general.
 </field>
 																			    <field name="uniqueId">308</field>
 																			</base>
@@ -5910,14 +5910,14 @@ Este agente se encarga de recopilar y gestionar el feedback de los clientes sobr
 																			    <object type="Goal" id="291">
 																				<base type="Entity">
 																				    <field name="name">Valorar productos</field>
-																				    <field name="description">Un usuario que haya comprado un producto debe poder añadir una valoración de este. Para lograr este objetivo, se deben cumplir sus tres subobjetivos.</field>
+																				    <field name="description">Un usuario que haya comprado un producto debe poder añadir una valoracion de este. Para lograr este objetivo, se deben cumplir sus tres subobjetivos.</field>
 																				    <field name="uniqueId">7</field>
 																				</base>
 
 																				<field name="subGoals"><list>
 																				    <object type="Goal" id="292">
 																					<base type="Entity">
-																					    <field name="name">Obtener valoración producto</field>
+																					    <field name="name">Obtener valoracion producto</field>
 																					    <field name="description"></field>
 																					    <field name="uniqueId">240</field>
 																					</base>
@@ -5926,7 +5926,7 @@ Este agente se encarga de recopilar y gestionar el feedback de los clientes sobr
 
 																				    <object type="Goal" id="293">
 																					<base type="Entity">
-																					    <field name="name">Registrar valoración</field>
+																					    <field name="name">Registrar valoracion</field>
 																					    <field name="description"></field>
 																					    <field name="uniqueId">246</field>
 																					</base>
@@ -5949,7 +5949,7 @@ Este agente se encarga de recopilar y gestionar el feedback de los clientes sobr
 																				<base type="Interaction">
 																				    <base type="Entity">
 																					<field name="name">Momento de valorar</field>
-																					<field name="description">Después de un tiempo desde que el usuario recibió el producto, se debe obtener la opinión del usuario sobre el producto</field>
+																					<field name="description">Despues de un tiempo desde que el usuario recibio el producto, se debe obtener la opinion del usuario sobre el producto</field>
 																					<field name="uniqueId">238</field>
 																				    </base>
 
@@ -5975,8 +5975,8 @@ Este agente se encarga de recopilar y gestionar el feedback de los clientes sobr
 																			    <object type="Action" id="295">
 																				<base type="Interaction">
 																				    <base type="Entity">
-																					<field name="name">Informar valoración guardada</field>
-																					<field name="description">Se notifica al usuario de la valoración guardada</field>
+																					<field name="name">Informar valoracion guardada</field>
+																					<field name="description">Se notifica al usuario de la valoracion guardada</field>
 																					<field name="uniqueId">70</field>
 																				    </base>
 
@@ -5993,8 +5993,8 @@ Este agente se encarga de recopilar y gestionar el feedback de los clientes sobr
 																			    <object type="Action" id="296">
 																				<base type="Interaction">
 																				    <base type="Entity">
-																					<field name="name">Pide valoración</field>
-																					<field name="description">Se pide al usuario la opinión que tiene de un producto que haya recibido</field>
+																					<field name="name">Pide valoracion</field>
+																					<field name="description">Se pide al usuario la opinion que tiene de un producto que haya recibido</field>
 																					<field name="uniqueId">242</field>
 																					<field name="connectTo"><list>
 																					    <object ref="7"/>
@@ -6017,7 +6017,7 @@ Este agente se encarga de recopilar y gestionar el feedback de los clientes sobr
 																			    <object type="Role" id="297">
 																				<base type="Entity">
 																				    <field name="name">Gestor de valoraciones</field>
-																				    <field name="description">Se encarga de pedir las valoraciones de algún producto que haya comprado el cliente y almacenar esta información.
+																				    <field name="description">Se encarga de pedir las valoraciones de algun producto que haya comprado el cliente y almacenar esta informacion.
 </field>
 																				    <field name="uniqueId">55</field>
 																				</base>
@@ -6050,7 +6050,7 @@ Este agente se encarga de recopilar y gestionar el feedback de los clientes sobr
 																				    <object type="Data" id="298">
 																					<base type="Entity">
 																					    <field name="name">Valoraciones</field>
-																					    <field name="description">Esta base de datos contiene la información referente a todas las valoraciones que los clientes han dejado a los productos que han comprado.</field>
+																					    <field name="description">Esta base de datos contiene la informacion referente a todas las valoraciones que los clientes han dejado a los productos que han comprado.</field>
 																					    <field name="uniqueId">97</field>
 																					</base>
 
@@ -6210,7 +6210,7 @@ Este agente se encarga de recopilar y gestionar el feedback de los clientes sobr
 																	    <object type="Data" id="306">
 																		<base type="Entity">
 																		    <field name="name">Devoluciones</field>
-																		    <field name="description">Esta base de datos contiene la información referente a todas las valoraciones que los clientes han dejado a los productos que han comprado. </field>
+																		    <field name="description">Esta base de datos contiene la informacion referente a todas las valoraciones que los clientes han dejado a los productos que han comprado. </field>
 																		    <field name="uniqueId">390</field>
 																		</base>
 
@@ -10668,7 +10668,7 @@ Este agente se encarga de recopilar y gestionar el feedback de los clientes sobr
 			<object type="Scenario" id="939">
 			    <base type="Entity">
 				<field name="name">Vender productos scenario</field>
-				<field name="description">Se debe poder comprar uno o más productos de nuestra plataforma. Se deben cumplir los todos subobjetivos exceptuando ‘Elegir centro logístico del envío’ que se cumple si el producto se envía desde uno de nuestros centros logísticos y ‘Gestionar pedido vendedor externo’ en el caso que el pedido sea de un vendedor externo:</field>
+				<field name="description">Se debe poder comprar uno o mas productos de nuestra plataforma. Se deben cumplir los todos subobjetivos exceptuando ‘Elegir centro logistico del envio’ que se cumple si el producto se envia desde uno de nuestros centros logisticos y ‘Gestionar pedido vendedor externo’ en el caso que el pedido sea de un vendedor externo:</field>
 				<field name="uniqueId">4</field>
 			    </base>
 
@@ -11020,9 +11020,9 @@ Este agente se encarga de recopilar y gestionar el feedback de los clientes sobr
 				</object>
 				</list>
 			    </field>
-			    <field name="variation">Si uno o más de los productos que el cliente quiere comprar son de
-un vendedor externo que se encarga del envío, se deberá notificar de que envíe el producto.
-Si hay productos externos en la lista de productos comprados, el importe de éstos se deberá pagar al vendedor externo. Este pago se realizará inmediatamente tras la venta si el vendedor externo se encarga del envío, o posterior a la confirmación de envío si se encarga la tienda.
+			    <field name="variation">Si uno o mas de los productos que el cliente quiere comprar son de
+un vendedor externo que se encarga del envio, se debera notificar de que envie el producto.
+Si hay productos externos en la lista de productos comprados, el importe de estos se debera pagar al vendedor externo. Este pago se realizara inmediatamente tras la venta si el vendedor externo se encarga del envio, o posterior a la confirmacion de envio si se encarga la tienda.
 </field>
 			    <field name="linkedGoals"><list>
 				<object ref="213"/>
@@ -11186,8 +11186,8 @@ Si hay productos externos en la lista de productos comprados, el importe de ést
 				</object>
 				</list>
 			    </field>
-			    <field name="variation">Si el motivo de la devolución es que no satisfacen las expectativas del cliente y la venta de los productos se ha realizado hace más de 15 días, el escenario termina una vez se ha notificado al cliente que su solicitud ha sido rechazada.
-Si los productos devueltos son de un vendedor externo, una vez hecho el reintegro al cliente se deberá solicitar el pago al vendedor externo.
+			    <field name="variation">Si el motivo de la devolucion es que no satisfacen las expectativas del cliente y la venta de los productos se ha realizado hace mas de 15 dias, el escenario termina una vez se ha notificado al cliente que su solicitud ha sido rechazada.
+Si los productos devueltos son de un vendedor externo, una vez hecho el reintegro al cliente se debera solicitar el pago al vendedor externo.
 </field>
 			    <field name="linkedGoals"><list>
 				<object ref="285"/>
@@ -14918,7 +14918,7 @@ Si los productos devueltos son de un vendedor externo, una vez hecho el reintegr
 		</object>
 
 		<object type="Entity" id="1386">
-		    <field name="name">Confirmación devolución</field>
+		    <field name="name">Confirmacion devolucion</field>
 		</object>
 
 		<object type="Entity" id="1387">
@@ -15046,7 +15046,7 @@ Si los productos devueltos son de un vendedor externo, una vez hecho el reintegr
 		</object>
 
 		<object type="Entity" id="1418">
-		    <field name="name">Confirmación envío</field>
+		    <field name="name">Confirmacion envio</field>
 		</object>
 
 		<object type="Entity" id="1419">
@@ -15058,7 +15058,7 @@ Si los productos devueltos son de un vendedor externo, una vez hecho el reintegr
 		</object>
 
 		<object type="Entity" id="1421">
-		    <field name="name">Notificar centro logístico</field>
+		    <field name="name">Notificar centro logistico</field>
 		</object>
 
 		<object type="Entity" id="1422">
@@ -15066,7 +15066,7 @@ Si los productos devueltos son de un vendedor externo, una vez hecho el reintegr
 		</object>
 
 		<object type="Entity" id="1423">
-		    <field name="name">Guarda filtros de búsqueda</field>
+		    <field name="name">Guarda filtros de busqueda</field>
 		</object>
 
 		<object type="Entity" id="1424">
@@ -15150,7 +15150,7 @@ Si los productos devueltos son de un vendedor externo, una vez hecho el reintegr
 		</object>
 
 		<object type="Entity" id="1444">
-		    <field name="name">Envíos</field>
+		    <field name="name">Envios</field>
 		</object>
 
 		<object type="Entity" id="1445">
@@ -15410,7 +15410,7 @@ Si los productos devueltos son de un vendedor externo, una vez hecho el reintegr
 		</object>
 
 		<object type="Entity" id="1509">
-		    <field name="name">Envíos</field>
+		    <field name="name">Envios</field>
 		</object>
 
 		<object type="Entity" id="1510">
@@ -15430,7 +15430,7 @@ Si los productos devueltos son de un vendedor externo, una vez hecho el reintegr
 		</object>
 
 		<object type="Entity" id="1514">
-		    <field name="name">Búsquedas</field>
+		    <field name="name">Busquedas</field>
 		</object>
 
 		<object type="Entity" id="1515">
@@ -15498,7 +15498,7 @@ Si los productos devueltos son de un vendedor externo, una vez hecho el reintegr
 		</object>
 
 		<object type="Entity" id="1531">
-		    <field name="name">Pedir recoger devolución</field>
+		    <field name="name">Pedir recoger devolucion</field>
 		</object>
 
 		<object type="Entity" id="1532">
@@ -15542,7 +15542,7 @@ Si los productos devueltos son de un vendedor externo, una vez hecho el reintegr
 		</object>
 
 		<object type="Entity" id="1542">
-		    <field name="name">Envío finalizado</field>
+		    <field name="name">Envio finalizado</field>
 		</object>
 
 		<object type="Entity" id="1543">
