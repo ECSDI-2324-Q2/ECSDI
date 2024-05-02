@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Solver Problems</title>
+<meta http-equiv="refresh" content="20">
+    <style type="text/css">
+        table, th, td {
+            border: 1px solid black;
+        }
+    </style>
+</head>
+
+<body>
+
+<h1> Received problems</h1>
+
+<p></p>
+<table>
+    <tr>
+        <th>Prob ID</th>
+        <th>Prob Type</th>
+        <th>Client</th>
+        <th>Prob</th>
+        <th>Status</th>
+    </tr>
+    {% for id in probs|sort %}
+    <tr>
+        <td>{{id}}</td>
+        <td>{{probs[id][0]}}</td>
+        <td>{{probs[id][1]}}</td>
+        <td>{{probs[id][2]}}</td>
+        <td>{{probs[id][3]}}</td>
+     </tr>
+    {% endfor %}
+</table>
+
+<form  action="/info" method="get">
+    <p>
+        <button type="submit">Refresh</button>
+    </p>
+</form>
+
+</body>
+</html>

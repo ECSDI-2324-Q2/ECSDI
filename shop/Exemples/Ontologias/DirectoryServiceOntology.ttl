@@ -1,0 +1,145 @@
+@prefix : <http://www.semanticweb.org/directory-service-ontology#> .
+@prefix dso: <http://www.semanticweb.org/directory-service-ontology#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix rfds: <http://www.w3.org/2000/01/rdf-schema#> .
+@base <http://www.semanticweb.org/directory-service-ontology#> .
+
+<http://www.semanticweb.org/directory-service-ontology#> rdf:type owl:Ontology ;
+                                                          owl:versionIRI <http://www.semanticweb.org/directory-service-ontology#1.0> ;
+                                                          rfds:comment "Ontologia de servicio de registro usando las operaciones de FIPA" .
+
+#################################################################
+#    Object Properties
+#################################################################
+
+###  http://www.semanticweb.org/directory-service-ontology#AgentType
+dso:AgentType rdf:type owl:ObjectProperty ;
+              rfds:subPropertyOf owl:topObjectProperty ;
+              rfds:domain dso:Register ,
+                          dso:Search ;
+              rfds:range dso:ServiceAgent .
+
+
+#################################################################
+#    Data properties
+#################################################################
+
+###  http://www.semanticweb.org/directory-service-ontology#Address
+dso:Address rdf:type owl:DatatypeProperty ;
+            rfds:domain dso:Deregister ,
+                        dso:Modify ,
+                        dso:Register ,
+                        dso:RegisterResult ;
+            rfds:range xsd:string .
+
+
+###  http://www.semanticweb.org/directory-service-ontology#Uri
+dso:Uri rdf:type owl:DatatypeProperty ;
+        rfds:domain dso:Modify ,
+                    dso:Register ,
+                    dso:RegisterResult ;
+        rfds:range xsd:anyURI .
+
+
+###  http://xmlns.com/foaf/0.1/Name
+foaf:Name rdf:type owl:DatatypeProperty ;
+          rfds:domain dso:Modify ,
+                      dso:Register ,
+                      dso:RegisterResult ;
+          rfds:range xsd:string .
+
+
+#################################################################
+#    Classes
+#################################################################
+
+###  http://www.semanticweb.org/directory-service-ontology#Deregister
+dso:Deregister rdf:type owl:Class ;
+               rfds:subClassOf dso:RegisterAction ;
+               rfds:comment "Borrado del registro"@es .
+
+
+###  http://www.semanticweb.org/directory-service-ontology#InfoAgent
+dso:InfoAgent rdf:type owl:Class ;
+              rfds:subClassOf dso:ServiceAgent .
+
+
+###  http://www.semanticweb.org/directory-service-ontology#Modify
+dso:Modify rdf:type owl:Class ;
+           rfds:subClassOf dso:RegisterAction ;
+           rfds:comment "Modificacion del resistro"@es .
+
+
+###  http://www.semanticweb.org/directory-service-ontology#Register
+dso:Register rdf:type owl:Class ;
+             rfds:subClassOf dso:RegisterAction ;
+             rfds:comment "Registro en el servicio"@es .
+
+
+###  http://www.semanticweb.org/directory-service-ontology#RegisterAction
+dso:RegisterAction rdf:type owl:Class ;
+                   rfds:comment "Acciones del servicio de registro"@es .
+
+
+###  http://www.semanticweb.org/directory-service-ontology#RegisterResult
+dso:RegisterResult rdf:type owl:Class ;
+                   rfds:comment "Objeto de resultado"@es .
+
+
+###  http://www.semanticweb.org/directory-service-ontology#Search
+dso:Search rdf:type owl:Class ;
+           rfds:subClassOf dso:RegisterAction ;
+           rfds:comment "Busqueda en el registro"@es .
+
+
+###  http://www.semanticweb.org/directory-service-ontology#ServiceAgent
+dso:ServiceAgent rdf:type owl:Class ;
+                 rfds:comment "Tipos de los agentes de servicio" ;
+                 rfds:label "ServiceAgent" .
+
+
+###  http://www.semanticweb.org/directory-service-ontology#SolverAgent
+dso:SolverAgent rdf:type owl:Class ;
+                rfds:subClassOf dso:ServiceAgent .
+
+
+#################################################################
+#    Individuals
+#################################################################
+
+###  http://www.semanticweb.org/directory-service-ontology#FlightsAgent
+dso:FlightsAgent rdf:type owl:NamedIndividual ,
+                          dso:InfoAgent .
+
+
+###  http://www.semanticweb.org/directory-service-ontology#HotelsAgent
+dso:HotelsAgent rdf:type owl:NamedIndividual ,
+                         dso:InfoAgent .
+
+
+###  http://www.semanticweb.org/directory-service-ontology#PaymentAgent
+dso:PaymentAgent rdf:type owl:NamedIndividual ,
+                          dso:SolverAgent .
+
+
+###  http://www.semanticweb.org/directory-service-ontology#PersonalAgent
+dso:PersonalAgent rdf:type owl:NamedIndividual ,
+                           dso:SolverAgent .
+
+
+###  http://www.semanticweb.org/directory-service-ontology#TravelServiceAgent
+dso:TravelServiceAgent rdf:type owl:NamedIndividual ,
+                                dso:SolverAgent .
+
+
+###  http://www.semanticweb.org/directory-service-ontology#WeatherAgent
+dso:WeatherAgent rdf:type owl:NamedIndividual ,
+                          dso:InfoAgent .
+
+
+###  Generated by the OWL API (version 4.5.9.2019-02-01T07:24:44Z) https://github.com/owlcs/owlapi

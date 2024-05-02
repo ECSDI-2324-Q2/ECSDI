@@ -1,0 +1,264 @@
+@prefix : <http://www.nuin.org/ontology/fipa/acl#> .
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix acl: <http://www.nuin.org/ontology/fipa/acl#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix fipa: <http://www.nuin.org/ontology/fipa/> .
+@prefix nuin: <http://www.nuin.org/ontology/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix smodel: <http://www.nuin.org/ontology/selfmodel#> .
+@base <http://www.nuin.org/ontology/fipa/acl> .
+
+<http://www.nuin.org/ontology/fipa/acl> rdf:type owl:Ontology ;
+                                         dc:creator """
+            Ian Dickinson, mailto:Ian.Dickinson@hp.com
+        """ ;
+                                         dc:date """
+            $Date: 2004/12/15 13:23:10 $
+        """ ;
+                                         dc:title """
+            Ontology of FIPA messaging nouns and properties
+        """ ;
+                                         rdfs:comment """
+            Defines a simple ontology for sending messages between Nuin agents,
+            based on the FIPA message service description.
+        """ ;
+                                         owl:versionInfo "CVS info: $Id: fipa-acl.owl,v 1.7 2004/12/15 13:23:10 ian_dickinson Exp $ " .
+
+#################################################################
+#    Annotation properties
+#################################################################
+
+###  http://purl.org/dc/elements/1.1/creator
+dc:creator rdf:type owl:AnnotationProperty .
+
+
+###  http://purl.org/dc/elements/1.1/date
+dc:date rdf:type owl:AnnotationProperty .
+
+
+###  http://purl.org/dc/elements/1.1/title
+dc:title rdf:type owl:AnnotationProperty .
+
+
+#################################################################
+#    Object Properties
+#################################################################
+
+###  http://www.nuin.org/ontology/fipa/acl#ontology
+acl:ontology rdf:type owl:ObjectProperty ;
+             rdfs:domain acl:FipaAclMessage ;
+             rdfs:comment "Denotes an ontology supporting the message" .
+
+
+###  http://www.nuin.org/ontology/fipa/acl#performative
+acl:performative rdf:type owl:ObjectProperty ;
+                 rdfs:domain acl:FipaAclMessage ;
+                 rdfs:range acl:SpeechAct ;
+                 rdfs:comment "Maps a message to its peformative" .
+
+
+###  http://www.nuin.org/ontology/fipa/acl#receiver
+acl:receiver rdf:type owl:ObjectProperty ;
+             rdfs:domain acl:FipaAclMessage ;
+             rdfs:comment "Maps a message to its receiver" .
+
+
+###  http://www.nuin.org/ontology/fipa/acl#reply-to
+acl:reply-to rdf:type owl:ObjectProperty ;
+             rdfs:domain acl:FipaAclMessage ;
+             rdfs:comment "Denotes the agent to whom the reply should be sent" .
+
+
+###  http://www.nuin.org/ontology/fipa/acl#sender
+acl:sender rdf:type owl:ObjectProperty ;
+           rdfs:domain acl:FipaAclMessage ;
+           rdfs:comment "Maps a message to its sender" .
+
+
+#################################################################
+#    Data properties
+#################################################################
+
+###  http://www.nuin.org/ontology/fipa/acl#content
+acl:content rdf:type owl:DatatypeProperty ;
+            rdfs:domain acl:FipaAclMessage ;
+            rdfs:comment "Denotes the contents of the message" .
+
+
+###  http://www.nuin.org/ontology/fipa/acl#conversation-id
+acl:conversation-id rdf:type owl:DatatypeProperty ;
+                    rdfs:domain acl:FipaAclMessage ;
+                    rdfs:comment "Denotes an identifier that distinguishes this conversation from others" .
+
+
+###  http://www.nuin.org/ontology/fipa/acl#encoding
+acl:encoding rdf:type owl:DatatypeProperty ;
+             rdfs:domain acl:FipaAclMessage ;
+             rdfs:comment "Denotes the encoding method of the message contents" .
+
+
+###  http://www.nuin.org/ontology/fipa/acl#in-reply-to
+acl:in-reply-to rdf:type owl:DatatypeProperty ;
+                rdfs:domain acl:FipaAclMessage ;
+                rdfs:comment "Denotes an identifier that marks this message as a reply to an earlier message" .
+
+
+###  http://www.nuin.org/ontology/fipa/acl#language
+acl:language rdf:type owl:DatatypeProperty ;
+             rdfs:domain acl:FipaAclMessage ;
+             rdfs:comment "Denotes the encoding language of the message contents" .
+
+
+###  http://www.nuin.org/ontology/fipa/acl#reply-by
+acl:reply-by rdf:type owl:DatatypeProperty ;
+             rdfs:domain acl:FipaAclMessage ;
+             rdfs:comment "Denotes a time by which the reply should be received" .
+
+
+###  http://www.nuin.org/ontology/fipa/acl#reply-with
+acl:reply-with rdf:type owl:DatatypeProperty ;
+               rdfs:domain acl:FipaAclMessage ;
+               rdfs:comment "Denotes an identifier that should be specified for reply messages" .
+
+
+#################################################################
+#    Classes
+#################################################################
+
+###  http://www.nuin.org/ontology/fipa/acl#FipaAclMessage
+acl:FipaAclMessage rdf:type owl:Class ;
+                   rdfs:subClassOf smodel:KsMessage ;
+                   rdfs:comment """
+            Class denoting a message in the FIPA ACL formulation
+        """ .
+
+
+###  http://www.nuin.org/ontology/fipa/acl#SpeechAct
+acl:SpeechAct rdf:type owl:Class ;
+              rdfs:comment """
+            Class denoting performatives of a message
+        """ .
+
+
+###  http://www.nuin.org/ontology/selfmodel#KsMessage
+smodel:KsMessage rdf:type owl:Class .
+
+
+#################################################################
+#    Individuals
+#################################################################
+
+###  http://www.nuin.org/ontology/fipa/acl#accept-proposal
+acl:accept-proposal rdf:type owl:NamedIndividual ,
+                             acl:SpeechAct .
+
+
+###  http://www.nuin.org/ontology/fipa/acl#agree
+acl:agree rdf:type owl:NamedIndividual ,
+                   acl:SpeechAct .
+
+
+###  http://www.nuin.org/ontology/fipa/acl#cancel
+acl:cancel rdf:type owl:NamedIndividual ,
+                    acl:SpeechAct .
+
+
+###  http://www.nuin.org/ontology/fipa/acl#cfp
+acl:cfp rdf:type owl:NamedIndividual ,
+                 acl:SpeechAct .
+
+
+###  http://www.nuin.org/ontology/fipa/acl#confirm
+acl:confirm rdf:type owl:NamedIndividual ,
+                     acl:SpeechAct .
+
+
+###  http://www.nuin.org/ontology/fipa/acl#disconfirm
+acl:disconfirm rdf:type owl:NamedIndividual ,
+                        acl:SpeechAct .
+
+
+###  http://www.nuin.org/ontology/fipa/acl#failure
+acl:failure rdf:type owl:NamedIndividual ,
+                     acl:SpeechAct .
+
+
+###  http://www.nuin.org/ontology/fipa/acl#inform
+acl:inform rdf:type owl:NamedIndividual ,
+                    acl:SpeechAct .
+
+
+###  http://www.nuin.org/ontology/fipa/acl#inform-if
+acl:inform-if rdf:type owl:NamedIndividual ,
+                       acl:SpeechAct .
+
+
+###  http://www.nuin.org/ontology/fipa/acl#inform-ref
+acl:inform-ref rdf:type owl:NamedIndividual ,
+                        acl:SpeechAct .
+
+
+###  http://www.nuin.org/ontology/fipa/acl#not-understood
+acl:not-understood rdf:type owl:NamedIndividual ,
+                            acl:SpeechAct .
+
+
+###  http://www.nuin.org/ontology/fipa/acl#propagate
+acl:propagate rdf:type owl:NamedIndividual ,
+                       acl:SpeechAct .
+
+
+###  http://www.nuin.org/ontology/fipa/acl#propose
+acl:propose rdf:type owl:NamedIndividual ,
+                     acl:SpeechAct .
+
+
+###  http://www.nuin.org/ontology/fipa/acl#proxy
+acl:proxy rdf:type owl:NamedIndividual ,
+                   acl:SpeechAct .
+
+
+###  http://www.nuin.org/ontology/fipa/acl#query-if
+acl:query-if rdf:type owl:NamedIndividual ,
+                      acl:SpeechAct .
+
+
+###  http://www.nuin.org/ontology/fipa/acl#query-ref
+acl:query-ref rdf:type owl:NamedIndividual ,
+                       acl:SpeechAct .
+
+
+###  http://www.nuin.org/ontology/fipa/acl#refuse
+acl:refuse rdf:type owl:NamedIndividual ,
+                    acl:SpeechAct .
+
+
+###  http://www.nuin.org/ontology/fipa/acl#reject-proposal
+acl:reject-proposal rdf:type owl:NamedIndividual ,
+                             acl:SpeechAct .
+
+
+###  http://www.nuin.org/ontology/fipa/acl#request
+acl:request rdf:type owl:NamedIndividual ,
+                     acl:SpeechAct .
+
+
+###  http://www.nuin.org/ontology/fipa/acl#request-when
+acl:request-when rdf:type owl:NamedIndividual ,
+                          acl:SpeechAct .
+
+
+###  http://www.nuin.org/ontology/fipa/acl#request-whenever
+acl:request-whenever rdf:type owl:NamedIndividual ,
+                              acl:SpeechAct .
+
+
+###  http://www.nuin.org/ontology/fipa/acl#subscribe
+acl:subscribe rdf:type owl:NamedIndividual ,
+                       acl:SpeechAct .
+
+
+###  Generated by the OWL API (version 4.5.9.2019-02-01T07:24:44Z) https://github.com/owlcs/owlapi

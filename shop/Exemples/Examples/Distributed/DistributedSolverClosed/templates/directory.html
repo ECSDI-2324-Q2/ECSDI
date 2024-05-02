@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+ <head>
+    <title>Directory Service</title>
+<meta http-equiv="refresh" content="20">
+    <style type="text/css">
+        table, th, td {
+            border: 1px solid black;
+        }
+    </style>
+</head>
+<body>
+
+<h1> Directory Register</h1>
+
+<p></p>
+<table>
+    <tr>
+        <th>time</th>
+        <th>ID</th>
+        <th>Type</th>
+        <th>Address</th>
+        <th>Assign</th>
+
+    </tr>
+    {% for id in dir|sort %}
+    <tr>
+        <td>{{dir[id][2]}}</td>
+        <td>{{id}}</td>
+        <td>{{dir[id][0]}}</td>
+        <td>{{dir[id][1]}}</td>
+        <td>{{bal[id]}}</td>
+     </tr>
+    {% endfor %}
+</table>
+
+<form  action="/info" method="get">
+    <p>
+        <button type="submit">Refresh</button>
+    </p>
+</form>
+
+
+</body>
+</html>
