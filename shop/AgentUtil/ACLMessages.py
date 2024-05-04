@@ -10,10 +10,15 @@ Created on 08/02/2014 ###
 """
 __author__ = 'javier'
 
-from rdflib import Graph, URIRef
+from xml.parsers.expat import ExpatError
 import requests
-from rdflib.namespace import RDF, OWL
-from AgentUtil.ACL import ACL
+from rdflib import Graph, Namespace, Literal, URIRef
+from rdflib.namespace import RDF, FOAF
+from AgentUtil.OntoNamespaces import ACL, DSO
+from AgentUtil.OntoNamespaces import ECSDI
+from rdflib import XSD
+
+agn = Namespace("http://www.agentes.org#")
 
 
 def build_message(gmess, perf, sender=None, receiver=None,  content=None, msgcnt=0):
@@ -33,9 +38,8 @@ def build_message(gmess, perf, sender=None, receiver=None,  content=None, msgcnt
     # Añade los elementos del speech act al grafo del mensaje
     mssid = f'message-{sender.__hash__()}-{msgcnt:04}'
     # No podemos crear directamente una instancia en el namespace ACL ya que es un ClosedNamedspace
-    ms = URIRef(mssid)
+    ms = ACL[mssid]
     gmess.bind('acl', ACL)
-    gmess.add((ms, RDF.type, OWL.NamedIndividual)) # Declaramos la URI como instancia
     gmess.add((ms, RDF.type, ACL.FipaAclMessage))
     gmess.add((ms, ACL.performative, perf))
     gmess.add((ms, ACL.sender, sender))
@@ -43,7 +47,6 @@ def build_message(gmess, perf, sender=None, receiver=None,  content=None, msgcnt
         gmess.add((ms, ACL.receiver, receiver))
     if content is not None:
         gmess.add((ms, ACL.content, content))
-        
     return gmess
 
 
@@ -53,11 +56,17 @@ def send_message(gmess, address):
     un grafo RDF
     """
     msg = gmess.serialize(format='xml')
-    r = requests.get(address, params={'content': msg})
+    r = requests.get(address, params={'content': msg}, timeout=5)  # Add timeout argument
+    print(f"Respuesta recibida: {r.text}")  # Imprimir la respuesta recibida
+
 
     # Procesa la respuesta y la retorna como resultado como grafo
     gr = Graph()
-    gr.parse(data=r.text, format='xml')
+    try:
+        gr.parse(data=r.text, format='xml')
+    except ExpatError as e:
+        print(f"Error al parsear el XML: {e}")
+        print(f"Contenido que causó el error: {r.text}")
 
     return gr
 
@@ -86,3 +95,27 @@ def get_message_properties(msg):
             if val is not None:
                 msgdic[key] = val
     return msgdic
+
+# Función para el registro de un agente
+def registerAgent(agent, directoryService, typeOfAgent, messageCount):
+    gmess = Graph()
+
+    gmess.bind('foaf', FOAF)
+    gmess.bind('dso', DSO)
+    reg_obj = agn[agent.name + '-Register']
+    gmess.add((reg_obj, RDF.type, DSO.Register))
+    gmess.add((reg_obj, DSO.Uri, agent.uri))
+    gmess.add((reg_obj, FOAF.name, Literal(agent.name)))
+    gmess.add((reg_obj, DSO.Address, Literal(agent.address)))
+    gmess.add((reg_obj, DSO.AgentType, typeOfAgent))
+    # Lo metemos en un envoltorio FIPA-ACL y lo enviamos
+
+    print(f"Enviando peticion de registro a {directoryService.address}")
+    
+    gr = send_message(
+        build_message(gmess, perf=ACL.request,
+                      sender=agent.uri,
+                      receiver=directoryService.uri,
+                      content=reg_obj,
+                      msgcnt=messageCount),
+        directoryService.address)
