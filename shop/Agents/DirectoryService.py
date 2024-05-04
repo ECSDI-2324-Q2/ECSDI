@@ -17,10 +17,12 @@ DirectoryService
 :Created on: 06/02/2018 8:20 
 
 """
-from Util import gethostname
+import sys
+sys.path.append('../')
+from AgentUtil.Util import gethostname
 import socket
 import argparse
-from FlaskServer import shutdown_server
+from AgentUtil.FlaskServer import shutdown_server
 
 from flask import Flask, request, render_template
 import numpy as np
