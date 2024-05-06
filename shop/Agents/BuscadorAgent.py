@@ -14,109 +14,152 @@ Asume que el agente de registro esta en el puerto 9000
 @author: Marc i Arnau
 """
 
-from multiprocessing import Process, Queue
+import argparse
 import socket
+import sys
+sys.path.append('../')
+from multiprocessing import Queue, Process
+from threading import Thread
+from typing import Literal
 
-from rdflib import Namespace, Graph
-from flask import Flask
+from flask import Flask, request
+from rdflib import URIRef, XSD
 
-from AgentUtil.FlaskServer import shutdown_server
-from AgentUtil.Agent import Agent
 from AgentUtil.ACLMessages import *
+from AgentUtil.Agent import Agent
+from AgentUtil.FlaskServer import shutdown_server
+from AgentUtil.Logging import config_logger
+from AgentUtil.OntoNamespaces import ECSDI
 
 __author__ = 'ECSDIstore'
 
-# Configuration stuff
-hostname = socket.gethostname()
-port = 9010
+# Definimos los parametros de la linea de comandos
+parser = argparse.ArgumentParser()
+parser.add_argument('--open', help="Define si el servidor esta abierto al exterior o no", action='store_true',
+                    default=False)
+parser.add_argument('--port', type=int, help="Puerto de comunicacion del agente")
+parser.add_argument('--dhost', default=socket.gethostname(), help="Host del agente de directorio")
+parser.add_argument('--dport', type=int, help="Puerto de comunicacion del agente de directorio")
 
+# Logging
+logger = config_logger(level=1)
+
+# Parsear los parametros de la linea de comandos
+args = parser.parse_args()
+
+# Configuration stuff
+if args.port is None:
+    port = 9002
+else:
+    port = args.port
+    
+if args.open is None:
+    hostname = '0.0.0.0'
+else:
+    hostname = socket.gethostname()
+
+if args.dport is None:
+    dport = 9000
+else:
+    dport = args.dport
+
+if args.dhost is None:
+    dhostname = socket.gethostname()
+else:
+    dhostname = args.dhost
+
+
+# Agent Namespace
 agn = Namespace("http://www.agentes.org#")
 
 # Contador de mensajes
 mss_cnt = 0
 
 # Datos del Agente
-
-Buscadoragent = Agent('Buscadoragent',
-                       agn.Buscadoragent,
+BuscadorAgent = Agent('BuscadorAgent',
+                       agn.BuscadorAgent,
                        'http://%s:%d/comm' % (hostname, port),
                        'http://%s:%d/Stop' % (hostname, port))
 
 # Directory agent address
 DirectoryAgent = Agent('DirectoryAgent',
                        agn.Directory,
-                       'http://%s:9000/Register' % hostname,
-                       'http://%s:9000/Stop' % hostname)
+                       'http://%s:%d/Register' % (dhostname, dport),
+                       'http://%s:%d/Stop' % (dhostname, dport))
 
 # Global triplestore graph
 dsgraph = Graph()
 
+# Queue
 cola1 = Queue()
 
 # Flask stuff
 app = Flask(__name__)
 
+# función incrementar contador de mensajes
+def getMessageCount():
+    global mss_cnt
+    mss_cnt += 1
+    return mss_cnt
 
 # Función que busca productos dependiendo de las restricciones que se le envian
 def buscarProducto(content, grafoEntrada):
     # Extraemos las restricciones de busqueda que se nos pasan y creamos un contenedor de las restriciones
     # para su posterior procesamiento
     logger.info("Recibida peticion de busqueda")
-    restricciones = grafoEntrada.objects(content, ECSDI.RestringidaPor)
-    directivasRestrictivas = {}
-    for restriccion in restricciones:
-        if grafoEntrada.value(subject=restriccion, predicate=RDF.type) == ECSDI.RestriccionDeNombre:
-            nombre = grafoEntrada.value(subject=restriccion, predicate=ECSDI.Nombre)
-            directivasRestrictivas['Nombre'] = nombre
-        elif grafoEntrada.value(subject=restriccion, predicate=RDF.type) == ECSDI.RestriccionDePrecio:
-            precioMax = grafoEntrada.value(subject=restriccion, predicate=ECSDI.PrecioMaximo)
-            precioMin = grafoEntrada.value(subject=restriccion, predicate=ECSDI.PrecioMinimo)
-            directivasRestrictivas['PrecioMax'] = precioMax
-            directivasRestrictivas['PrecioMin'] = precioMin
+    filtros = grafoEntrada.objects(content, ECSDI.FiltradoPor)
+    directivasFiltradoras = {}
+    for filtro in filtros:
+        if grafoEntrada.value(subject=filtro, predicate=RDF.type) == ECSDI.FiltroPorNombre:
+            nombre = grafoEntrada.value(subject=filtro, predicate=ECSDI.Nombre)
+            directivasFiltradoras['Nombre'] = nombre
+        elif grafoEntrada.value(subject=filtro, predicate=RDF.type) == ECSDI.FiltroPorPrecio:
+            precioMax = grafoEntrada.value(subject=filtro, predicate=ECSDI.PrecioMaximo)
+            precioMin = grafoEntrada.value(subject=filtro, predicate=ECSDI.PrecioMinimo)
+            directivasFiltradoras['PrecioMax'] = precioMax
+            directivasFiltradoras['PrecioMin'] = precioMin
     # Llamamos a una funcion que nos retorna un grafo con la información acorde al filtro establecido por el usuario
-    resultadoComunicacion = findProductsByFilter(**directivasRestrictivas)
+    resultadoComunicacion = findProductsByFilter(**directivasFiltradoras)
     return resultadoComunicacion
 
 # Función que busca productos en la base de datos acorde a los filtros establecidos con anterioriad
 def findProductsByFilter(Nombre=None,PrecioMin=0.0,PrecioMax=sys.float_info.max):
     logger.info("Haciendo resultado de busqueda")
     graph = Graph()
-    ontologyFile = open('../data/ProductsDB.owl')
-    graph.parse(ontologyFile, format='turtle')
+    ontologyFile = open('../data/database_test.rdf')
+    graph.parse(ontologyFile, format='rdfxml')
 
-    addAnd = False;
+    addAnd = False
     logger.info("Buscando productos")
     query = """PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
     PREFIX owl: <http://www.w3.org/2002/07/owl#>
     PREFIX default: <http://www.owl-ontologies.com/ECSDIstore#>
     PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
     PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
-    SELECT ?Producto ?Nombre ?Precio ?Descripcion ?Id ?Peso
+    SELECT ?producte ?nom ?preu ?descripcio ?id ?pes
     where {
-        ?Producto rdf:type default:Producto .
-        ?Producto default:Nombre ?Nombre .
-        ?Producto default:Precio ?Precio .
-        ?Producto default:Descripcion ?Descripcion .
-        ?Producto default:Id ?Id .
-        ?Producto default:Peso ?Peso .
+        ?producte rdf:type default:producte .
+        ?producte default:nom ?nom .
+        ?producte default:preu ?preu .
+        ?producte default:descripcio ?descripcio .
+        ?producte default:id ?id .
+        ?producte default:pes ?pes .
         FILTER("""
 
     if Nombre is not None:
-        query += """?Nombre = '""" + Nombre + """'"""
+        query += """?nom = '""" + Nombre + """'"""
         addAnd = True
-
 
     if PrecioMin is not None:
         if addAnd:
             query += """ && """
-        query += """?Precio >= """ + str(PrecioMin)
+        query += """?preu >= """ + str(PrecioMin)
         addAnd = True
-
 
     if PrecioMax is not None:
         if addAnd:
             query += """ && """
-        query += """?Precio <= """ + str(PrecioMax)
+        query += """?preu <= """ + str(PrecioMax)
 
     query += """)}"""
 
@@ -128,27 +171,17 @@ def findProductsByFilter(Nombre=None,PrecioMin=0.0,PrecioMax=sys.float_info.max)
     products_filtro = Graph()
     # Añadimos los productos resultantes de la búsqueda
     for product in graph_query:
-        product_nombre = product.Nombre
-        product_precio = product.Precio
-        product_descripcion = product.Descripcion
-        product_peso = product.Peso
-        sujeto = product.Producto
-        products_graph.add((sujeto, RDF.type, ECSDI.Producto))
-        products_graph.add((sujeto, ECSDI.Nombre, Literal(product_nombre, datatype=XSD.string)))
-        products_graph.add((sujeto, ECSDI.Precio, Literal(product_precio, datatype=XSD.float)))
-        products_graph.add((sujeto, ECSDI.Descripcion, Literal(product_descripcion, datatype=XSD.string)))
-        products_graph.add((sujeto, ECSDI.Peso, Literal(product_peso, datatype=XSD.float)))
+        product_nombre = product.nom
+        product_precio = product.preu
+        product_descripcion = product.descripcio
+        product_peso = product.pes
+        sujeto = product.producte
+        products_graph.add((sujeto, RDF.type, ECSDI.producte))
+        products_graph.add((sujeto, ECSDI.nom, Literal(product_nombre, datatype=XSD.string)))
+        products_graph.add((sujeto, ECSDI.preu, Literal(product_precio, datatype=XSD.float)))
+        products_graph.add((sujeto, ECSDI.descripcio, Literal(product_descripcion, datatype=XSD.string)))
+        products_graph.add((sujeto, ECSDI.pes, Literal(product_peso, datatype=XSD.float)))
         products_graph.add((sujetoRespuesta, ECSDI.Muestra, URIRef(sujeto)))
-
-        # Generamos el grafo de los filtros
-        sujetofiltrado = ECSDI['ProductoFiltrado' + str(getMessageCount())]
-        products_filtro.add((sujetofiltrado, RDF.type, ECSDI.Producto))
-        products_filtro.add((sujetofiltrado, ECSDI.Nombre, Literal(product_nombre, datatype=XSD.string)))
-        products_filtro.add((sujetofiltrado, ECSDI.Precio, Literal(product_precio, datatype=XSD.float)))
-        products_filtro.add((sujetofiltrado, ECSDI.Descripcion, Literal(product_descripcion, datatype=XSD.string)))
-
-    thread = Thread(target=registrarFiltro, args=(products_filtro,))
-    thread.start()
 
     logger.info("Respondiendo peticion de busqueda")
     return products_graph
@@ -159,10 +192,31 @@ def comunicacion():
     """
     Entrypoint de comunicacion
     """
-    global dsgraph
-    global mss_cnt
-    pass
-
+    message = request.args['content']
+    grafoEntrada = Graph()
+    grafoEntrada.parse(data=message)
+    
+    message_properties = get_message_properties(grafoEntrada)
+    
+    resultadoComunicacion = None
+    
+    if message_properties is None:
+        resultadoComunicacion = build_message(Graph(), ACL['not-understood'], sender=BuscadorAgent.uri, msgcnt=getMessageCount())
+    else:
+        # Obtenemos la performativa
+        if message_properties['performative'] != ACL.request:
+            resultadoComunicacion = build_message(Graph(), ACL['not-understood'], sender=BuscadorAgent.uri, msgcnt=getMessageCount())
+        else:
+            # Extraemos el contenido que ha de ser una accion de la ontologia
+            content = message_properties['content']
+            accion = grafoEntrada.value(subject=content, predicate=RDF.type)
+            
+            # Si la acción es de tipo buscar producto
+            if accion == ECSDI.BuscarProducto:
+                resultadoComunicacion = buscarProducto(content, grafoEntrada)
+    
+    return resultadoComunicacion.serialize(format='xml'), 200
+    
 
 @app.route("/Stop")
 def stop():
@@ -207,9 +261,9 @@ def register_message():
     :return:
     """
 
-    #logger.info('Nos registramos')
+    logger.info('Nos registramos')
 
-    #gr = registerAgent(Buscadoragent, DirectoryAgent, Buscadoragent.uri, getMessageCount())
+    gr = registerAgent(BuscadorAgent, DirectoryAgent, BuscadorAgent.uri, getMessageCount())
     return gr
 
 
