@@ -10,10 +10,14 @@ Created on 08/02/2014 ###
 """
 __author__ = 'javier'
 
-from rdflib import Graph, URIRef
+from typing import Literal
+from rdflib import FOAF, Graph, URIRef, Namespace
 import requests
 from rdflib.namespace import RDF, OWL
 from AgentUtil.ACL import ACL
+from shop.AgentUtil import DSO
+
+agn = Namespace("http://www.agentes.org#")
 
 
 def build_message(gmess, perf, sender=None, receiver=None,  content=None, msgcnt=0):
@@ -86,3 +90,21 @@ def get_message_properties(msg):
             if val is not None:
                 msgdic[key] = val
     return msgdic
+
+def registerAgent(agent, directoryAgent, typeOfAgent, messageCount):
+    gmess = Graph()
+    
+    gmess.bind('foaf', FOAF)
+    gmess.bind('dso', DSO)
+    reg_obj = agn[agent.name + '-Register']
+    gmess.add((reg_obj, RDF.type, DSO.Register))
+    gmess.add((reg_obj, DSO.Uri, agent.uri))
+    gmess.add((reg_obj, FOAF.name, Literal(agent.name)))
+    gmess.add((reg_obj, DSO.Address, Literal(agent.address)))
+    gmess.add((reg_obj, DSO.AgentType, typeOfAgent))
+    
+    # Lo metemos en un FIPA request y lo enviamos
+    gr = send_message(
+        build_message(gmess, perf=ACL.request, sender=agent.uri, receiver=directoryAgent.uri, content=reg_obj, msgcnt=messageCount),
+        directoryAgent.address
+    )
