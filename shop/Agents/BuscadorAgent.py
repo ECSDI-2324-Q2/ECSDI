@@ -29,7 +29,7 @@ from AgentUtil.ACLMessages import *
 from AgentUtil.Agent import Agent
 from AgentUtil.FlaskServer import shutdown_server
 from AgentUtil.Logging import config_logger
-from AgentUtil.OntoNamespaces import ECSDI
+from AgentUtil.OntoNamespaces import ECSDI, ACL, DSO
 
 __author__ = 'ECSDIstore'
 
@@ -244,7 +244,7 @@ def buscadorbehavior1(cola):
 
     :return:
     """
-    #gr = register_message()
+    gr = register_message()
 
 def getMessageCount():
     global mss_cnt
@@ -263,7 +263,30 @@ def register_message():
 
     logger.info('Nos registramos')
 
-    gr = registerAgent(BuscadorAgent, DirectoryAgent, BuscadorAgent.uri, getMessageCount())
+    global mss_cnt
+
+    gmess = Graph()
+
+    # Construimos el mensaje de registro
+    gmess.bind('foaf', FOAF)
+    gmess.bind('dso', DSO)
+    reg_obj = agn[BuscadorAgent.name + '-Register']
+    gmess.add((reg_obj, RDF.type, DSO.Register))
+    gmess.add((reg_obj, DSO.Uri, BuscadorAgent.uri))
+    gmess.add((reg_obj, FOAF.name, Literal(BuscadorAgent.name)))
+    gmess.add((reg_obj, DSO.Address, Literal(BuscadorAgent.address)))
+    gmess.add((reg_obj, DSO.AgentType, DSO.BuscadorAgent))
+
+    # Lo metemos en un envoltorio FIPA-ACL y lo enviamos
+    gr = send_message(
+        build_message(gmess, perf=ACL.request,
+                      sender=BuscadorAgent.uri,
+                      receiver=DirectoryAgent.uri,
+                      content=reg_obj,
+                      msgcnt=mss_cnt),
+        DirectoryAgent.address)
+    mss_cnt += 1
+
     return gr
 
 

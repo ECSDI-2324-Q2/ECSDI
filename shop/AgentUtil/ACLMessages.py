@@ -11,10 +11,15 @@ Created on 08/02/2014 ###
 __author__ = 'javier'
 
 from typing import Literal
-from rdflib import FOAF, Graph, URIRef, Namespace
+from xml.parsers.expat import ExpatError
 import requests
-from rdflib.namespace import RDF, OWL
-from AgentUtil.ACL import ACL
+from rdflib import Graph, Namespace, Literal, URIRef
+from rdflib.namespace import RDF, FOAF
+from AgentUtil.OntoNamespaces import ACL, DSO
+from AgentUtil.OntoNamespaces import ECSDI
+from rdflib import XSD
+
+agn = Namespace("http://www.agentes.org#")
 from shop.AgentUtil import DSO
 
 agn = Namespace("http://www.agentes.org#")
@@ -37,9 +42,8 @@ def build_message(gmess, perf, sender=None, receiver=None,  content=None, msgcnt
     # Añade los elementos del speech act al grafo del mensaje
     mssid = f'message-{sender.__hash__()}-{msgcnt:04}'
     # No podemos crear directamente una instancia en el namespace ACL ya que es un ClosedNamedspace
-    ms = URIRef(mssid)
+    ms = ACL[mssid]
     gmess.bind('acl', ACL)
-    gmess.add((ms, RDF.type, OWL.NamedIndividual)) # Declaramos la URI como instancia
     gmess.add((ms, RDF.type, ACL.FipaAclMessage))
     gmess.add((ms, ACL.performative, perf))
     gmess.add((ms, ACL.sender, sender))
@@ -47,7 +51,6 @@ def build_message(gmess, perf, sender=None, receiver=None,  content=None, msgcnt
         gmess.add((ms, ACL.receiver, receiver))
     if content is not None:
         gmess.add((ms, ACL.content, content))
-        
     return gmess
 
 
@@ -57,11 +60,17 @@ def send_message(gmess, address):
     un grafo RDF
     """
     msg = gmess.serialize(format='xml')
-    r = requests.get(address, params={'content': msg})
+    r = requests.get(address, params={'content': msg}, timeout=5)  # Add timeout argument
+    print(f"Respuesta recibida: {r.text}")  # Imprimir la respuesta recibida
+
 
     # Procesa la respuesta y la retorna como resultado como grafo
     gr = Graph()
-    gr.parse(data=r.text, format='xml')
+    try:
+        gr.parse(data=r.text, format='xml')
+    except ExpatError as e:
+        print(f"Error al parsear el XML: {e}")
+        print(f"Contenido que causó el error: {r.text}")
 
     return gr
 
@@ -90,6 +99,8 @@ def get_message_properties(msg):
             if val is not None:
                 msgdic[key] = val
     return msgdic
+
+
 
 def registerAgent(agent, directoryAgent, typeOfAgent, messageCount):
     gmess = Graph()
