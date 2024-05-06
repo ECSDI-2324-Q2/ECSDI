@@ -1,0 +1,38 @@
+@prefix ns1: <http://www.owl-ontologies.com/ECSDIstore#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+ns1:001 a "http://www.owl-ontologies.com/ECSDIstore#producte" ;
+    ns1:descripcio "Camisa de manga corta de algodón suave" ;
+    ns1:id "001" ;
+    ns1:nom "Camisa de algodón" ;
+    ns1:pes 200 ;
+    ns1:preu 2.599e+01 .
+
+ns1:002 a "http://www.owl-ontologies.com/ECSDIstore#producte" ;
+    ns1:descripcio "Pantalones vaqueros ajustados de mezclilla" ;
+    ns1:id "002" ;
+    ns1:nom "Pantalones vaqueros" ;
+    ns1:pes 500 ;
+    ns1:preu 3.999e+01 .
+
+ns1:003 a "http://www.owl-ontologies.com/ECSDIstore#producte" ;
+    ns1:descripcio "Zapatillas deportivas ligeras y transpirables" ;
+    ns1:id "003" ;
+    ns1:nom "Zapatillas deportivas" ;
+    ns1:pes 300 ;
+    ns1:preu 4.999e+01 .
+
+ns1:004 a "http://www.owl-ontologies.com/ECSDIstore#producte" ;
+    ns1:descripcio "Vestido corto con estampado floral y cinturón ajustable" ;
+    ns1:id "004" ;
+    ns1:nom "Vestido floral" ;
+    ns1:pes 400 ;
+    ns1:preu 2.999e+01 .
+
+ns1:005 a "http://www.owl-ontologies.com/ECSDIstore#producte" ;
+    ns1:descripcio "Mochila con múltiples compartimentos y resistente al agua" ;
+    ns1:id "005" ;
+    ns1:nom "Mochila resistente al agua" ;
+    ns1:pes 700 ;
+    ns1:preu 3.499e+01 .
+
