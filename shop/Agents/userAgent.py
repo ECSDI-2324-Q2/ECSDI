@@ -92,6 +92,17 @@ def index():
 
     return render_template('index.html')
 
+@app.route("/search", methods=['GET', 'POST'])
+def search():
+    global listaDeProductos
+    if request.method == 'GET':
+        return render_template('search.html', products = None)
+    # elif request.method == 'POST':
+    #     if request.form['submit'] == 'Search':
+    #         return enviarPeticionBusqueda(request)
+    #     elif request.form['submit'] == 'Buy':
+    #         return buy(request)
+
 def personalagentbehavior1():
     """
     Un comportamiento del agente

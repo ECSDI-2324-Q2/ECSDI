@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Buscador de productos</title>
+</head>
+<body>
+     <h1>Busqueda de productos</h1>
+    {% if not products %}
+        <form method="post">
+            <input type="text" name="nombre" placeholder="Nombre..."/><br>
+            <input type="number" name="maxPrecio" step="0.01" min="0.0" placeholder="Precio máximo..."/><br>
+            <input type="number" name="minPrecio" step="0.01" min="0.0" placeholder="Precio mínimo..."/><br>
+            <input type="submit" name="submit" value="Search">
+        </form>
+    {% else %}
+         <form method="post">
+                <table style="width:85%; border-collapse:collapse;" align="center" border="1px solid black">
+                  <tr align="left">
+                    <th style="padding:15px">Nombre</th>
+                    <th style="padding:15px">Precio</th>
+                    <th style="padding:15px">Descripción</th>
+                  </tr>
+                  {% for product in products %}
+                    <tr>
+                        <td style="padding:15px">{{ product.Nombre }}</td>
+                        <td style="padding:15px">{{ product.Precio }}</td>
+                        <td style="padding:15px">{{ product.Descripcion }}</td>
+                        <td style="padding:15px"><input type="checkbox" name="checkbox" value="{{ products.index(product) }}"></td>
+                    </tr>
+                  {% endfor %}
+                </table>
+                Numero tarjeta: <input type="text" name="numeroTarjeta"><br>
+                Direccion: <input type="text" name="direccion"><br>
+                Codigo postal: <input type="text" name="codigoPostal"><br>
+                Prioridad envio: <input type="text" name="prioridad"><br>
+                <input type="submit" name="submit" value="Buy">
+         </form>
+     {% endif %}
+     <br>
+     <a href="javascript:history.back()">Volver</a>
+</body>
+</html>
