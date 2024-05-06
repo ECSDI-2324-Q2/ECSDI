@@ -109,7 +109,7 @@ def registerAgent(agent, directoryService, typeOfAgent, messageCount):
     gmess.add((reg_obj, DSO.Address, Literal(agent.address)))
     gmess.add((reg_obj, DSO.AgentType, typeOfAgent))
     # Lo metemos en un envoltorio FIPA-ACL y lo enviamos
-
+    print(gmess.serialize(format='xml'))
     print(f"Enviando peticion de registro a {directoryService.address}")
     
     gr = send_message(
