@@ -98,7 +98,36 @@ def getMessageCount():
     mss_cnt += 1
     return mss_cnt
 
+def registrarCompra(grafoEntrada):
+    logger.info("Registrando la compra")
+    ontologyFile = open('../data/ComprasDB')
 
+    grafoCompras = Graph()
+    grafoCompras.bind('default', ECSDI)
+    grafoCompras.parse(ontologyFile, format='xml')
+    grafoCompras += grafoEntrada
+
+    # Guardem el graf
+    grafoCompras.serialize(destination='../data/ComprasDB', format='xml')
+    logger.info("Registro de compra finalizado")
+
+
+# Función que efectua y organiza en threads el proceso de vender
+def vender(grafoEntrada, content):
+    logger.info("Recibida peticion de compra")
+    # Guardar Compra
+    thread = Thread(target=registrarCompra, args=(grafoEntrada,))
+    thread.start()
+
+    # suj = grafoEntrada.value(predicate=RDF.type, object=ECSDI.PeticionCompra)
+    # grafoEntrada.add((suj, ECSDI.PrecioTotal, Literal(precioTotal, datatype=XSD.float)))
+
+    # # Enviar compra a Enviador
+    # thread = Thread(target=enviarCompra, args=(grafoEntrada, content))
+    # thread.start()
+
+    # logger.info("Devolviendo factura")
+    return #grafoFactura
 
 #funcion llamada en /comm
 @app.route("/comm")
@@ -125,6 +154,16 @@ def communication():
             # Extraemos el contenido que ha de ser una accion de la ontologia definida en Protege
             content = messageProperties['content']
             accion = grafoEntrada.value(subject=content, predicate=RDF.type)
+
+            # Si la acción es de tipo peticiónCompra emprendemos las acciones consequentes
+            if accion == ECSDI.PeticionCompra:
+
+                # Eliminar los ACLMessage
+                for item in grafoEntrada.subjects(RDF.type, ACL.FipaAclMessage):
+                    grafoEntrada.remove((item, None, None))
+
+
+                resultadoComunicacion =  vender(grafoEntrada, content)
 
             
 
