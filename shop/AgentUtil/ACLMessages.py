@@ -96,26 +96,3 @@ def get_message_properties(msg):
                 msgdic[key] = val
     return msgdic
 
-# Función para el registro de un agente
-def registerAgent(agent, directoryService, typeOfAgent, messageCount):
-    gmess = Graph()
-
-    gmess.bind('foaf', FOAF)
-    gmess.bind('dso', DSO)
-    reg_obj = agn[agent.name + '-Register']
-    gmess.add((reg_obj, RDF.type, DSO.Register))
-    gmess.add((reg_obj, DSO.Uri, agent.uri))
-    gmess.add((reg_obj, FOAF.name, Literal(agent.name)))
-    gmess.add((reg_obj, DSO.Address, Literal(agent.address)))
-    gmess.add((reg_obj, DSO.AgentType, typeOfAgent))
-    # Lo metemos en un envoltorio FIPA-ACL y lo enviamos
-    print(gmess.serialize(format='xml'))
-    print(f"Enviando peticion de registro a {directoryService.address}")
-    
-    gr = send_message(
-        build_message(gmess, perf=ACL.request,
-                      sender=agent.uri,
-                      receiver=directoryService.uri,
-                      content=reg_obj,
-                      msgcnt=messageCount),
-        directoryService.address)

@@ -122,7 +122,7 @@ def register():
         logger.info('Peticion de registro')
 
         agn_add = gm.value(subject=content, predicate=DSO.Address)
-        agn_name = gm.value(subject=content, predicate=FOAF.Name)
+        agn_name = gm.value(subject=content, predicate=FOAF.name)
         agn_uri = gm.value(subject=content, predicate=DSO.Uri)
         agn_type = gm.value(subject=content, predicate=DSO.AgentType)
 
@@ -147,7 +147,7 @@ def register():
     # Extraemos el mensaje y creamos un grafo con él
     message = request.args['content']
     gm = Graph()
-    gm.parse(data=message)
+    gm.parse(format='xml',data=message)
 
     msgdic = get_message_properties(gm)
 
@@ -254,10 +254,10 @@ def info():
     """
     Entrada que da informacion sobre el agente a traves de una pagina web
     """
-    global directory
-    global loadbalance
+    global dsgraph
+    global mss_cnt
 
-    return render_template('directory.html', dir=obscure(directory), bal=loadbalance)
+    return render_template('info.html', nmess=mss_cnt, graph=dsgraph.serialize(format='turtle'))
 
 
 @app.route("/stop")

@@ -15,13 +15,15 @@ from multiprocessing import Queue, Process
 from threading import Thread
 
 from flask import Flask, request
-from rdflib import URIRef, XSD, Namespace
+from rdflib import URIRef, XSD, Namespace, Literal
 
 from AgentUtil.ACLMessages import *
 from AgentUtil.Agent import Agent
 from AgentUtil.FlaskServer import shutdown_server
 from AgentUtil.Logging import config_logger
 from AgentUtil.OntoNamespaces import ECSDI
+from AgentUtil.OntoNamespaces import ACL, DSO
+from rdflib.namespace import RDF, FOAF
 
 __author__ = 'ECSDIstore'
 
@@ -161,7 +163,6 @@ def tidyUp():
 
     pass
 
-#función para registro de agente en el servicio de directorios
 def register_message():
     """
     Envia un mensaje de registro al servicio de registro
@@ -174,7 +175,30 @@ def register_message():
 
     logger.info('Nos registramos')
 
-    gr = registerAgent(ComercianteAgent, DirectoryAgent, ComercianteAgent.uri, getMessageCount())
+    global mss_cnt
+
+    gmess = Graph()
+
+    # Construimos el mensaje de registro
+    gmess.bind('foaf', FOAF)
+    gmess.bind('dso', DSO)
+    reg_obj = agn[ComercianteAgent.name + '-Register']
+    gmess.add((reg_obj, RDF.type, DSO.Register))
+    gmess.add((reg_obj, DSO.Uri, ComercianteAgent.uri))
+    gmess.add((reg_obj, FOAF.name, Literal(ComercianteAgent.name)))
+    gmess.add((reg_obj, DSO.Address, Literal(ComercianteAgent.address)))
+    gmess.add((reg_obj, DSO.AgentType, DSO.ComercianteAgent))
+
+    # Lo metemos en un envoltorio FIPA-ACL y lo enviamos
+    gr = send_message(
+        build_message(gmess, perf=ACL.request,
+                      sender=ComercianteAgent.uri,
+                      receiver=DirectoryAgent.uri,
+                      content=reg_obj,
+                      msgcnt=mss_cnt),
+        DirectoryAgent.address)
+    mss_cnt += 1
+
     return gr
 
 if __name__ == '__main__':
