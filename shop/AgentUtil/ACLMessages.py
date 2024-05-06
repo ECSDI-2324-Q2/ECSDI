@@ -20,9 +20,6 @@ from AgentUtil.OntoNamespaces import ECSDI
 from rdflib import XSD
 
 agn = Namespace("http://www.agentes.org#")
-from shop.AgentUtil import DSO
-
-agn = Namespace("http://www.agentes.org#")
 
 
 def build_message(gmess, perf, sender=None, receiver=None,  content=None, msgcnt=0):
