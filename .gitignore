@@ -1,2 +1,6 @@
 .DS_Store
 .vscode/
+.Python
+bin/
+lib/
+pyvenv.cfg
