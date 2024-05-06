@@ -83,6 +83,12 @@ DirectoryAgent = Agent('DirectoryAgent',
                        'http://%s:%d/Register' % (dhostname, dport),
                        'http://%s:%d/Stop' % (dhostname, dport))
 
+# Datos del Agente Comerciante
+ComercianteAgent = Agent('ComercianteAgent',
+                          agn.ComercianteAgent,
+                          'http://%s:%d/comm' % (hostname, 9003),
+                          'http://%s:%d/Stop' % (hostname, 9003))
+
 # Global dsgraph triplestore
 dsgraph = Graph()
 
@@ -128,15 +134,15 @@ def procesarVenta(listaDeCompra, prioridad, numTarjeta, direccion, codigoPostal)
     grafoCompra.add((content,ECSDI.De,URIRef(sujetoCompra)))
     print(grafoCompra.serialize(format='xml'))
 
-    # # Pedimos información del agente vendedor
-    # vendedor = getAgentInfo(agn.VendedorAgent, DirectoryAgent, UserPersonalAgent,getMessageCount())
-
-    # # Enviamos petición de compra al agente vendedor
-    # logger.info("Enviando petición de compra")
-    # respuestaVenta = send_message(
-    #     build_message(grafoCompra, perf=ACL.request, sender=UserPersonalAgent.uri, receiver=vendedor.uri,
-    #                   msgcnt=getMessageCount(),
-    #                   content=content), vendedor.address)
+    # Pedimos información del agente vendedor
+    comerciante = ComercianteAgent
+    
+    # Enviamos petición de compra al agente vendedor
+    logger.info("Enviando petición de compra")
+    respuestaVenta = send_message(
+        build_message(grafoCompra, perf=ACL.request, sender=PersonalAgent.uri, receiver=comerciante.uri,
+                    msgcnt=getMessageCount(),
+                    content=content), comerciante.address)
 
     # logger.info("Recibido resultado de compra")
     return respuestaVenta
