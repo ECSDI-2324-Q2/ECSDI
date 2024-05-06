@@ -1,9 +1,6 @@
 .DS_Store
-<<<<<<< Updated upstream
 .vscode/
-=======
 .Python
 bin/
 lib/
 pyvenv.cfg
->>>>>>> Stashed changes
