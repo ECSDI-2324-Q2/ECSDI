@@ -23,7 +23,8 @@ from threading import Thread
 from typing import Literal
 
 from flask import Flask, request
-from rdflib import URIRef, XSD
+from rdflib import URIRef, XSD, RDF
+from rdflib.plugins.sparql import prepareQuery
 
 from AgentUtil.ACLMessages import *
 from AgentUtil.Agent import Agent
@@ -126,8 +127,8 @@ def buscarProducto(content, grafoEntrada):
 def findProductsByFilter(Nombre=None,PrecioMin=0.0,PrecioMax=sys.float_info.max):
     logger.info("Haciendo resultado de busqueda")
     graph = Graph()
-    ontologyFile = open('../data/database_test.rdf')
-    graph.parse(ontologyFile, format='rdfxml')
+    ontologyFile = open('../data/BDProductos.owl')
+    graph.parse(ontologyFile, format='turtle')
 
     addAnd = False
     logger.info("Buscando productos")
@@ -136,30 +137,32 @@ def findProductsByFilter(Nombre=None,PrecioMin=0.0,PrecioMax=sys.float_info.max)
     PREFIX default: <http://www.owl-ontologies.com/ECSDIstore#>
     PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
     PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
-    SELECT ?producte ?nom ?preu ?descripcio ?id ?pes
+    SELECT ?Producto ?Nombre ?Precio ?Descripcion ?Id ?Peso
     where {
-        ?producte rdf:type default:producte .
-        ?producte default:nom ?nom .
-        ?producte default:preu ?preu .
-        ?producte default:descripcio ?descripcio .
-        ?producte default:id ?id .
-        ?producte default:pes ?pes .
+        ?Producto rdf:type default:Producto .
+        ?Producto default:Nombre ?Nombre .
+        ?Producto default:Precio ?Precio .
+        ?Producto default:Descripcion ?Descripcion .
+        ?Producto default:Id ?Id .
+        ?Producto default:Peso ?Peso .
         FILTER("""
 
     if Nombre is not None:
-        query += """?nom = '""" + Nombre + """'"""
+        query += """?Nombre = '""" + Nombre + """'"""
         addAnd = True
+
 
     if PrecioMin is not None:
         if addAnd:
             query += """ && """
-        query += """?preu >= """ + str(PrecioMin)
+        query += """?Precio >= """ + str(PrecioMin)
         addAnd = True
+
 
     if PrecioMax is not None:
         if addAnd:
             query += """ && """
-        query += """?preu <= """ + str(PrecioMax)
+        query += """?Precio <= """ + str(PrecioMax)
 
     query += """)}"""
 
@@ -168,19 +171,20 @@ def findProductsByFilter(Nombre=None,PrecioMin=0.0,PrecioMax=sys.float_info.max)
     products_graph.bind('ECSDI', ECSDI)
     sujetoRespuesta = ECSDI['RespuestaDeBusqueda' + str(getMessageCount())]
     products_graph.add((sujetoRespuesta, RDF.type, ECSDI.RespuestaDeBusqueda))
-    products_filtro = Graph()
+    
     # Añadimos los productos resultantes de la búsqueda
     for product in graph_query:
-        product_nombre = product.nom
-        product_precio = product.preu
-        product_descripcion = product.descripcio
-        product_peso = product.pes
-        sujeto = product.producte
-        products_graph.add((sujeto, RDF.type, ECSDI.producte))
-        products_graph.add((sujeto, ECSDI.nom, Literal(product_nombre, datatype=XSD.string)))
-        products_graph.add((sujeto, ECSDI.preu, Literal(product_precio, datatype=XSD.float)))
-        products_graph.add((sujeto, ECSDI.descripcio, Literal(product_descripcion, datatype=XSD.string)))
-        products_graph.add((sujeto, ECSDI.pes, Literal(product_peso, datatype=XSD.float)))
+        product_nombre = product.Nombre
+        print(product_nombre)
+        product_precio = product.Precio
+        product_descripcion = product.Descripcion
+        product_peso = product.Peso
+        sujeto = product.Producto
+        products_graph.add((sujeto, RDF.type, ECSDI.Producto))
+        products_graph.add((sujeto, ECSDI.Nombre, Literal(product_nombre, datatype=XSD.string)))
+        products_graph.add((sujeto, ECSDI.Precio, Literal(product_precio, datatype=XSD.float)))
+        products_graph.add((sujeto, ECSDI.Descripcion, Literal(product_descripcion, datatype=XSD.string)))
+        products_graph.add((sujeto, ECSDI.Peso, Literal(product_peso, datatype=XSD.float)))
         products_graph.add((sujetoRespuesta, ECSDI.Muestra, URIRef(sujeto)))
 
     logger.info("Respondiendo peticion de busqueda")
@@ -194,7 +198,7 @@ def comunicacion():
     """
     message = request.args['content']
     grafoEntrada = Graph()
-    grafoEntrada.parse(data=message)
+    grafoEntrada.parse(format='xml', data=message)
     
     message_properties = get_message_properties(grafoEntrada)
     
