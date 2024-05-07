@@ -4,3 +4,4 @@
 bin/
 lib/
 pyvenv.cfg
+shop/AgentUtil/__pycache__/
