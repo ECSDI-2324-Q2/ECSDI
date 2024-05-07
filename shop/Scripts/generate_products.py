@@ -1,30 +1,36 @@
 import sys
 sys.path.append('../')
-from rdflib import Graph, Literal, RDF
-from AgentUtil.OntoNamespaces import ECSDI
+from rdflib import Graph, Literal, Namespace, URIRef
+from rdflib.namespace import RDF, RDFS, XSD
 
-def add_product(g, product_id, product_name, product_description, weight_grams, price):
-    g.add((ECSDI[product_id], RDF.type, Literal(ECSDI.producte)))
-    g.add((ECSDI[product_id], ECSDI.nom, Literal(product_name)))
-    g.add((ECSDI[product_id], ECSDI.id, Literal(product_id)))
-    g.add((ECSDI[product_id], ECSDI.descripcio, Literal(product_description)))
-    g.add((ECSDI[product_id], ECSDI.pes, Literal(weight_grams)))
-    g.add((ECSDI[product_id], ECSDI.preu, Literal(price)))
+# Definir el namespace
+default = Namespace("http://www.owl-ontologies.com/ECSDIstore#")
 
+# Crear un grafo RDF
+g = Graph()
 
-def main():
-    graph = Graph()
+# Definir los productos
+productos = [
+    {"id": 1, "nombre": "Patatas", "descripcion": "Esto son Patatas", "precio": 308.0, "peso": 23.0},
+    {"id": 2, "nombre": "Mouse", "descripcion": "Esto es un Mouse", "precio": 32.0, "peso": 1.0},
+    {"id": 3, "nombre": "Teclado", "descripcion": "Esto es un Teclado", "precio": 55.0, "peso": 2.0},
+    {"id": 4, "nombre": "Barco", "descripcion": "Esto es un Barco", "precio": 20000.0, "peso": 1000.0},
+    {"id": 5, "nombre": "Ordenador", "descripcion": "Esto es un Ordenador", "precio": 1000.0, "peso": 2.0},
+    {"id": 6, "nombre": "Auriculares", "descripcion": "Esto son unos Auriculares", "precio": 20.0, "peso": 0.5},
+    {"id": 7, "nombre": "Cable", "descripcion": "Esto es un Cable", "precio": 5.0, "peso": 0.5},
+    {"id": 8, "nombre": "Platano", "descripcion": "Esto es un Platano", "precio": 1.0, "peso": 0.5},
+    {"id": 9, "nombre": "Nuria Bruch", "descripcion": "Esto es una Nuria", "precio": 23000000.0, "peso": 55.0}
+]
 
-    add_product(graph, "001", "Camisa de algodón", "Camisa de manga corta de algodón suave", 200, 25.99)
-    add_product(graph, "002", "Pantalones vaqueros", "Pantalones vaqueros ajustados de mezclilla", 500, 39.99)
-    add_product(graph, "003", "Zapatillas deportivas", "Zapatillas deportivas ligeras y transpirables", 300, 49.99)
-    add_product(graph, "004", "Vestido floral", "Vestido corto con estampado floral y cinturón ajustable", 400, 29.99)
-    add_product(graph, "005", "Mochila resistente al agua", "Mochila con múltiples compartimentos y resistente al agua", 700, 34.99)
+# Agregar los productos al grafo RDF
+for producto in productos:
+    producto_uri = default[f"Producto{producto['id']}"]
+    g.add((producto_uri, RDF.type, default.Producto))
+    g.add((producto_uri, default.Id, Literal(producto['id'], datatype=XSD.integer)))
+    g.add((producto_uri, default.Nombre, Literal(producto['nombre'])))
+    g.add((producto_uri, default.Descripcion, Literal(producto['descripcion'])))
+    g.add((producto_uri, default.Precio, Literal(producto['precio'], datatype=XSD.float)))
+    g.add((producto_uri, default.Peso, Literal(producto['peso'], datatype=XSD.float)))
 
-
-    graph.serialize('database_test.rdf')
-    print('Created product_test.rdf')
-
-
-
-main()
+# Guardar el grafo RDF en un archivo OWL
+g.serialize(destination="BDProductos.owl")
