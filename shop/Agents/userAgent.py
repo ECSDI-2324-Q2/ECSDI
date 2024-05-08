@@ -109,6 +109,7 @@ def getMessageCount():
 
 # Función que procesa una venta y la envía el grafo resultado de haber hablado con el agente correspondiente
 def procesarVenta(listaDeCompra, prioridad, numTarjeta, direccion, codigoPostal):
+    print("Procesando venta")
     #Creamos la compra
     grafoCompra = Graph()
 
@@ -193,8 +194,9 @@ def search():
     elif request.method == 'POST':
         if request.form['submit'] == 'Search':
              return enviarPeticionBusqueda(request)
-    #     elif request.form['submit'] == 'Buy':
-    #         return buy(request)
+        elif request.form['submit'] == 'Buy':
+            print("Comprando")
+            return buy(request)
 
 def UserAgentbehavior1():
     """

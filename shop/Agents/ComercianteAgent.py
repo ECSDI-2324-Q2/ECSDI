@@ -101,11 +101,14 @@ def getMessageCount():
 def registrarCompra(grafoEntrada):
     logger.info("Registrando la compra")
     ontologyFile = open('../data/ComprasDB')
+    print(ontologyFile.read())
 
     grafoCompras = Graph()
     grafoCompras.bind('default', ECSDI)
-    grafoCompras.parse(ontologyFile, format='xml')
+    grafoCompras.parse(ontologyFile, format='turtle')
     grafoCompras += grafoEntrada
+
+    print(grafoCompras.serialize(format='xml'))
 
     # Guardem el graf
     grafoCompras.serialize(destination='../data/ComprasDB', format='xml')
@@ -134,7 +137,7 @@ def vender(grafoEntrada, content):
 def communication():
     message = request.args['content']
     grafoEntrada = Graph()
-    grafoEntrada.parse(data=message)
+    grafoEntrada.parse(format='xml',data=message)
 
     messageProperties = get_message_properties(grafoEntrada)
 
@@ -143,7 +146,7 @@ def communication():
     if messageProperties is None:
         # Respondemos que no hemos entendido el mensaje
         resultadoComunicacion = build_message(Graph(), ACL['not-understood'],
-                                              sender=VendedorAgent.uri, msgcnt=getMessageCount())
+                                              sender=ComercianteAgent.uri, msgcnt=getMessageCount())
     else:
         # Obtenemos la performativa
         if messageProperties['performative'] != ACL.request:
@@ -162,11 +165,11 @@ def communication():
                 for item in grafoEntrada.subjects(RDF.type, ACL.FipaAclMessage):
                     grafoEntrada.remove((item, None, None))
 
-
+                logger.info("Procesando peticion de compra")
                 resultadoComunicacion =  vender(grafoEntrada, content)
 
             
-
+    logger.info('Respondemos a la peticion')
     serialize = resultadoComunicacion.serialize(format='xml')
     return serialize, 200
 

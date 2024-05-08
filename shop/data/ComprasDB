@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rdf:RDF
+   xmlns:default="http://www.owl-ontologies.com/ECSDIstore#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+>
+  <rdf:Description rdf:about="http://www.owl-ontologies.com/ECSDIstore#Compra43">
+    <default:Destino rdf:resource="http://www.owl-ontologies.com/ECSDIstore#Direccion42"/>
+    <rdf:type rdf:resource="http://www.owl-ontologies.com/ECSDIstore#Compra"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.owl-ontologies.com/ECSDIstore#PeticionCompra41">
+    <default:Tarjeta rdf:datatype="http://www.w3.org/2001/XMLSchema#int">43214132</default:Tarjeta>
+    <default:De rdf:resource="http://www.owl-ontologies.com/ECSDIstore#Compra43"/>
+    <default:Prioridad rdf:datatype="http://www.w3.org/2001/XMLSchema#int">1</default:Prioridad>
+    <rdf:type rdf:resource="http://www.owl-ontologies.com/ECSDIstore#PeticionCompra"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.owl-ontologies.com/ECSDIstore#Direccion42">
+    <default:CodigoPostal rdf:datatype="http://www.w3.org/2001/XMLSchema#int">11334</default:CodigoPostal>
+    <rdf:type rdf:resource="http://www.owl-ontologies.com/ECSDIstore#Direccion"/>
+    <default:Direccion rdf:datatype="http://www.w3.org/2001/XMLSchema#string">1334</default:Direccion>
+  </rdf:Description>
+</rdf:RDF>
