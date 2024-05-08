@@ -154,7 +154,7 @@ def generar_factura(grafoEntrada, content):
 def communication():
     message = request.args['content']
     grafoEntrada = Graph()
-    grafoEntrada.parse(data=message)
+    grafoEntrada.parse(data=message, format='xml')
 
     messageProperties = get_message_properties(grafoEntrada)
 
