@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 """
-filename: personalAgent
+
+filename: UserAgent
 
 Agente que permite interactuar con el usuario
 
@@ -25,6 +26,7 @@ from AgentUtil.Logging import config_logger
 from AgentUtil.OntoNamespaces import ECSDI
 from AgentUtil.OntoNamespaces import ACL, DSO
 from rdflib.namespace import RDF, FOAF
+
 
 __author__ = 'ECSDIstore'
 
@@ -73,8 +75,8 @@ agn = Namespace("http://www.agentes.org#")
 mss_cnt = 0
 
 # Datos del Agente
-PersonalAgent = Agent('personalAgent',
-                          agn.PersonalAgent,
+UserAgent = Agent('UserAgent',
+                          agn.UserAgent,
                           'http://%s:%d/comm' % (hostname, port),
                           'http://%s:%d/Stop' % (hostname, port))
 # Directory agent address
@@ -83,8 +85,100 @@ DirectoryAgent = Agent('DirectoryAgent',
                        'http://%s:%d/Register' % (dhostname, dport),
                        'http://%s:%d/Stop' % (dhostname, dport))
 
+# Datos del Agente Comerciante
+ComercianteAgent = Agent('ComercianteAgent',
+                          agn.ComercianteAgent,
+                          'http://%s:%d/comm' % (hostname, 9003),
+                          'http://%s:%d/Stop' % (hostname, 9003))
+BuscadorAgent = Agent('BuscadorAgent',
+                       agn.BuscadorAgent,
+                       'http://%s:%d/comm' % (dhostname, 9002),
+                       'http://%s:%d/Stop' % (dhostname, 9002))
+
 # Global dsgraph triplestore
 dsgraph = Graph()
+
+# Función que lleva y devuelve la cuenta de mensajes
+def getMessageCount():
+    global mss_cnt
+    if mss_cnt is None:
+        mss_cnt = 0
+    mss_cnt += 1
+    return mss_cnt
+
+
+# Función que procesa una venta y la envía el grafo resultado de haber hablado con el agente correspondiente
+def procesarVenta(listaDeCompra, prioridad, numTarjeta, direccion, codigoPostal):
+    print("Procesando venta")
+    #Creamos la compra
+    grafoCompra = Graph()
+
+    # ACCION -> PeticionCompra
+    content = ECSDI['PeticionCompra' + str(getMessageCount())]
+    grafoCompra.add((content,RDF.type,ECSDI.PeticionCompra))
+    grafoCompra.add((content,ECSDI.Prioridad,Literal(prioridad, datatype=XSD.int)))
+    grafoCompra.add((content,ECSDI.Tarjeta,Literal(numTarjeta, datatype=XSD.int)))
+
+    sujetoDireccion = ECSDI['Direccion'+ str(getMessageCount())]
+    grafoCompra.add((sujetoDireccion,RDF.type,ECSDI.Direccion))
+    grafoCompra.add((sujetoDireccion,ECSDI.Direccion,Literal(direccion,datatype=XSD.string)))
+    grafoCompra.add((sujetoDireccion,ECSDI.CodigoPostal,Literal(codigoPostal,datatype=XSD.int)))
+
+    sujetoCompra = ECSDI['Compra'+str(getMessageCount())]
+    grafoCompra.add((sujetoCompra, RDF.type, ECSDI.Compra))
+    grafoCompra.add((sujetoCompra, ECSDI.Destino, URIRef(sujetoDireccion)))
+
+    # Añadimos los productos
+    for producto in listaDeCompra:
+        sujetoProducto = producto['Sujeto']
+        grafoCompra.add((sujetoProducto, RDF.type, ECSDI.Producto))
+        grafoCompra.add((sujetoProducto,ECSDI.Descripcion,producto['Descripcion']))
+        grafoCompra.add((sujetoProducto,ECSDI.Nombre,producto['Nombre']))
+        grafoCompra.add((sujetoProducto,ECSDI.Precio,producto['Precio']))
+        grafoCompra.add((sujetoProducto,ECSDI.Peso,producto['Peso']))
+        grafoCompra.add((sujetoCompra, ECSDI.Contiene, URIRef(sujetoProducto)))
+
+    grafoCompra.add((content,ECSDI.De,URIRef(sujetoCompra)))
+    print(grafoCompra.serialize(format='xml'))
+
+    # Pedimos información del agente vendedor
+    comerciante = ComercianteAgent
+    
+    # Enviamos petición de compra al agente vendedor
+    logger.info("Enviando petición de compra")
+    respuestaVenta = send_message(
+        build_message(grafoCompra, perf=ACL.request, sender=UserAgent.uri, receiver=comerciante.uri,
+                    msgcnt=getMessageCount(),
+                    content=content), comerciante.address)
+
+    # logger.info("Recibido resultado de compra")
+    return respuestaVenta
+
+# Función que renderiza los productos comprados
+def buy(request):
+    global listaDeProductos
+    logger.info("Haciendo petición de compra")
+    listaDeCompra = []
+    for producto in request.form.getlist("checkbox"):
+        listaDeCompra.append(listaDeProductos[int(producto)])
+
+    numTarjeta = int(request.form['numeroTarjeta'])
+    prioridad = int(request.form['prioridad'])
+    direccion = request.form['direccion']
+    codigoPostal = int(request.form['codigoPostal'])
+    respuestaVenta = procesarVenta(listaDeCompra, prioridad, numTarjeta, direccion, codigoPostal)
+    factura = respuestaVenta.value(predicate=RDF.type, object=ECSDI.Factura)
+    tarjeta = respuestaVenta.value(subject=factura, predicate=ECSDI.Tarjeta)
+    total = respuestaVenta.value(subject=factura, predicate=ECSDI.PrecioTotal)
+    productos = respuestaVenta.subjects(object=ECSDI.Producto)
+    productosEnFactura = []
+    for producto in productos:
+        product = [respuestaVenta.value(subject=producto, predicate=ECSDI.Nombre),
+                   respuestaVenta.value(subject=producto, predicate=ECSDI.Precio)]
+        productosEnFactura.append(product)
+
+    # Mostramos la factura
+    return render_template('venta.html', products=productosEnFactura, tarjeta=tarjeta, total=total)
 
 
 @app.route("/")
@@ -97,21 +191,95 @@ def search():
     global listaDeProductos
     if request.method == 'GET':
         return render_template('search.html', products = None)
-    # elif request.method == 'POST':
-    #     if request.form['submit'] == 'Search':
-    #         return enviarPeticionBusqueda(request)
-    #     elif request.form['submit'] == 'Buy':
-    #         return buy(request)
+    elif request.method == 'POST':
+        if request.form['submit'] == 'Search':
+             return enviarPeticionBusqueda(request)
+        elif request.form['submit'] == 'Buy':
+            print("Comprando")
+            return buy(request)
 
-def personalagentbehavior1():
+def UserAgentbehavior1():
     """
     Un comportamiento del agente
 
     :return:
     """
     gr = register_message()
-
-
+    
+def enviarPeticionBusqueda(request):
+    global listaProductos
+    logger.info('Haciendo petición de busqueda')
+    
+    contenido = ECSDI['BuscarProducto' + str(getMessageCount())]
+    grafoDeContenido = Graph()
+    grafoDeContenido.add((contenido, RDF.type, ECSDI.BuscarProducto))
+    nombreProducto = request.form['nombre']
+    
+    # Añadimos el nombre del producto a buscar
+    if nombreProducto:
+        print(nombreProducto)
+        nombreSujeto = ECSDI['FiltroPorNombre' + str(getMessageCount())]
+        grafoDeContenido.add((nombreSujeto, RDF.type, ECSDI.FiltroPorNombre))
+        grafoDeContenido.add((nombreSujeto, ECSDI.Nombre, Literal(nombreProducto, datatype=XSD.string)))
+        grafoDeContenido.add((contenido, ECSDI.FiltradoPor, URIRef(nombreSujeto)))
+    
+    precioMinimo = request.form['minPrecio']
+    precioMaximo = request.form['maxPrecio']
+    
+    #Añaadimos el precio minimo y maximo
+    if precioMinimo or precioMaximo:
+        print(precioMinimo)
+        print(precioMaximo)
+        
+        precioSujeto = ECSDI['FiltroPorPrecio' + str(getMessageCount())]
+        grafoDeContenido.add((precioSujeto, RDF.type, ECSDI.FiltroPorPrecio))
+        if precioMinimo:
+            grafoDeContenido.add((precioSujeto, ECSDI.PrecioMinimo, Literal(precioMinimo)))
+        if precioMaximo:
+            grafoDeContenido.add((precioSujeto, ECSDI.PrecioMaximo, Literal(precioMaximo)))
+        grafoDeContenido.add((contenido, ECSDI.FiltradoPor, URIRef(precioSujeto)))
+        
+    # Pedimos informacion del agente buscador
+    agente = BuscadorAgent
+    
+    # Enviamos peticion de busqueda al agente buscador
+    logger.info('Enviando peticion de busqueda')
+    grafoBusqueda = send_message(
+        build_message(grafoDeContenido, perf=ACL.request, sender=UserAgent.uri, receiver=agente.uri, msgcnt=getMessageCount(), content=contenido),
+        agente.address
+    )
+    
+    logger.info('Recibiendo respuesta de la busqueda')
+    listaDeProductos = []
+    posicionDeSujetos = {}
+    indice = 0
+    
+    sujetos = grafoBusqueda.objects(predicate=ECSDI.Muestra)
+    for sujeto in sujetos:
+        posicionDeSujetos[sujeto] = indice
+        indice += 1
+        listaDeProductos.append({})
+    
+    for s, p, o in grafoBusqueda:
+        if s in posicionDeSujetos:
+            producto = listaDeProductos[posicionDeSujetos[s]]
+            if p == ECSDI.Nombre:
+                producto["Nombre"] = o
+            elif p == ECSDI.Precio:
+                producto["Precio"] = o
+            elif p == ECSDI.Descripcion:
+                producto["Descripcion"] = o
+            elif p == ECSDI.Id:
+                producto["Id"] = o
+            elif p == ECSDI.Peso:
+                producto["Peso"] = o
+            elif p == RDF.type:
+                producto["Sujeto"] = s
+            listaDeProductos[posicionDeSujetos[s]] = producto
+    
+    # Mostramos los productos filtrados
+    return render_template('search.html', products = listaDeProductos)
+    
 def register_message():
     """
     Envia un mensaje de registro al servicio de registro
@@ -131,17 +299,17 @@ def register_message():
     # Construimos el mensaje de registro
     gmess.bind('foaf', FOAF)
     gmess.bind('dso', DSO)
-    reg_obj = agn[PersonalAgent.name + '-Register']
+    reg_obj = agn[UserAgent.name + '-Register']
     gmess.add((reg_obj, RDF.type, DSO.Register))
-    gmess.add((reg_obj, DSO.Uri, PersonalAgent.uri))
-    gmess.add((reg_obj, FOAF.name, Literal(PersonalAgent.name)))
-    gmess.add((reg_obj, DSO.Address, Literal(PersonalAgent.address)))
-    gmess.add((reg_obj, DSO.AgentType, DSO.PersonalAgent))
+    gmess.add((reg_obj, DSO.Uri, UserAgent.uri))
+    gmess.add((reg_obj, FOAF.name, Literal(UserAgent.name)))
+    gmess.add((reg_obj, DSO.Address, Literal(UserAgent.address)))
+    gmess.add((reg_obj, DSO.AgentType, DSO.UserAgent))
 
     # Lo metemos en un envoltorio FIPA-ACL y lo enviamos
     gr = send_message(
         build_message(gmess, perf=ACL.request,
-                      sender=PersonalAgent.uri,
+                      sender=UserAgent.uri,
                       receiver=DirectoryAgent.uri,
                       content=reg_obj,
                       msgcnt=mss_cnt),
@@ -152,7 +320,7 @@ def register_message():
 
 if __name__ == '__main__':
     # Ponemos en marcha los behaviors
-    ab1 = Process(target=personalagentbehavior1)
+    ab1 = Process(target=UserAgentbehavior1)
     ab1.start()
 
     # Ponemos en marcha el servidor

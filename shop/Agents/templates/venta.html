@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Venta Realizada</title>
+</head>
+<body>
+    <h1>FACTURA</h1>
+    <table style="width:35%; border-collapse:collapse;" align="left" border="1px solid black">
+        <tr>
+            <h2>Nº tarjeta asociada: {{tarjeta}}</h2>
+        </tr>
+        {% for product in products %}
+        <tr>
+            <td align="left">{{product[0]}}</td>
+            <td align="right">{{product[1]}}</td>
+        </tr>
+        {% endfor %}
+        <tr></tr>
+        <tr>
+            <td align="left">TOTAL:</td>
+            <td align="right">{{total}}</td>
+        </tr>
+    </table>
+</body>
+</html>

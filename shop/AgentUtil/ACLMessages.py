@@ -10,6 +10,7 @@ Created on 08/02/2014 ###
 """
 __author__ = 'javier'
 
+from typing import Literal
 from xml.parsers.expat import ExpatError
 import requests
 from rdflib import Graph, Namespace, Literal, URIRef
@@ -17,6 +18,7 @@ from rdflib.namespace import RDF, FOAF
 from AgentUtil.OntoNamespaces import ACL, DSO
 from AgentUtil.OntoNamespaces import ECSDI
 from rdflib import XSD
+from AgentUtil.Agent import Agent
 
 agn = Namespace("http://www.agentes.org#")
 
@@ -96,3 +98,44 @@ def get_message_properties(msg):
                 msgdic[key] = val
     return msgdic
 
+
+
+def registerAgent(agent, directoryAgent, typeOfAgent, messageCount):
+    gmess = Graph()
+    
+    gmess.bind('foaf', FOAF)
+    gmess.bind('dso', DSO)
+    reg_obj = agn[agent.name + '-Register']
+    gmess.add((reg_obj, RDF.type, DSO.Register))
+    gmess.add((reg_obj, DSO.Uri, agent.uri))
+    gmess.add((reg_obj, FOAF.name, Literal(agent.name)))
+    gmess.add((reg_obj, DSO.Address, Literal(agent.address)))
+    gmess.add((reg_obj, DSO.AgentType, typeOfAgent))
+    
+    # Lo metemos en un FIPA request y lo enviamos
+    gr = send_message(
+        build_message(gmess, perf=ACL.request, sender=agent.uri, receiver=directoryAgent.uri, content=reg_obj, msgcnt=messageCount),
+        directoryAgent.address
+    )
+    
+def getAgentInfo(agentType, directoryAgent, sender, messageCount):
+    gmess = Graph()
+    gmess.bind('foaf', FOAF)
+    gmess.bind('dso', DSO)
+    ask_obj = agn[sender.name + '-Search']
+
+    gmess.add((ask_obj, RDF.type, DSO.Search))
+    gmess.add((ask_obj, DSO.AgentType, agentType))
+    gr = send_message(
+        build_message(gmess, perf=ACL.request, sender=sender.uri, receiver=directoryAgent.uri, msgcnt=messageCount,
+                      content=ask_obj),
+        directoryAgent.address
+    )
+    dic = get_message_properties(gr)
+    content = dic['content']
+
+    address = gr.value(subject=content, predicate=DSO.Address)
+    url = gr.value(subject=content, predicate=DSO.Uri)
+    name = gr.value(subject=content, predicate=FOAF.name)
+
+    return Agent(name, url, address, None)

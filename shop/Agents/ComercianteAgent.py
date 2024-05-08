@@ -83,6 +83,12 @@ DirectoryAgent = Agent('DirectoryAgent',
                        'http://%s:%d/Register' % (dhostname, dport),
                        'http://%s:%d/Stop' % (dhostname, dport))
 
+# Datos Agente Financiero
+FinancieroAgent = Agent('FinancieroAgent',
+                    agn.FinancieroAgent,
+                    'http://%s:%d/comm' % (hostname, 9004),
+                    'http://%s:%d/Stop' % (hostname, 9004))
+
 # Global triplestore graph
 dsGraph = Graph()
 
@@ -101,14 +107,17 @@ def getMessageCount():
 def registrarCompra(grafoEntrada):
     logger.info("Registrando la compra")
     ontologyFile = open('../data/ComprasDB')
+    print(ontologyFile.read())
 
     grafoCompras = Graph()
     grafoCompras.bind('default', ECSDI)
-    grafoCompras.parse(ontologyFile, format='xml')
+    grafoCompras.parse(ontologyFile, format='turtle')
     grafoCompras += grafoEntrada
 
+    print(grafoCompras.serialize(format='xml'))
+
     # Guardem el graf
-    grafoCompras.serialize(destination='../data/ComprasDB', format='xml')
+    grafoCompras.serialize(destination='../data/ComprasDB', format='turtle')
     logger.info("Registro de compra finalizado")
 
 
@@ -119,6 +128,13 @@ def vender(grafoEntrada, content):
     thread = Thread(target=registrarCompra, args=(grafoEntrada,))
     thread.start()
 
+    # Se pide la generacion de la factura
+    logger.info("Pidiendo factura")
+    grafoFactura = send_message(
+        build_message(grafoEntrada, perf=ACL.request, sender=ComercianteAgent.uri, receiver=FinancieroAgent.uri,
+                    msgcnt=getMessageCount(),
+                    content=content), FinancieroAgent.address)
+
     # suj = grafoEntrada.value(predicate=RDF.type, object=ECSDI.PeticionCompra)
     # grafoEntrada.add((suj, ECSDI.PrecioTotal, Literal(precioTotal, datatype=XSD.float)))
 
@@ -127,14 +143,14 @@ def vender(grafoEntrada, content):
     # thread.start()
 
     # logger.info("Devolviendo factura")
-    return #grafoFactura
+    return grafoFactura
 
 #funcion llamada en /comm
 @app.route("/comm")
 def communication():
     message = request.args['content']
     grafoEntrada = Graph()
-    grafoEntrada.parse(data=message)
+    grafoEntrada.parse(format='xml',data=message)
 
     messageProperties = get_message_properties(grafoEntrada)
 
@@ -143,7 +159,7 @@ def communication():
     if messageProperties is None:
         # Respondemos que no hemos entendido el mensaje
         resultadoComunicacion = build_message(Graph(), ACL['not-understood'],
-                                              sender=VendedorAgent.uri, msgcnt=getMessageCount())
+                                              sender=ComercianteAgent.uri, msgcnt=getMessageCount())
     else:
         # Obtenemos la performativa
         if messageProperties['performative'] != ACL.request:
@@ -162,11 +178,11 @@ def communication():
                 for item in grafoEntrada.subjects(RDF.type, ACL.FipaAclMessage):
                     grafoEntrada.remove((item, None, None))
 
-
+                logger.info("Procesando peticion de compra")
                 resultadoComunicacion =  vender(grafoEntrada, content)
 
             
-
+    logger.info('Respondemos a la peticion')
     serialize = resultadoComunicacion.serialize(format='xml')
     return serialize, 200
 
