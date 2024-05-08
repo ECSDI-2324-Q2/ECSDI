@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 """
+
 filename: UserAgent
 
 Agente que permite interactuar con el usuario
@@ -84,6 +85,11 @@ DirectoryAgent = Agent('DirectoryAgent',
                        'http://%s:%d/Register' % (dhostname, dport),
                        'http://%s:%d/Stop' % (dhostname, dport))
 
+# Datos del Agente Comerciante
+ComercianteAgent = Agent('ComercianteAgent',
+                          agn.ComercianteAgent,
+                          'http://%s:%d/comm' % (hostname, 9003),
+                          'http://%s:%d/Stop' % (hostname, 9003))
 BuscadorAgent = Agent('BuscadorAgent',
                        agn.BuscadorAgent,
                        'http://%s:%d/comm' % (dhostname, 9002),
@@ -91,6 +97,88 @@ BuscadorAgent = Agent('BuscadorAgent',
 
 # Global dsgraph triplestore
 dsgraph = Graph()
+
+# Función que lleva y devuelve la cuenta de mensajes
+def getMessageCount():
+    global mss_cnt
+    if mss_cnt is None:
+        mss_cnt = 0
+    mss_cnt += 1
+    return mss_cnt
+
+
+# Función que procesa una venta y la envía el grafo resultado de haber hablado con el agente correspondiente
+def procesarVenta(listaDeCompra, prioridad, numTarjeta, direccion, codigoPostal):
+    print("Procesando venta")
+    #Creamos la compra
+    grafoCompra = Graph()
+
+    # ACCION -> PeticionCompra
+    content = ECSDI['PeticionCompra' + str(getMessageCount())]
+    grafoCompra.add((content,RDF.type,ECSDI.PeticionCompra))
+    grafoCompra.add((content,ECSDI.Prioridad,Literal(prioridad, datatype=XSD.int)))
+    grafoCompra.add((content,ECSDI.Tarjeta,Literal(numTarjeta, datatype=XSD.int)))
+
+    sujetoDireccion = ECSDI['Direccion'+ str(getMessageCount())]
+    grafoCompra.add((sujetoDireccion,RDF.type,ECSDI.Direccion))
+    grafoCompra.add((sujetoDireccion,ECSDI.Direccion,Literal(direccion,datatype=XSD.string)))
+    grafoCompra.add((sujetoDireccion,ECSDI.CodigoPostal,Literal(codigoPostal,datatype=XSD.int)))
+
+    sujetoCompra = ECSDI['Compra'+str(getMessageCount())]
+    grafoCompra.add((sujetoCompra, RDF.type, ECSDI.Compra))
+    grafoCompra.add((sujetoCompra, ECSDI.Destino, URIRef(sujetoDireccion)))
+
+    # Añadimos los productos
+    for producto in listaDeCompra:
+        sujetoProducto = producto['Sujeto']
+        grafoCompra.add((sujetoProducto, RDF.type, ECSDI.Producto))
+        grafoCompra.add((sujetoProducto,ECSDI.Descripcion,producto['Descripcion']))
+        grafoCompra.add((sujetoProducto,ECSDI.Nombre,producto['Nombre']))
+        grafoCompra.add((sujetoProducto,ECSDI.Precio,producto['Precio']))
+        grafoCompra.add((sujetoProducto,ECSDI.Peso,producto['Peso']))
+        grafoCompra.add((sujetoCompra, ECSDI.Contiene, URIRef(sujetoProducto)))
+
+    grafoCompra.add((content,ECSDI.De,URIRef(sujetoCompra)))
+    print(grafoCompra.serialize(format='xml'))
+
+    # Pedimos información del agente vendedor
+    comerciante = ComercianteAgent
+    
+    # Enviamos petición de compra al agente vendedor
+    logger.info("Enviando petición de compra")
+    respuestaVenta = send_message(
+        build_message(grafoCompra, perf=ACL.request, sender=UserAgent.uri, receiver=comerciante.uri,
+                    msgcnt=getMessageCount(),
+                    content=content), comerciante.address)
+
+    # logger.info("Recibido resultado de compra")
+    return respuestaVenta
+
+# Función que renderiza los productos comprados
+def buy(request):
+    global listaDeProductos
+    logger.info("Haciendo petición de compra")
+    listaDeCompra = []
+    for producto in request.form.getlist("checkbox"):
+        listaDeCompra.append(listaDeProductos[int(producto)])
+
+    numTarjeta = int(request.form['numeroTarjeta'])
+    prioridad = int(request.form['prioridad'])
+    direccion = request.form['direccion']
+    codigoPostal = int(request.form['codigoPostal'])
+    respuestaVenta = procesarVenta(listaDeCompra, prioridad, numTarjeta, direccion, codigoPostal)
+    factura = respuestaVenta.value(predicate=RDF.type, object=ECSDI.Factura)
+    tarjeta = respuestaVenta.value(subject=factura, predicate=ECSDI.Tarjeta)
+    total = respuestaVenta.value(subject=factura, predicate=ECSDI.PrecioTotal)
+    productos = respuestaVenta.subjects(object=ECSDI.Producto)
+    productosEnFactura = []
+    for producto in productos:
+        product = [respuestaVenta.value(subject=producto, predicate=ECSDI.Nombre),
+                   respuestaVenta.value(subject=producto, predicate=ECSDI.Precio)]
+        productosEnFactura.append(product)
+
+    # Mostramos la factura
+    return render_template('venta.html', products=productosEnFactura, tarjeta=tarjeta, total=total)
 
 
 @app.route("/")
@@ -106,8 +194,9 @@ def search():
     elif request.method == 'POST':
         if request.form['submit'] == 'Search':
              return enviarPeticionBusqueda(request)
-    #     elif request.form['submit'] == 'Buy':
-    #         return buy(request)
+        elif request.form['submit'] == 'Buy':
+            print("Comprando")
+            return buy(request)
 
 def UserAgentbehavior1():
     """
@@ -117,13 +206,6 @@ def UserAgentbehavior1():
     """
     gr = register_message()
     
-def getMessageCount():
-    global mss_cnt
-    if mss_cnt is None:
-        mss_cnt = 0
-    mss_cnt += 1
-    return mss_cnt
-
 def enviarPeticionBusqueda(request):
     global listaProductos
     logger.info('Haciendo petición de busqueda')
