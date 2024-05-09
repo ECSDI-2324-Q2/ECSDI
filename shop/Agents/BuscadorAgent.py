@@ -172,6 +172,8 @@ def findProductsByFilter(Nombre=None,PrecioMin=0.0,PrecioMax=sys.float_info.max)
     sujetoRespuesta = ECSDI['RespuestaDeBusqueda' + str(getMessageCount())]
     products_graph.add((sujetoRespuesta, RDF.type, ECSDI.RespuestaDeBusqueda))
     
+    products_filtro = Graph()
+    
     # Añadimos los productos resultantes de la búsqueda
     for product in graph_query:
         product_nombre = product.Nombre
@@ -186,10 +188,30 @@ def findProductsByFilter(Nombre=None,PrecioMin=0.0,PrecioMax=sys.float_info.max)
         products_graph.add((sujeto, ECSDI.Descripcion, Literal(product_descripcion, datatype=XSD.string)))
         products_graph.add((sujeto, ECSDI.Peso, Literal(product_peso, datatype=XSD.float)))
         products_graph.add((sujetoRespuesta, ECSDI.Muestra, URIRef(sujeto)))
+        
+        # Grafo de los filtros
+        sujetoFiltrado = ECSDI['ProductoFiltrado' + str(getMessageCount())]
+        products_filtro.add((sujetoFiltrado, RDF.type, ECSDI.Producto))
+        products_filtro.add((sujetoFiltrado, ECSDI.Nombre, Literal(product_nombre, datatype=XSD.string)))
+        products_filtro.add((sujetoFiltrado, ECSDI.Precio, Literal(product_precio, datatype=XSD.float)))
+        products_filtro.add((sujetoFiltrado, ECSDI.Descripcion, Literal(product_descripcion, datatype=XSD.string)))
+        
+    Thread(target=guardarFiltro, args=(products_filtro,)).start()
 
     logger.info("Respondiendo peticion de busqueda")
     return products_graph
 
+def guardarFiltro(grafo):
+    logger.info("Guardando filtro")
+    ontologyFile = open('../data/BDFiltros')
+    
+    grafoFiltros = Graph()
+    grafoFiltros.bind('default', ECSDI)
+    grafoFiltros.parse(ontologyFile, format='turtle')
+    grafoFiltros += grafo
+    
+    grafoFiltros.serialize(destination='../data/BDFiltros', format='turtle')
+    logger.info("Filtro guardado")
 
 @app.route("/comm")
 def comunicacion():
