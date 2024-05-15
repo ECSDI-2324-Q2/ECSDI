@@ -130,6 +130,8 @@ def vender(grafoEntrada, content):
 
     # Se pide la generacion de la factura
     logger.info("Pidiendo factura")
+    grafoEntrada.remove((content, RDF.type, ECSDI.PeticionCompra))
+    grafoEntrada.add((content, RDF.type, ECSDI.GenerarFactura))
     grafoFactura = send_message(
         build_message(grafoEntrada, perf=ACL.request, sender=ComercianteAgent.uri, receiver=FinancieroAgent.uri,
                     msgcnt=getMessageCount(),

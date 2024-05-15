@@ -1,0 +1,17 @@
+@prefix default: <http://www.owl-ontologies.com/ECSDIstore#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+default:Factura1 a default:Factura ;
+    default:Facturando default:Producto1 ;
+    default:PrecioTotal "308.0"^^xsd:float ;
+    default:Tarjeta "12"^^xsd:int .
+
+default:Factura2 a default:Factura ;
+    default:Facturando default:Producto1 ;
+    default:PrecioTotal "308.0"^^xsd:float ;
+    default:Tarjeta "12"^^xsd:int .
+
+default:Producto1 a default:Producto ;
+    default:Nombre "Patatas"^^xsd:string ;
+    default:Precio "308.0"^^xsd:float .
+

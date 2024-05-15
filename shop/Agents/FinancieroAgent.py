@@ -125,24 +125,22 @@ def generar_factura(grafoEntrada, content):
     compra = grafoEntrada.value(subject=content, predicate=ECSDI.De)
 
     precioTotal = 0
-    for producto in grafoEntrada.objects(subject=compra, predicate=ECSDI.contiene):
+    for producto in grafoEntrada.objects(subject=compra, predicate=ECSDI.Contiene):
         grafoFactura.add((producto, RDF.type, ECSDI.Producto))
 
-        nombreProducto = grafoEntrada.value(subject=producto, predicate=ECSDI.nombre)
-        grafoFactura.add((producto, ECSDI.nombre, Literal(nombreProducto, datatype=XSD.string)))
+        nombreProducto = grafoEntrada.value(subject=producto, predicate=ECSDI.Nombre)
+        grafoFactura.add((producto, ECSDI.Nombre, Literal(nombreProducto, datatype=XSD.string)))
 
-        precioProducto = grafoEntrada.value(subject=producto, predicate=ECSDI.precio)
-        grafoFactura.add((producto, ECSDI.precio, Literal(float(precioProducto), datatype=XSD.float)))
+        precioProducto = grafoEntrada.value(subject=producto, predicate=ECSDI.Precio)
+        grafoFactura.add((producto, ECSDI.Precio, Literal(float(precioProducto), datatype=XSD.float)))
         precioTotal += float(precioProducto)
 
         grafoFactura.add((sujeto, ECSDI.Facturando, URIRef(producto)))
 
     grafoFactura.add((sujeto, ECSDI.PrecioTotal, Literal(precioTotal, datatype=XSD.float)))
-    suj = grafoEntrada.value(predicate=RDF.type, object=ECSDI.PeticionCompra)
-    grafoEntrada.add((suj, ECSDI.PrecioTotal, Literal(precioTotal, datatype=XSD.float)))
 
     # Guardar Factura
-    thread = Thread(target=registrarFactura, args=(grafoEntrada,))
+    thread = Thread(target=registrarFactura, args=(grafoFactura,))
     thread.start()
     
     logger.info("Devolviendo factura")
@@ -152,6 +150,7 @@ def generar_factura(grafoEntrada, content):
 #funcion llamada en /comm
 @app.route("/comm")
 def communication():
+    logger.info('Peticion de comunicacion recibida')
     message = request.args['content']
     grafoEntrada = Graph()
     grafoEntrada.parse(data=message, format='xml')
@@ -175,6 +174,7 @@ def communication():
             content = messageProperties['content']
             accion = grafoEntrada.value(subject=content, predicate=RDF.type)
 
+            print(accion)
             # Si la acción es de tipo peticiónCompra emprendemos las acciones consequentes
             if accion == ECSDI.GenerarFactura:
 
@@ -187,6 +187,7 @@ def communication():
             
 
     serialize = resultadoComunicacion.serialize(format='xml')
+    logger.info('Respondemos a la peticion')
     return serialize, 200
 
 
