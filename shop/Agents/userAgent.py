@@ -74,6 +74,8 @@ agn = Namespace("http://www.agentes.org#")
 # Contador de mensajes
 mss_cnt = 0
 
+listaDeProductos = []
+
 # Datos del Agente
 UserAgent = Agent('UserAgent',
                           agn.UserAgent,
@@ -160,6 +162,8 @@ def buy(request):
     logger.info("Haciendo petición de compra")
     listaDeCompra = []
     for producto in request.form.getlist("checkbox"):
+        print(int(producto))
+        print(len(listaDeProductos))
         listaDeCompra.append(listaDeProductos[int(producto)])
 
     numTarjeta = int(request.form['numeroTarjeta'])
@@ -207,7 +211,7 @@ def UserAgentbehavior1():
     gr = register_message()
     
 def enviarPeticionBusqueda(request):
-    global listaProductos
+    global listaDeProductos
     logger.info('Haciendo petición de busqueda')
     
     contenido = ECSDI['BuscarProducto' + str(getMessageCount())]
