@@ -43,7 +43,7 @@ args = parser.parse_args()
 
 # Configuration stuff
 if args.port is None:
-    port = 9003
+    port = 9004
 else:
     port = args.port
 
@@ -70,10 +70,9 @@ agn = Namespace("http://www.agentes.org#")
 # Message Count
 mss_cnt = 0
 
-# Data Agent
 # Datos del Agente
-ComercianteAgent = Agent('ComercianteAgent',
-                    agn.ComercianteAgent,
+FinancieroAgent = Agent('FinancieroAgent',
+                    agn.FinancieroAgent,
                     'http://%s:%d/comm' % (hostname, port),
                     'http://%s:%d/Stop' % (hostname, port))
 
@@ -82,12 +81,6 @@ DirectoryAgent = Agent('DirectoryAgent',
                        agn.DirectoryAgent,
                        'http://%s:%d/Register' % (dhostname, dport),
                        'http://%s:%d/Stop' % (dhostname, dport))
-
-# Datos Agente Financiero
-FinancieroAgent = Agent('FinancieroAgent',
-                    agn.FinancieroAgent,
-                    'http://%s:%d/comm' % (hostname, 9004),
-                    'http://%s:%d/Stop' % (hostname, 9004))
 
 # Global triplestore graph
 dsGraph = Graph()
@@ -98,61 +91,69 @@ queue = Queue()
 # Flask app
 app = Flask(__name__)
 
-#función inclremental de numero de mensajes
+#función incremental de numero de mensajes
 def getMessageCount():
     global mss_cnt
     mss_cnt += 1
     return mss_cnt
 
-def registrarCompra(grafoEntrada):
-    logger.info("Registrando la compra")
-    ontologyFile = open('../data/ComprasDB')
-    print(ontologyFile.read())
+def registrarFactura(grafoEntrada):
+    logger.info("Registrando la factura")
+    ontologyFile = open('../data/FacturasDB')
 
-    grafoCompras = Graph()
-    grafoCompras.bind('default', ECSDI)
-    grafoCompras.parse(ontologyFile, format='turtle')
-    grafoCompras += grafoEntrada
-
-    print(grafoCompras.serialize(format='xml'))
+    grafoFacturas = Graph()
+    grafoFacturas.bind('default', ECSDI)
+    grafoFacturas.parse(ontologyFile, format='turtle')
+    grafoFacturas += grafoEntrada
 
     # Guardem el graf
-    grafoCompras.serialize(destination='../data/ComprasDB', format='turtle')
-    logger.info("Registro de compra finalizado")
+    grafoFacturas.serialize(destination='../data/FacturasDB', format='turtle')
+    logger.info("Registro de factura finalizado")
 
+def generar_factura(grafoEntrada, content):
+    logger.info("Generando factura")
 
-# Función que efectua y organiza en threads el proceso de vender
-def vender(grafoEntrada, content):
-    logger.info("Recibida peticion de compra")
-    # Guardar Compra
-    thread = Thread(target=registrarCompra, args=(grafoEntrada,))
+    tarjeta = grafoEntrada.value(subject=content, predicate=ECSDI.Tarjeta)
+    grafoFactura = Graph()
+    grafoFactura.bind('default', ECSDI)
+
+    # Crear factura
+    sujeto = ECSDI['Factura' + str(getMessageCount())]
+    grafoFactura.add((sujeto, RDF.type, ECSDI.Factura))
+    grafoFactura.add((sujeto, ECSDI.Tarjeta, Literal(tarjeta, datatype=XSD.int)))
+
+    compra = grafoEntrada.value(subject=content, predicate=ECSDI.De)
+
+    precioTotal = 0
+    for producto in grafoEntrada.objects(subject=compra, predicate=ECSDI.Contiene):
+        grafoFactura.add((producto, RDF.type, ECSDI.Producto))
+
+        nombreProducto = grafoEntrada.value(subject=producto, predicate=ECSDI.Nombre)
+        grafoFactura.add((producto, ECSDI.Nombre, Literal(nombreProducto, datatype=XSD.string)))
+
+        precioProducto = grafoEntrada.value(subject=producto, predicate=ECSDI.Precio)
+        grafoFactura.add((producto, ECSDI.Precio, Literal(float(precioProducto), datatype=XSD.float)))
+        precioTotal += float(precioProducto)
+
+        grafoFactura.add((sujeto, ECSDI.Facturando, URIRef(producto)))
+
+    grafoFactura.add((sujeto, ECSDI.PrecioTotal, Literal(precioTotal, datatype=XSD.float)))
+
+    # Guardar Factura
+    thread = Thread(target=registrarFactura, args=(grafoFactura,))
     thread.start()
-
-    # Se pide la generacion de la factura
-    logger.info("Pidiendo factura")
-    grafoEntrada.remove((content, RDF.type, ECSDI.PeticionCompra))
-    grafoEntrada.add((content, RDF.type, ECSDI.GenerarFactura))
-    grafoFactura = send_message(
-        build_message(grafoEntrada, perf=ACL.request, sender=ComercianteAgent.uri, receiver=FinancieroAgent.uri,
-                    msgcnt=getMessageCount(),
-                    content=content), FinancieroAgent.address)
-
-    # suj = grafoEntrada.value(predicate=RDF.type, object=ECSDI.PeticionCompra)
-    # grafoEntrada.add((suj, ECSDI.PrecioTotal, Literal(precioTotal, datatype=XSD.float)))
-
-    # # Enviar compra a Enviador
-    # thread = Thread(target=enviarCompra, args=(grafoEntrada, content))
-    # thread.start()
-
-    # logger.info("Devolviendo factura")
+    
+    logger.info("Devolviendo factura")
     return grafoFactura
+
 
 #funcion llamada en /comm
 @app.route("/comm")
 def communication():
+    logger.info('Peticion de comunicacion recibida')
     message = request.args['content']
     grafoEntrada = Graph()
-    grafoEntrada.parse(format='xml',data=message)
+    grafoEntrada.parse(data=message, format='xml')
 
     messageProperties = get_message_properties(grafoEntrada)
 
@@ -161,7 +162,7 @@ def communication():
     if messageProperties is None:
         # Respondemos que no hemos entendido el mensaje
         resultadoComunicacion = build_message(Graph(), ACL['not-understood'],
-                                              sender=ComercianteAgent.uri, msgcnt=getMessageCount())
+                                              sender=FinancieroAgent.uri, msgcnt=getMessageCount())
     else:
         # Obtenemos la performativa
         if messageProperties['performative'] != ACL.request:
@@ -173,20 +174,22 @@ def communication():
             content = messageProperties['content']
             accion = grafoEntrada.value(subject=content, predicate=RDF.type)
 
+            print(accion)
             # Si la acción es de tipo peticiónCompra emprendemos las acciones consequentes
-            if accion == ECSDI.PeticionCompra:
+            if accion == ECSDI.GenerarFactura:
 
                 # Eliminar los ACLMessage
                 for item in grafoEntrada.subjects(RDF.type, ACL.FipaAclMessage):
                     grafoEntrada.remove((item, None, None))
 
-                logger.info("Procesando peticion de compra")
-                resultadoComunicacion =  vender(grafoEntrada, content)
+                resultadoComunicacion = generar_factura(grafoEntrada, content)
 
             
-    logger.info('Respondemos a la peticion')
+
     serialize = resultadoComunicacion.serialize(format='xml')
+    logger.info('Respondemos a la peticion')
     return serialize, 200
+
 
 @app.route("/Stop")
 def stop():
@@ -194,13 +197,10 @@ def stop():
     Entrypoint to the agent
     :return: string
     """
-
-    tidyUp()
     shutdown_server()
     return "Stopping server"
 
-#funcion llamada al principio de un agente
-def ComercianteBehavior(queue):
+def FinancieroBehavior(queue):
 
     """
     Agent Behaviour in a concurrent thread.
@@ -208,17 +208,6 @@ def ComercianteBehavior(queue):
     :return: something
     """
     gr = register_message()
-
-#función llamada antes de cerrar el servidor
-def tidyUp():
-    """
-    Previous actions for the agent.
-    """
-
-    global queue
-    queue.put(0)
-
-    pass
 
 def register_message():
     """
@@ -239,17 +228,17 @@ def register_message():
     # Construimos el mensaje de registro
     gmess.bind('foaf', FOAF)
     gmess.bind('dso', DSO)
-    reg_obj = agn[ComercianteAgent.name + '-Register']
+    reg_obj = agn[FinancieroAgent.name + '-Register']
     gmess.add((reg_obj, RDF.type, DSO.Register))
-    gmess.add((reg_obj, DSO.Uri, ComercianteAgent.uri))
-    gmess.add((reg_obj, FOAF.name, Literal(ComercianteAgent.name)))
-    gmess.add((reg_obj, DSO.Address, Literal(ComercianteAgent.address)))
-    gmess.add((reg_obj, DSO.AgentType, DSO.ComercianteAgent))
+    gmess.add((reg_obj, DSO.Uri, FinancieroAgent.uri))
+    gmess.add((reg_obj, FOAF.name, Literal(FinancieroAgent.name)))
+    gmess.add((reg_obj, DSO.Address, Literal(FinancieroAgent.address)))
+    gmess.add((reg_obj, DSO.AgentType, DSO.FinancieroAgent))
 
     # Lo metemos en un envoltorio FIPA-ACL y lo enviamos
     gr = send_message(
         build_message(gmess, perf=ACL.request,
-                      sender=ComercianteAgent.uri,
+                      sender=FinancieroAgent.uri,
                       receiver=DirectoryAgent.uri,
                       content=reg_obj,
                       msgcnt=mss_cnt),
@@ -261,7 +250,7 @@ def register_message():
 if __name__ == '__main__':
     # ------------------------------------------------------------------------------------------------------
     # Run behaviors
-    ab1 = Process(target=ComercianteBehavior, args=(queue,))
+    ab1 = Process(target=FinancieroBehavior, args=(queue,))
     ab1.start()
 
     # Run server
