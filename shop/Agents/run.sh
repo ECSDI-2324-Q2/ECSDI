@@ -2,10 +2,10 @@
 
 python DirectoryService.py &
 sleep 2
-python userAgent.py &
-sleep 1
-python BuscadorAgent.py &
-sleep 1
+#python userAgent.py &
+#sleep 1
+#python BuscadorAgent.py &
+#sleep 1
 python ComercianteAgent.py &
 sleep 1
 python FinancieroAgent.py &

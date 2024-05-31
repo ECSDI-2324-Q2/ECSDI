@@ -143,6 +143,9 @@ def procesarVenta(listaDeCompra, prioridad, numTarjeta, direccion, codigoPostal)
     grafoCompra.add((content,ECSDI.De,URIRef(sujetoCompra)))
     print(grafoCompra.serialize(format='xml'))
 
+    # Pedimos información del agente filtrador
+    #comerciante = getAgentInfo(agn.ComercianteAgent, DirectoryAgent, UserAgent, getMessageCount())
+
     # Pedimos información del agente vendedor
     comerciante = ComercianteAgent
     
@@ -189,7 +192,7 @@ def buy(request):
 def index():
     return render_template('index.html')
 
-@app.route("/search", methods=['GET', 'POST'])
+@app.route("/search", methods=['GET', 'POST']) # type: ignore
 def search():
     global listaDeProductos
     if request.method == 'GET':
@@ -201,35 +204,36 @@ def search():
             print("Comprando")
             return buy(request)
         
-@app.route("/return",methods=['GET', 'POST'])
+@app.route("/return",methods=['GET', 'POST'])  # type: ignore
 def getProductsToReturn():
     global listaDeProductos
     if request.method == 'POST':
         if request.form['return'] == 'submit':
-            return procesarRetorno(request)
+            return verProductosRetorno(request)
 
         elif request.form['return'] == 'Submit':
             return submitReturn(request)
         
 
-def procesarRetorno(request):
+def verProductosRetorno(request):
     global listaDeProductos
     logger.info("Haciendo petición de productos enviados")
     grafoDeContenido = Graph()
 
-    # ACCION -> PeticionProductosEnviados
     accion = ECSDI["PeticionProductosEnviados" + str(getMessageCount())]
     grafoDeContenido.add((accion, RDF.type, ECSDI.PeticionProductosEnviados))
     tarjeta = request.form['tarjeta']
     grafoDeContenido.add((accion, ECSDI.Tarjeta, Literal(tarjeta, datatype=XSD.int)))
 
+    logger.info("enviando petición de productos enviados a gestor de devoluciones")
+
     # Pedimos información del Gestor de Devoluciones
-    agente = getAgentInfo(agn.GestorDeDevoluciones, DirectoryAgent, UserPersonalAgent, getMessageCount())
+    agente = getAgentInfo(agn.GestorDevoluciones, DirectoryAgent, UserAgent, getMessageCount())
 
     logger.info("Enviando petición de productos enviados")
     # Enviamos petición de productos enviados al agente Gestor de Devoluciones
     grafoBusqueda = send_message(
-        build_message(grafoDeContenido, perf=ACL.request, sender=UserPersonalAgent.uri, receiver=agente.uri,
+        build_message(grafoDeContenido, perf=ACL.request, sender=UserAgent.uri, receiver=agente.uri,
                       msgcnt=getMessageCount(),
                       content=accion), agente.address)
 

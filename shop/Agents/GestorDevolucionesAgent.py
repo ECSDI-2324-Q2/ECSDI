@@ -72,8 +72,8 @@ mss_cnt = 0
 
 # Data Agent
 # Datos del Agente
-GestorDeDevolucionesAgent = Agent('GestorDeDevoluciones',
-                    agn.GestorDeDevoluciones,
+GestorDevolucionesAgent = Agent('GestorDevoluciones',
+                    agn.GestorDevoluciones,
                     'http://%s:%d/comm' % (hostname, port),
                     'http://%s:%d/Stop' % (hostname, port))
 
@@ -220,12 +220,12 @@ def solicitarRecogida(direccionRetorno,codigoPostal):
     peticion.add((accion, ECSDI.Desde, URIRef(sujetoDireccion)))
 
     # Solicitamos informacion del transportista de devoluciones
-    agente = getAgentInfo(agn.TransportistaDevolucionesAgent, DirectoryAgent, GestorDeDevolucionesAgent, getMessageCount())
+    agente = getAgentInfo(agn.TransportistaDevolucionesAgent, DirectoryAgent, GestorDevolucionesAgent, getMessageCount())
 
     # Enviamos peticion de recoger devolucion al transportista
     logger.info("Enviando peticion de recoger devolucion")
     grafoBusqueda = send_message(
-        build_message(peticion, perf=ACL.request, sender=GestorDeDevolucionesAgent.uri, receiver=agente.uri,
+        build_message(peticion, perf=ACL.request, sender=GestorDevolucionesAgent.uri, receiver=agente.uri,
                       msgcnt=getMessageCount(),
                       content=accion), agente.address)
     logger.info("Enviada peticion de recoger devolucion")
@@ -247,7 +247,7 @@ def communication():
     if messageProperties is None:
         # Respondemos que no hemos entendido el mensaje
         resultadoComunicacion = build_message(Graph(), ACL['not-understood'],
-                                              sender=GestorDeDevolucionesAgent.uri, msgcnt=getMessageCount())
+                                              sender=GestorDevolucionesAgent.uri, msgcnt=getMessageCount())
     else:
         # Obtenemos la performativa
         if messageProperties['performative'] != ACL.request:
@@ -297,7 +297,7 @@ def register_message():
     """
 
     logger.info('Nos registramos')
-    gr = registerAgent(GestorDeDevolucionesAgent, DirectoryAgent, GestorDeDevolucionesAgent.uri, getMessageCount())
+    gr = registerAgent(GestorDevolucionesAgent, DirectoryAgent, GestorDevolucionesAgent.uri, getMessageCount())
     return gr
 
 def DevolvedorBehaviour(queue):
