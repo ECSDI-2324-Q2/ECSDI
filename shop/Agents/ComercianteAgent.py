@@ -10,6 +10,8 @@ Asume que el agente de registro esta en el puerto 9000
 import argparse
 import socket
 import sys
+
+from requests import get
 sys.path.append('../')
 from multiprocessing import Queue, Process
 from threading import Thread
@@ -83,12 +85,6 @@ DirectoryAgent = Agent('DirectoryAgent',
                        'http://%s:%d/Register' % (dhostname, dport),
                        'http://%s:%d/Stop' % (dhostname, dport))
 
-# Datos Agente Financiero
-FinancieroAgent = Agent('FinancieroAgent',
-                    agn.FinancieroAgent,
-                    'http://%s:%d/comm' % (hostname, 9004),
-                    'http://%s:%d/Stop' % (hostname, 9004))
-
 # Global triplestore graph
 dsGraph = Graph()
 
@@ -128,14 +124,16 @@ def vender(grafoEntrada, content):
     thread = Thread(target=registrarCompra, args=(grafoEntrada,))
     thread.start()
 
+    agente = getAgentInfo(agn.FinancieroAgent, DirectoryAgent, ComercianteAgent, getMessageCount())
+
     # Se pide la generacion de la factura
     logger.info("Pidiendo factura")
     grafoEntrada.remove((content, RDF.type, ECSDI.PeticionCompra))
     grafoEntrada.add((content, RDF.type, ECSDI.GenerarFactura))
     grafoFactura = send_message(
-        build_message(grafoEntrada, perf=ACL.request, sender=ComercianteAgent.uri, receiver=FinancieroAgent.uri,
+        build_message(grafoEntrada, perf=ACL.request, sender=ComercianteAgent.uri, receiver=agente.uri,
                     msgcnt=getMessageCount(),
-                    content=content), FinancieroAgent.address)
+                    content=content), agente.address)
 
     # suj = grafoEntrada.value(predicate=RDF.type, object=ECSDI.PeticionCompra)
     # grafoEntrada.add((suj, ECSDI.PrecioTotal, Literal(precioTotal, datatype=XSD.float)))
@@ -207,7 +205,7 @@ def ComercianteBehavior(queue):
     :param queue: the queue
     :return: something
     """
-    gr = register_message()
+    registerAgent(ComercianteAgent, DirectoryAgent, ComercianteAgent.uri, getMessageCount())
 
 #función llamada antes de cerrar el servidor
 def tidyUp():
@@ -219,44 +217,6 @@ def tidyUp():
     queue.put(0)
 
     pass
-
-def register_message():
-    """
-    Envia un mensaje de registro al servicio de registro
-    usando una performativa Request y una accion Register del
-    servicio de directorio
-
-    :param gmess:
-    :return:
-    """
-
-    logger.info('Nos registramos')
-
-    global mss_cnt
-
-    gmess = Graph()
-
-    # Construimos el mensaje de registro
-    gmess.bind('foaf', FOAF)
-    gmess.bind('dso', DSO)
-    reg_obj = agn[ComercianteAgent.name + '-Register']
-    gmess.add((reg_obj, RDF.type, DSO.Register))
-    gmess.add((reg_obj, DSO.Uri, ComercianteAgent.uri))
-    gmess.add((reg_obj, FOAF.name, Literal(ComercianteAgent.name)))
-    gmess.add((reg_obj, DSO.Address, Literal(ComercianteAgent.address)))
-    gmess.add((reg_obj, DSO.AgentType, DSO.ComercianteAgent))
-
-    # Lo metemos en un envoltorio FIPA-ACL y lo enviamos
-    gr = send_message(
-        build_message(gmess, perf=ACL.request,
-                      sender=ComercianteAgent.uri,
-                      receiver=DirectoryAgent.uri,
-                      content=reg_obj,
-                      msgcnt=mss_cnt),
-        DirectoryAgent.address)
-    mss_cnt += 1
-
-    return gr
 
 if __name__ == '__main__':
     # ------------------------------------------------------------------------------------------------------

@@ -12,6 +12,9 @@ Agente que permite interactuar con el usuario
 import argparse
 import socket
 import sys
+from tkinter import N
+
+from requests import get
 sys.path.append('../')
 from multiprocessing import Queue, Process
 from threading import Thread
@@ -87,16 +90,6 @@ DirectoryAgent = Agent('DirectoryAgent',
                        'http://%s:%d/Register' % (dhostname, dport),
                        'http://%s:%d/Stop' % (dhostname, dport))
 
-# Datos del Agente Comerciante
-ComercianteAgent = Agent('ComercianteAgent',
-                          agn.ComercianteAgent,
-                          'http://%s:%d/comm' % (hostname, 9003),
-                          'http://%s:%d/Stop' % (hostname, 9003))
-BuscadorAgent = Agent('BuscadorAgent',
-                       agn.BuscadorAgent,
-                       'http://%s:%d/comm' % (dhostname, 9002),
-                       'http://%s:%d/Stop' % (dhostname, 9002))
-
 # Global dsgraph triplestore
 dsgraph = Graph()
 
@@ -144,7 +137,7 @@ def procesarVenta(listaDeCompra, prioridad, numTarjeta, direccion, codigoPostal)
     print(grafoCompra.serialize(format='xml'))
 
     # Pedimos información del agente vendedor
-    comerciante = ComercianteAgent
+    comerciante = getAgentInfo(agn.ComercianteAgent, DirectoryAgent, UserAgent, getMessageCount())
     
     # Enviamos petición de compra al agente vendedor
     logger.info("Enviando petición de compra")
@@ -208,7 +201,7 @@ def UserAgentbehavior1():
 
     :return:
     """
-    gr = register_message()
+    registerAgent(UserAgent, DirectoryAgent, UserAgent.uri, getMessageCount())
     
 def enviarPeticionBusqueda(request):
     global listaDeProductos
@@ -244,7 +237,7 @@ def enviarPeticionBusqueda(request):
         grafoDeContenido.add((contenido, ECSDI.FiltradoPor, URIRef(precioSujeto)))
         
     # Pedimos informacion del agente buscador
-    agente = BuscadorAgent
+    agente = getAgentInfo(agn.BuscadorAgent, DirectoryAgent, UserAgent, getMessageCount())
     
     # Enviamos peticion de busqueda al agente buscador
     logger.info('Enviando peticion de busqueda')
@@ -283,44 +276,6 @@ def enviarPeticionBusqueda(request):
     
     # Mostramos los productos filtrados
     return render_template('search.html', products = listaDeProductos)
-    
-def register_message():
-    """
-    Envia un mensaje de registro al servicio de registro
-    usando una performativa Request y una accion Register del
-    servicio de directorio
-
-    :param gmess:
-    :return:
-    """
-
-    logger.info('Nos registramos')
-
-    global mss_cnt
-
-    gmess = Graph()
-
-    # Construimos el mensaje de registro
-    gmess.bind('foaf', FOAF)
-    gmess.bind('dso', DSO)
-    reg_obj = agn[UserAgent.name + '-Register']
-    gmess.add((reg_obj, RDF.type, DSO.Register))
-    gmess.add((reg_obj, DSO.Uri, UserAgent.uri))
-    gmess.add((reg_obj, FOAF.name, Literal(UserAgent.name)))
-    gmess.add((reg_obj, DSO.Address, Literal(UserAgent.address)))
-    gmess.add((reg_obj, DSO.AgentType, DSO.UserAgent))
-
-    # Lo metemos en un envoltorio FIPA-ACL y lo enviamos
-    gr = send_message(
-        build_message(gmess, perf=ACL.request,
-                      sender=UserAgent.uri,
-                      receiver=DirectoryAgent.uri,
-                      content=reg_obj,
-                      msgcnt=mss_cnt),
-        DirectoryAgent.address)
-    mss_cnt += 1
-
-    return gr
 
 if __name__ == '__main__':
     # Ponemos en marcha los behaviors

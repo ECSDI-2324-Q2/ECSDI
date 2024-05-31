@@ -9,7 +9,7 @@ import random
 import re
 import sys
 sys.path.append('../')
-from AgentUtil.ACLMessages import getAgentInfo, build_message, send_message, get_message_properties
+from AgentUtil.ACLMessages import getAgentInfo, build_message, registerAgent, send_message, get_message_properties
 from AgentUtil.OntoNamespaces import ECSDI
 import argparse
 import socket
@@ -162,45 +162,7 @@ def VendedorPersonalAgentBehavior(queue):
     :param queue: the queue
     :return: something
     """
-    gr = register_message()
-
-def register_message():
-    """
-    Envia un mensaje de registro al servicio de registro
-    usando una performativa Request y una accion Register del
-    servicio de directorio
-
-    :param gmess:
-    :return:
-    """
-
-    logger.info('Nos registramos')
-
-    global mss_cnt
-
-    gmess = Graph()
-
-    # Construimos el mensaje de registro
-    gmess.bind('foaf', FOAF)
-    gmess.bind('dso', DSO)
-    reg_obj = agn[VendedorPersonalAgent.name + '-Register']
-    gmess.add((reg_obj, RDF.type, DSO.Register))
-    gmess.add((reg_obj, DSO.Uri, VendedorPersonalAgent.uri))
-    gmess.add((reg_obj, FOAF.name, Literal(VendedorPersonalAgent.name)))
-    gmess.add((reg_obj, DSO.Address, Literal(VendedorPersonalAgent.address)))
-    gmess.add((reg_obj, DSO.AgentType, DSO.VendedorPersonalAgent))
-
-    # Lo metemos en un envoltorio FIPA-ACL y lo enviamos
-    gr = send_message(
-        build_message(gmess, perf=ACL.request,
-                      sender=VendedorPersonalAgent.uri,
-                      receiver=DirectoryAgent.uri,
-                      content=reg_obj,
-                      msgcnt=mss_cnt),
-        DirectoryAgent.address)
-    mss_cnt += 1
-
-    return gr
+    registerAgent(VendedorPersonalAgent, DirectoryAgent, VendedorPersonalAgent.uri, getMessageCount())
 
 if __name__ == '__main__':
     # ------------------------------------------------------------------------------------------------------

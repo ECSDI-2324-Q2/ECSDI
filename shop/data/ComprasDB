@@ -1,25 +1,18 @@
-@prefix default: <http://www.semanticweb.org/arnaut/ontologies/2024/4/ECSDIShop#> .
-@prefix ns1: <http://www.nuin.org/ontology/fipa/acl#> .
+@prefix default: <http://www.owl-ontologies.com/ECSDIstore#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-ns1:message--5017614432592811611-0001 a ns1:FipaAclMessage ;
-    ns1:content default:PeticionCompra40 ;
-    ns1:performative ns1:request ;
-    ns1:receiver <http://www.agentes.org#FinancieroAgent> ;
-    ns1:sender <http://www.agentes.org#ComercianteAgent> .
-
-default:Compra42 a default:Compra ;
-    default:Contiene default:ProductoExterno3 ;
-    default:Destino default:Direccion41 .
-
-default:Direccion41 a default:Direccion ;
-    default:CodigoPostal "9850"^^xsd:int ;
-    default:Direccion "hola"^^xsd:string .
-
-default:PeticionCompra40 a default:GenerarFactura ;
-    default:De default:Compra42 ;
+default:PeticionCompra5 a default:PeticionCompra ;
+    default:De default:Compra7 ;
     default:Prioridad "1"^^xsd:int ;
-    default:Tarjeta "1231232"^^xsd:int .
+    default:Tarjeta "1234"^^xsd:int .
+
+default:Compra7 a default:Compra ;
+    default:Contiene default:ProductoExterno3 ;
+    default:Destino default:Direccion6 .
+
+default:Direccion6 a default:Direccion ;
+    default:CodigoPostal "3"^^xsd:int ;
+    default:Direccion "aef"^^xsd:string .
 
 default:ProductoExterno3 a default:Producto ;
     default:Descripcion "gafas"^^xsd:string ;

@@ -1,4 +1,4 @@
-@prefix default: <http://www.semanticweb.org/arnaut/ontologies/2024/4/ECSDIShop#> .
+@prefix default: <http://www.owl-ontologies.com/ECSDIstore#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
 default:Producto1 a default:Producto ;
@@ -63,6 +63,14 @@ default:Producto9 a default:Producto ;
     default:Nombre "Nuria Bruch" ;
     default:Peso "55.0"^^xsd:float ;
     default:Precio "23000000.0"^^xsd:float .
+
+default:ProductoExterno1 a default:ProductoExterno ;
+    default:Descripcion "macbook"^^xsd:string ;
+    default:GestionExterna true ;
+    default:Nombre "pc"^^xsd:string ;
+    default:Peso "100.0"^^xsd:float ;
+    default:Precio "2000.0"^^xsd:float ;
+    default:Tarjeta "34131"^^xsd:string .
 
 default:ProductoExterno2 a default:ProductoExterno ;
     default:Descripcion "123"^^xsd:string ;
