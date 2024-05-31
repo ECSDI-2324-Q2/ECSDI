@@ -2,14 +2,21 @@
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
 default:Factura1 a default:Factura ;
-    default:Facturando default:Producto1 ;
-    default:PrecioTotal "308.0"^^xsd:float ;
-    default:Tarjeta "12"^^xsd:int .
+    default:Facturando default:Producto1,
+        default:ProductoExterno3 ;
+    default:PrecioTotal "2.0"^^xsd:float,
+        "308.0"^^xsd:float ;
+    default:Tarjeta "12"^^xsd:int,
+        "1231232"^^xsd:int .
 
 default:Factura2 a default:Factura ;
     default:Facturando default:Producto1 ;
     default:PrecioTotal "308.0"^^xsd:float ;
     default:Tarjeta "12"^^xsd:int .
+
+default:ProductoExterno3 a default:Producto ;
+    default:Nombre "gafas"^^xsd:string ;
+    default:Precio "2.0"^^xsd:float .
 
 default:Producto1 a default:Producto ;
     default:Nombre "Patatas"^^xsd:string ;

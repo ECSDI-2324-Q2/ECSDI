@@ -137,13 +137,13 @@ def findProductsByFilter(Nombre=None,PrecioMin=0.0,PrecioMax=sys.float_info.max)
     PREFIX default: <http://www.owl-ontologies.com/ECSDIstore#>
     PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
     PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
-    SELECT ?Producto ?Nombre ?Precio ?Descripcion ?Id ?Peso
+    SELECT ?Producto ?Nombre ?Precio ?Descripcion ?Peso
     where {
-        ?Producto rdf:type default:Producto .
+        ?Producto rdf:type ?type .
+        FILTER (?type IN (default:Producto, default:ProductoExterno))
         ?Producto default:Nombre ?Nombre .
         ?Producto default:Precio ?Precio .
         ?Producto default:Descripcion ?Descripcion .
-        ?Producto default:Id ?Id .
         ?Producto default:Peso ?Peso .
         FILTER("""
 
