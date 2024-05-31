@@ -1,4 +1,4 @@
-@prefix default: <http://www.owl-ontologies.com/ECSDIstore#> .
+@prefix default: <http://www.semanticweb.org/arnaut/ontologies/2024/4/ECSDIShop#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
 default:Producto1 a default:Producto ;

@@ -59,7 +59,6 @@ def send_message(gmess, address):
     """
     msg = gmess.serialize(format='xml')
     r = requests.get(address, params={'content': msg}, timeout=5)  # Add timeout argument
-    print(f"Respuesta recibida: {r.text}")  # Imprimir la respuesta recibida
 
 
     # Procesa la respuesta y la retorna como resultado como grafo

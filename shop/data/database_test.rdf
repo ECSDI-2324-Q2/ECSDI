@@ -1,4 +1,4 @@
-@prefix ns1: <http://www.owl-ontologies.com/ECSDIstore#> .
+@prefix ns1: <http://www.semanticweb.org/arnaut/ontologies/2024/4/ECSDIShop#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
 ns1:001 a "http://www.owl-ontologies.com/ECSDIstore#producte" ;
