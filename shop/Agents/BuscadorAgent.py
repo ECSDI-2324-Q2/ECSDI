@@ -134,7 +134,7 @@ def findProductsByFilter(Nombre=None,PrecioMin=0.0,PrecioMax=sys.float_info.max)
     logger.info("Buscando productos")
     query = """PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
     PREFIX owl: <http://www.w3.org/2002/07/owl#>
-    PREFIX default: <http://www.semanticweb.org/arnaut/ontologies/2024/4/ECSDIShop#>
+    PREFIX default: <http://www.owl-ontologies.com/ECSDIstore#>
     PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
     PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
     SELECT ?Producto ?Nombre ?Precio ?Descripcion ?Peso
@@ -270,50 +270,12 @@ def buscadorbehavior1(cola):
 
     :return:
     """
-    gr = register_message()
+    registerAgent(BuscadorAgent, DirectoryAgent, BuscadorAgent.uri, getMessageCount())
 
 def getMessageCount():
     global mss_cnt
     mss_cnt += 1
     return mss_cnt
-
-def register_message():
-    """
-    Envia un mensaje de registro al servicio de registro
-    usando una performativa Request y una accion Register del
-    servicio de directorio
-
-    :param gmess:
-    :return:
-    """
-
-    logger.info('Nos registramos')
-
-    global mss_cnt
-
-    gmess = Graph()
-
-    # Construimos el mensaje de registro
-    gmess.bind('foaf', FOAF)
-    gmess.bind('dso', DSO)
-    reg_obj = agn[BuscadorAgent.name + '-Register']
-    gmess.add((reg_obj, RDF.type, DSO.Register))
-    gmess.add((reg_obj, DSO.Uri, BuscadorAgent.uri))
-    gmess.add((reg_obj, FOAF.name, Literal(BuscadorAgent.name)))
-    gmess.add((reg_obj, DSO.Address, Literal(BuscadorAgent.address)))
-    gmess.add((reg_obj, DSO.AgentType, DSO.BuscadorAgent))
-
-    # Lo metemos en un envoltorio FIPA-ACL y lo enviamos
-    gr = send_message(
-        build_message(gmess, perf=ACL.request,
-                      sender=BuscadorAgent.uri,
-                      receiver=DirectoryAgent.uri,
-                      content=reg_obj,
-                      msgcnt=mss_cnt),
-        DirectoryAgent.address)
-    mss_cnt += 1
-
-    return gr
 
 
 if __name__ == '__main__':

@@ -195,22 +195,6 @@ def stop():
     shutdown_server()
     return "Stopping server"
 
-#función para registro de agente en el servicio de directorios
-def register_message():
-    """
-    Envia un mensaje de registro al servicio de registro
-    usando una performativa Request y una accion Register del
-    servicio de directorio
-
-    :param gmess:
-    :return:
-    """
-
-    logger.info('Nos registramos')
-
-    gr = registerAgent(GestorExternoAgent, DirectoryAgent, GestorExternoAgent.uri, getMessageCount())
-    return gr
-
 #función llamada antes de cerrar el servidor
 def tidyUp():
     """
@@ -230,7 +214,7 @@ def filterBehavior(queue):
     :param queue: the queue
     :return: something
     """
-    gr = register_message()
+    registerAgent(GestorExternoAgent, DirectoryAgent, GestorExternoAgent.uri, getMessageCount())
 
 if __name__ == '__main__':
     # ------------------------------------------------------------------------------------------------------

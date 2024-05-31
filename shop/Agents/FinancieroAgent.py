@@ -206,45 +206,7 @@ def FinancieroBehavior(queue):
     :param queue: the queue
     :return: something
     """
-    gr = register_message()
-
-def register_message():
-    """
-    Envia un mensaje de registro al servicio de registro
-    usando una performativa Request y una accion Register del
-    servicio de directorio
-
-    :param gmess:
-    :return:
-    """
-
-    logger.info('Nos registramos')
-
-    global mss_cnt
-
-    gmess = Graph()
-
-    # Construimos el mensaje de registro
-    gmess.bind('foaf', FOAF)
-    gmess.bind('dso', DSO)
-    reg_obj = agn[FinancieroAgent.name + '-Register']
-    gmess.add((reg_obj, RDF.type, DSO.Register))
-    gmess.add((reg_obj, DSO.Uri, FinancieroAgent.uri))
-    gmess.add((reg_obj, FOAF.name, Literal(FinancieroAgent.name)))
-    gmess.add((reg_obj, DSO.Address, Literal(FinancieroAgent.address)))
-    gmess.add((reg_obj, DSO.AgentType, DSO.FinancieroAgent))
-
-    # Lo metemos en un envoltorio FIPA-ACL y lo enviamos
-    gr = send_message(
-        build_message(gmess, perf=ACL.request,
-                      sender=FinancieroAgent.uri,
-                      receiver=DirectoryAgent.uri,
-                      content=reg_obj,
-                      msgcnt=mss_cnt),
-        DirectoryAgent.address)
-    mss_cnt += 1
-
-    return gr
+    registerAgent(FinancieroAgent, DirectoryAgent, FinancieroAgent.uri, getMessageCount())
 
 if __name__ == '__main__':
     # ------------------------------------------------------------------------------------------------------

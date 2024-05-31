@@ -135,6 +135,7 @@ def register():
 
         logger.info('Registrado agente: ' + agn_name + ' - tipus:' + agn_type)
 
+
         # Generamos un mensaje de respuesta
         return build_message(Graph(),
                              ACL.confirm,
@@ -157,8 +158,9 @@ def register():
 
         agn_type = gm.value(subject=content, predicate=DSO.AgentType)
         rsearch = dsgraph.triples((None, DSO.AgentType, agn_type))
+
         if rsearch is not None:
-            agn_uri = next(rsearch)[0]
+            agn_uri = list(rsearch)[0][0]
             agn_add = dsgraph.value(subject=agn_uri, predicate=DSO.Address)
             gr = Graph()
             gr.bind('dso', DSO)
