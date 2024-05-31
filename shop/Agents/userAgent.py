@@ -97,6 +97,11 @@ BuscadorAgent = Agent('BuscadorAgent',
                        'http://%s:%d/comm' % (dhostname, 9002),
                        'http://%s:%d/Stop' % (dhostname, 9002))
 
+GestorDevolucionesAgent = Agent('GestorDevolucionesAgent',
+                                agn.GestorDevoluciones,
+                                'http://%s:%d/comm' % (hostname, 9042),
+                                'http://%s:%d/Stop' % (hostname, 9042))
+
 # Global dsgraph triplestore
 dsgraph = Graph()
 
@@ -228,7 +233,7 @@ def verProductosRetorno(request):
     logger.info("enviando petición de productos enviados a gestor de devoluciones")
 
     # Pedimos información del Gestor de Devoluciones
-    agente = getAgentInfo(agn.GestorDevoluciones, DirectoryAgent, UserAgent, getMessageCount())
+    agente = GestorDevolucionesAgent
 
     logger.info("Enviando petición de productos enviados")
     # Enviamos petición de productos enviados al agente Gestor de Devoluciones
