@@ -72,7 +72,7 @@ mss_cnt = 0
 
 # Data Agent
 # Datos del Agente
-GestorDevolucionesAgent = Agent('GestorDevoluciones',
+GestorDevolucionesAgent = Agent('GestorDevolucionesAgent',
                     agn.GestorDevoluciones,
                     'http://%s:%d/comm' % (hostname, port),
                     'http://%s:%d/Stop' % (hostname, port))
@@ -238,7 +238,7 @@ def communication():
     """
     message = request.args['content']
     grafoEntrada = Graph()
-    grafoEntrada.parse(data=message)
+    grafoEntrada.parse(data=message, format='xml')
 
     messageProperties = get_message_properties(grafoEntrada)
 
