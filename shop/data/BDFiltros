@@ -283,9 +283,12 @@ default:ProductoFiltrado38 a default:Producto ;
     default:Precio "23000000.0"^^xsd:float .
 
 default:ProductoFiltrado4 a default:Producto ;
-    default:Descripcion "Esto son Patatas"^^xsd:string ;
-    default:Nombre "Patatas"^^xsd:string ;
-    default:Precio "308.0"^^xsd:float .
+    default:Descripcion "Esto son Patatas"^^xsd:string,
+        "gafas"^^xsd:string ;
+    default:Nombre "Patatas"^^xsd:string,
+        "gafas"^^xsd:string ;
+    default:Precio "2.0"^^xsd:float,
+        "308.0"^^xsd:float .
 
 default:ProductoFiltrado40 a default:Producto ;
     default:Descripcion "Esto son Patatas"^^xsd:string ;
