@@ -1,66 +1,82 @@
-@prefix ns1: <http://www.owl-ontologies.com/ECSDIstore#> .
+@prefix default: <http://www.owl-ontologies.com/ECSDIstore#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-ns1:Producto1 a ns1:Producto ;
-    ns1:Descripcion "Esto son Patatas" ;
-    ns1:Id 1 ;
-    ns1:Nombre "Patatas" ;
-    ns1:Peso "23.0"^^xsd:float ;
-    ns1:Precio "308.0"^^xsd:float .
+default:Producto1 a default:Producto ;
+    default:Descripcion "Esto son Patatas" ;
+    default:Id 1 ;
+    default:Nombre "Patatas" ;
+    default:Peso "23.0"^^xsd:float ;
+    default:Precio "308.0"^^xsd:float .
 
-ns1:Producto2 a ns1:Producto ;
-    ns1:Descripcion "Esto es un Mouse" ;
-    ns1:Id 2 ;
-    ns1:Nombre "Mouse" ;
-    ns1:Peso "1.0"^^xsd:float ;
-    ns1:Precio "32.0"^^xsd:float .
+default:Producto2 a default:Producto ;
+    default:Descripcion "Esto es un Mouse" ;
+    default:Id 2 ;
+    default:Nombre "Mouse" ;
+    default:Peso "1.0"^^xsd:float ;
+    default:Precio "32.0"^^xsd:float .
 
-ns1:Producto3 a ns1:Producto ;
-    ns1:Descripcion "Esto es un Teclado" ;
-    ns1:Id 3 ;
-    ns1:Nombre "Teclado" ;
-    ns1:Peso "2.0"^^xsd:float ;
-    ns1:Precio "55.0"^^xsd:float .
+default:Producto3 a default:Producto ;
+    default:Descripcion "Esto es un Teclado" ;
+    default:Id 3 ;
+    default:Nombre "Teclado" ;
+    default:Peso "2.0"^^xsd:float ;
+    default:Precio "55.0"^^xsd:float .
 
-ns1:Producto4 a ns1:Producto ;
-    ns1:Descripcion "Esto es un Barco" ;
-    ns1:Id 4 ;
-    ns1:Nombre "Barco" ;
-    ns1:Peso "1000.0"^^xsd:float ;
-    ns1:Precio "20000.0"^^xsd:float .
+default:Producto4 a default:Producto ;
+    default:Descripcion "Esto es un Barco" ;
+    default:Id 4 ;
+    default:Nombre "Barco" ;
+    default:Peso "1000.0"^^xsd:float ;
+    default:Precio "20000.0"^^xsd:float .
 
-ns1:Producto5 a ns1:Producto ;
-    ns1:Descripcion "Esto es un Ordenador" ;
-    ns1:Id 5 ;
-    ns1:Nombre "Ordenador" ;
-    ns1:Peso "2.0"^^xsd:float ;
-    ns1:Precio "1000.0"^^xsd:float .
+default:Producto5 a default:Producto ;
+    default:Descripcion "Esto es un Ordenador" ;
+    default:Id 5 ;
+    default:Nombre "Ordenador" ;
+    default:Peso "2.0"^^xsd:float ;
+    default:Precio "1000.0"^^xsd:float .
 
-ns1:Producto6 a ns1:Producto ;
-    ns1:Descripcion "Esto son unos Auriculares" ;
-    ns1:Id 6 ;
-    ns1:Nombre "Auriculares" ;
-    ns1:Peso "0.5"^^xsd:float ;
-    ns1:Precio "20.0"^^xsd:float .
+default:Producto6 a default:Producto ;
+    default:Descripcion "Esto son unos Auriculares" ;
+    default:Id 6 ;
+    default:Nombre "Auriculares" ;
+    default:Peso "0.5"^^xsd:float ;
+    default:Precio "20.0"^^xsd:float .
 
-ns1:Producto7 a ns1:Producto ;
-    ns1:Descripcion "Esto es un Cable" ;
-    ns1:Id 7 ;
-    ns1:Nombre "Cable" ;
-    ns1:Peso "0.5"^^xsd:float ;
-    ns1:Precio "5.0"^^xsd:float .
+default:Producto7 a default:Producto ;
+    default:Descripcion "Esto es un Cable" ;
+    default:Id 7 ;
+    default:Nombre "Cable" ;
+    default:Peso "0.5"^^xsd:float ;
+    default:Precio "5.0"^^xsd:float .
 
-ns1:Producto8 a ns1:Producto ;
-    ns1:Descripcion "Esto es un Platano" ;
-    ns1:Id 8 ;
-    ns1:Nombre "Platano" ;
-    ns1:Peso "0.5"^^xsd:float ;
-    ns1:Precio "1.0"^^xsd:float .
+default:Producto8 a default:Producto ;
+    default:Descripcion "Esto es un Platano" ;
+    default:Id 8 ;
+    default:Nombre "Platano" ;
+    default:Peso "0.5"^^xsd:float ;
+    default:Precio "1.0"^^xsd:float .
 
-ns1:Producto9 a ns1:Producto ;
-    ns1:Descripcion "Esto es una Nuria" ;
-    ns1:Id 9 ;
-    ns1:Nombre "Nuria Bruch" ;
-    ns1:Peso "55.0"^^xsd:float ;
-    ns1:Precio "23000000.0"^^xsd:float .
+default:Producto9 a default:Producto ;
+    default:Descripcion "Esto es una Nuria" ;
+    default:Id 9 ;
+    default:Nombre "Nuria Bruch" ;
+    default:Peso "55.0"^^xsd:float ;
+    default:Precio "23000000.0"^^xsd:float .
+
+default:ProductoExterno2 a default:ProductoExterno ;
+    default:Descripcion "123"^^xsd:string ;
+    default:GestionExterna true ;
+    default:Nombre "312"^^xsd:string ;
+    default:Peso "132.0"^^xsd:float ;
+    default:Precio "132.0"^^xsd:float ;
+    default:Tarjeta "213"^^xsd:string .
+
+default:ProductoExterno3 a default:ProductoExterno ;
+    default:Descripcion "gafas"^^xsd:string ;
+    default:GestionExterna true ;
+    default:Nombre "gafas"^^xsd:string ;
+    default:Peso "200.0"^^xsd:float ;
+    default:Precio "2.0"^^xsd:float ;
+    default:Tarjeta "123"^^xsd:string .
 

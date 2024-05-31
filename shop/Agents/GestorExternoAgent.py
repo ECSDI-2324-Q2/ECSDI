@@ -43,7 +43,7 @@ args = parser.parse_args()
 
 # Configuration stuff
 if args.port is None:
-    port = 9004
+    port = 9087
 else:
     port = args.port
 
@@ -70,15 +70,16 @@ agn = Namespace("http://www.agentes.org#")
 # Message Count
 mss_cnt = 0
 
+# Data Agent
 # Datos del Agente
-FinancieroAgent = Agent('FinancieroAgent',
-                    agn.FinancieroAgent,
+GestorExternoAgent = Agent('GestorExterno',
+                    agn.GestorExterno,
                     'http://%s:%d/comm' % (hostname, port),
                     'http://%s:%d/Stop' % (hostname, port))
 
 # Directory agent address
 DirectoryAgent = Agent('DirectoryAgent',
-                       agn.DirectoryAgent,
+                       agn.Directory,
                        'http://%s:%d/Register' % (dhostname, dport),
                        'http://%s:%d/Stop' % (dhostname, dport))
 
@@ -91,78 +92,78 @@ queue = Queue()
 # Flask app
 app = Flask(__name__)
 
-#función incremental de numero de mensajes
+#función inclremental de numero de mensajes
 def getMessageCount():
     global mss_cnt
     mss_cnt += 1
     return mss_cnt
 
-def registrarFactura(grafoEntrada):
-    logger.info("Registrando la factura")
-    ontologyFile = open('../data/FacturasDB')
-
-    grafoFacturas = Graph()
-    grafoFacturas.bind('default', ECSDI)
-    grafoFacturas.parse(ontologyFile, format='turtle')
-    grafoFacturas += grafoEntrada
-
-    # Guardem el graf
-    grafoFacturas.serialize(destination='../data/FacturasDB', format='turtle')
-    logger.info("Registro de factura finalizado")
-
-def generar_factura(grafoEntrada, content):
-    logger.info("Generando factura")
-
-    tarjeta = grafoEntrada.value(subject=content, predicate=ECSDI.Tarjeta)
-    grafoFactura = Graph()
-    grafoFactura.bind('default', ECSDI)
-
-    # Crear factura
-    sujeto = ECSDI['Factura' + str(getMessageCount())]
-    grafoFactura.add((sujeto, RDF.type, ECSDI.Factura))
-    grafoFactura.add((sujeto, ECSDI.Tarjeta, Literal(tarjeta, datatype=XSD.int)))
-
-    compra = grafoEntrada.value(subject=content, predicate=ECSDI.De)
-
-    precioTotal = 0
-    for producto in grafoEntrada.objects(subject=compra, predicate=ECSDI.Contiene):
-        grafoFactura.add((producto, RDF.type, ECSDI.Producto))
-
-        nombreProducto = grafoEntrada.value(subject=producto, predicate=ECSDI.Nombre)
-        grafoFactura.add((producto, ECSDI.Nombre, Literal(nombreProducto, datatype=XSD.string)))
-
-        precioProducto = grafoEntrada.value(subject=producto, predicate=ECSDI.Precio)
-        grafoFactura.add((producto, ECSDI.Precio, Literal(float(precioProducto), datatype=XSD.float)))
-        precioTotal += float(precioProducto)
-
-        grafoFactura.add((sujeto, ECSDI.Facturando, URIRef(producto)))
-
-    grafoFactura.add((sujeto, ECSDI.PrecioTotal, Literal(precioTotal, datatype=XSD.float)))
-
-    # Guardar Factura
-    thread = Thread(target=registrarFactura, args=(grafoFactura,))
+# Función que agrega un Producto Externo a la base de datos
+def agregarProducto(content, grafoEntrada):
+    logger.info("Recibida peticion de agregar productos")
+    for item in grafoEntrada.subjects(RDF.type, ACL.FipaAclMessage):
+        grafoEntrada.remove((item, None, None))
+    thread = Thread(target=procesarProductoExterno, args=(grafoEntrada,))
     thread.start()
-    
-    logger.info("Devolviendo factura")
-    return grafoFactura
+    resultadoComunicacion = Graph()
+    logger.info("Respondiendo peticion de agregar producto")
+    return resultadoComunicacion
 
+# Función que procesa un producto externo
+def procesarProductoExterno(graph):
+    nombre = None
+    peso = None
+    tarjeta = None
+    precio= None
+    descripcion = None
+    gestionExterna = False
+    for a,b,c in graph:
+        if b == ECSDI.Nombre:
+            nombre = c
+        elif b == ECSDI.Descripcion:
+            descripcion = c
+        elif b == ECSDI.Peso:
+            peso = c
+        elif b == ECSDI.GestionExterna:
+            gestionExterna = c
+        elif b == ECSDI.Precio:
+            precio = c
+        elif b == ECSDI.Tarjeta:
+            tarjeta = c
+
+    logger.info("Registrando producto " + nombre + " " + descripcion + " que pesa " + peso + " con precio " + precio)
+    # Añadimos el producto externo a la base de datos de productos
+    graph = Graph()
+    ontologyFile = open('../data/BDProductos.owl')
+    graph.parse(ontologyFile, format='turtle')
+    graph.bind("default", ECSDI)
+    sujeto = ECSDI['ProductoExterno' + str(getMessageCount())]
+    graph.add((sujeto, RDF.type, ECSDI.ProductoExterno))
+    graph.add((sujeto, ECSDI.Nombre, Literal(nombre, datatype=XSD.string)))
+    graph.add((sujeto, ECSDI.Precio, Literal(precio, datatype=XSD.float)))
+    graph.add((sujeto, ECSDI.Descripcion, Literal(descripcion, datatype=XSD.string)))
+    graph.add((sujeto, ECSDI.Tarjeta, Literal(tarjeta, datatype=XSD.string)))
+    graph.add((sujeto, ECSDI.GestionExterna, Literal(gestionExterna, datatype=XSD.boolean)))
+    graph.add((sujeto, ECSDI.Peso, Literal(peso, datatype=XSD.float)))
+
+    graph.serialize(destination='../data/BDProductos.owl', format='turtle')
+    logger.info("Registro de nuevo producto finalizado")
 
 #funcion llamada en /comm
 @app.route("/comm")
 def communication():
-    logger.info('Peticion de comunicacion recibida')
     message = request.args['content']
     grafoEntrada = Graph()
     grafoEntrada.parse(data=message, format='xml')
 
     messageProperties = get_message_properties(grafoEntrada)
 
-    resultadoComunicacion = Graph()
+    resultadoComunicacion = None
 
     if messageProperties is None:
         # Respondemos que no hemos entendido el mensaje
         resultadoComunicacion = build_message(Graph(), ACL['not-understood'],
-                                              sender=FinancieroAgent.uri, msgcnt=getMessageCount())
+                                              sender=GestorExternoAgent.uri, msgcnt=getMessageCount())
     else:
         # Obtenemos la performativa
         if messageProperties['performative'] != ACL.request:
@@ -174,20 +175,13 @@ def communication():
             content = messageProperties['content']
             accion = grafoEntrada.value(subject=content, predicate=RDF.type)
 
-            print(accion)
-            # Si la acción es de tipo peticiónCompra emprendemos las acciones consequentes
-            if accion == ECSDI.GenerarFactura:
+            # Si la acción es de tipo busqueda emprendemos las acciones consequentes
+            if accion == ECSDI.PeticionAgregarProducto:
+                resultadoComunicacion = agregarProducto(content, grafoEntrada)
 
-                # Eliminar los ACLMessage
-                for item in grafoEntrada.subjects(RDF.type, ACL.FipaAclMessage):
-                    grafoEntrada.remove((item, None, None))
 
-                resultadoComunicacion = generar_factura(grafoEntrada, content)
-
-            
 
     serialize = resultadoComunicacion.serialize(format='xml')
-    logger.info('Respondemos a la peticion')
     return serialize, 200
 
 @app.route("/Stop")
@@ -196,18 +190,12 @@ def stop():
     Entrypoint to the agent
     :return: string
     """
+
+    tidyUp()
     shutdown_server()
     return "Stopping server"
 
-def FinancieroBehavior(queue):
-
-    """
-    Agent Behaviour in a concurrent thread.
-    :param queue: the queue
-    :return: something
-    """
-    gr = register_message()
-
+#función para registro de agente en el servicio de directorios
 def register_message():
     """
     Envia un mensaje de registro al servicio de registro
@@ -220,36 +208,34 @@ def register_message():
 
     logger.info('Nos registramos')
 
-    global mss_cnt
-
-    gmess = Graph()
-
-    # Construimos el mensaje de registro
-    gmess.bind('foaf', FOAF)
-    gmess.bind('dso', DSO)
-    reg_obj = agn[FinancieroAgent.name + '-Register']
-    gmess.add((reg_obj, RDF.type, DSO.Register))
-    gmess.add((reg_obj, DSO.Uri, FinancieroAgent.uri))
-    gmess.add((reg_obj, FOAF.name, Literal(FinancieroAgent.name)))
-    gmess.add((reg_obj, DSO.Address, Literal(FinancieroAgent.address)))
-    gmess.add((reg_obj, DSO.AgentType, DSO.FinancieroAgent))
-
-    # Lo metemos en un envoltorio FIPA-ACL y lo enviamos
-    gr = send_message(
-        build_message(gmess, perf=ACL.request,
-                      sender=FinancieroAgent.uri,
-                      receiver=DirectoryAgent.uri,
-                      content=reg_obj,
-                      msgcnt=mss_cnt),
-        DirectoryAgent.address)
-    mss_cnt += 1
-
+    gr = registerAgent(GestorExternoAgent, DirectoryAgent, GestorExternoAgent.uri, getMessageCount())
     return gr
+
+#función llamada antes de cerrar el servidor
+def tidyUp():
+    """
+    Previous actions for the agent.
+    """
+
+    global queue
+    queue.put(0)
+
+    pass
+
+#funcion llamada al principio de un agente
+def filterBehavior(queue):
+
+    """
+    Agent Behaviour in a concurrent thread.
+    :param queue: the queue
+    :return: something
+    """
+    gr = register_message()
 
 if __name__ == '__main__':
     # ------------------------------------------------------------------------------------------------------
     # Run behaviors
-    ab1 = Process(target=FinancieroBehavior, args=(queue,))
+    ab1 = Process(target=filterBehavior, args=(queue,))
     ab1.start()
 
     # Run server

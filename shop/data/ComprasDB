@@ -2,28 +2,28 @@
 @prefix ns1: <http://www.nuin.org/ontology/fipa/acl#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-ns1:message-193373707872838632-0014 a ns1:FipaAclMessage ;
-    ns1:content default:PeticionCompra35 ;
+ns1:message--5017614432592811611-0001 a ns1:FipaAclMessage ;
+    ns1:content default:PeticionCompra40 ;
     ns1:performative ns1:request ;
     ns1:receiver <http://www.agentes.org#FinancieroAgent> ;
     ns1:sender <http://www.agentes.org#ComercianteAgent> .
 
-default:Compra37 a default:Compra ;
-    default:Contiene default:Producto1 ;
-    default:Destino default:Direccion36 .
+default:Compra42 a default:Compra ;
+    default:Contiene default:ProductoExterno3 ;
+    default:Destino default:Direccion41 .
 
-default:Direccion36 a default:Direccion ;
-    default:CodigoPostal "123"^^xsd:int ;
-    default:Direccion "312"^^xsd:string .
+default:Direccion41 a default:Direccion ;
+    default:CodigoPostal "9850"^^xsd:int ;
+    default:Direccion "hola"^^xsd:string .
 
-default:PeticionCompra35 a default:GenerarFactura ;
-    default:De default:Compra37 ;
+default:PeticionCompra40 a default:GenerarFactura ;
+    default:De default:Compra42 ;
     default:Prioridad "1"^^xsd:int ;
-    default:Tarjeta "12"^^xsd:int .
+    default:Tarjeta "1231232"^^xsd:int .
 
-default:Producto1 a default:Producto ;
-    default:Descripcion "Esto son Patatas"^^xsd:string ;
-    default:Nombre "Patatas"^^xsd:string ;
-    default:Peso "23.0"^^xsd:float ;
-    default:Precio "308.0"^^xsd:float .
+default:ProductoExterno3 a default:Producto ;
+    default:Descripcion "gafas"^^xsd:string ;
+    default:Nombre "gafas"^^xsd:string ;
+    default:Peso "200.0"^^xsd:float ;
+    default:Precio "2.0"^^xsd:float .
 
