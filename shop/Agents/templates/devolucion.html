@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Buscador de productos</title>
+</head>
+<body>
+     <h1>Busqueda de productos</h1>
+    {% if not products %}
+       <h2>No hay productos a devolver</h2>
+    {% else %}
+         <form method="post">
+                <table style="width:85%; border-collapse:collapse;" align="center" border="1px solid black">
+                  <tr align="left">
+                      <th style="padding:15px">Nombre</th>
+                      <th style="padding:15px">Precio</th>
+                      <th style="padding:15px">Descripción</th>
+                      <th style="padding:15px">Compra</th>
+
+
+                  </tr>
+                  {% for product in products %}
+                    <tr> 
+                        <td style="padding:15px">{{ product.Nombre }}</td>
+                        <td style="padding:15px">{{ product.Precio }}</td>
+                        <td style="padding:15px">{{ product.Descripcion }}</td>
+                        <td style="padding:15px">{{ product.Compra }}</td>
+                        <td style="padding:15px"><input type="checkbox" name="checkbox" value="{{ products.index(product) }}"></td>
+                    </tr>
+                  {% endfor %}
+                </table>
+                Direccion: <input type="text" name="direccion"><br>
+                Codigo postal: <input type="text" name="codigoPostal"><br>
+                <input type="submit" name="return" value="Submit">
+         </form>
+     {% endif %}
+     <br>
+     <a href="javascript:history.back()">Volver</a>
+</body>
+</html>
