@@ -2,27 +2,50 @@
 @prefix ns1: <http://www.nuin.org/ontology/fipa/acl#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-ns1:message-5708565758263715828-0005 a ns1:FipaAclMessage ;
+ns1:message--5884039335736434935-0002 a ns1:FipaAclMessage ;
+    ns1:content default:PeticionCompra5 ;
+    ns1:performative ns1:request ;
+    ns1:receiver <http://www.agentes.org#FinancieroAgent> ;
+    ns1:sender <http://www.agentes.org#ComercianteAgent> .
+
+ns1:message--5884039335736434935-0005 a ns1:FipaAclMessage ;
     ns1:content default:PeticionCompra14 ;
     ns1:performative ns1:request ;
     ns1:receiver <http://www.agentes.org#FinancieroAgent> ;
     ns1:sender <http://www.agentes.org#ComercianteAgent> .
 
-default:PeticionEnvio6 a default:PeticionEnvio ;
+default:PeticionEnvio3 a default:GenerarFactura,
+        default:PeticionEnvio ;
+    default:De default:Compra7 ;
+    default:FechaEntrega "2024-06-02T00:00:00"^^xsd:dateTime ;
+    default:Pagado false ;
+    default:PrecioTotal "0.0"^^xsd:float ;
+    default:Prioridad "1"^^xsd:int ;
+    default:Tarjeta "123123"^^xsd:int .
+
+default:PeticionEnvio6 a default:GenerarFactura,
+        default:PeticionEnvio ;
     default:De default:Compra16 ;
-    default:FechaEntrega "2024-06-02T11:27:10.626785"^^xsd:date ;
+    default:FechaEntrega "2024-06-02T00:00:00"^^xsd:dateTime ;
     default:Pagado false ;
     default:PrecioTotal "2000.0"^^xsd:float ;
     default:Prioridad "1"^^xsd:int ;
-    default:Tarjeta "13"^^xsd:int .
+    default:Tarjeta "123"^^xsd:int .
 
 default:Compra16 a default:Compra ;
     default:Contiene default:ProductoExterno1 ;
     default:Destino default:Direccion15 .
 
+default:Compra7 a default:Compra ;
+    default:Destino default:Direccion6 .
+
 default:Direccion15 a default:Direccion ;
-    default:CodigoPostal "13"^^xsd:int ;
-    default:Direccion "qwe"^^xsd:string .
+    default:CodigoPostal "123"^^xsd:int ;
+    default:Direccion "daw"^^xsd:string .
+
+default:Direccion6 a default:Direccion ;
+    default:CodigoPostal "213"^^xsd:int ;
+    default:Direccion "wadad"^^xsd:string .
 
 default:ProductoExterno1 a default:Producto ;
     default:Descripcion "macbook"^^xsd:string ;

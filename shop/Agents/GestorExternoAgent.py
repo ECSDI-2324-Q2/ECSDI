@@ -25,7 +25,7 @@ from AgentUtil.OntoNamespaces import ECSDI
 from AgentUtil.OntoNamespaces import ACL, DSO
 from rdflib.namespace import RDF, FOAF
 
-__author__ = 'ECSDIstore'
+__author__ = 'Miquel'
 
 # Definimos los parametros de la linea de comandos
 parser = argparse.ArgumentParser()

@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Define the array of ports
-ports=(9000 9002 9003 9004 9081 9030 9087)
+ports=(9000 9002 9003 9004 9081 9030 9087 9042 9005)
 
 # Loop over each port
 for port in ${ports[@]}

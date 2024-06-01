@@ -8,8 +8,11 @@ Tiene una funcion AgentBehavior1 que se lanza como un thread concurrente
 Asume que el agente de registro esta en el puerto 9000
 """
 import argparse
+import re
 import socket
 import sys
+from datetime import datetime
+from datetime import timedelta
 sys.path.append('../')
 from multiprocessing import Queue, Process
 from threading import Thread
@@ -24,8 +27,7 @@ from AgentUtil.Logging import config_logger
 from AgentUtil.OntoNamespaces import ECSDI
 from AgentUtil.OntoNamespaces import ACL, DSO
 from rdflib.namespace import RDF, FOAF
-
-__author__ = 'ECSDIstore'
+__author__ = 'Miquel'
 
 # Definimos los parametros de la linea de comandos
 parser = argparse.ArgumentParser()
@@ -99,27 +101,23 @@ def getMessageCount():
     return mss_cnt
 
 # Función que atiende a la petición de registrar una petición de recogida en una dirección
-def atenderPeticionRecogerDevolucion(grafoEntrada):
-    logger.info('Recibida Peticion Recoger Devolucion')
-    direccion = grafoEntrada.objects(predicate=ECSDI.Direccion)
-    direccionRetorno = None
-    for d in direccion:
-        direccionRetorno = d
-    codigo = grafoEntrada.objects(predicate=ECSDI.CodigoPostal)
-    codigoPostal = None
-    for c in codigo:
-        codigoPostal = c
-    logger.info(
-        "Registrada petición de recogida en " + str(direccionRetorno) + ". Con Codigo Postal: " + str(codigoPostal))
-    resultadoComunicacion = Graph()
-    return resultadoComunicacion
+def gestionarRecogida(grafoEntrada):
+    logger.info('Recibida Peticion de Recogida Devolucion')
+    
+    direccionRetorno = next(grafoEntrada.objects(predicate=ECSDI.Direccion), None)
+    codigoPostal = next(grafoEntrada.objects(predicate=ECSDI.CodigoPostal), None)
+    
+    if direccionRetorno and codigoPostal:
+        logger.info(f"Registrada petición de recogida en {direccionRetorno}. Con Codigo Postal: {codigoPostal}")
+    
+    return Graph()
 
 #funcion llamada en /comm
 @app.route("/comm")
 def communication():
     message = request.args['content']
     grafoEntrada = Graph()
-    grafoEntrada.parse(data=message)
+    grafoEntrada.parse(data=message, format='xml')
     messageProperties = get_message_properties(grafoEntrada)
 
     resultadoComunicacion = None
@@ -139,7 +137,7 @@ def communication():
 
             accion = grafoEntrada.value(subject=content, predicate=RDF.type)
             if accion == ECSDI.PeticionRecogerDevolucion:
-                resultadoComunicacion = atenderPeticionRecogerDevolucion(grafoEntrada)
+                resultadoComunicacion = gestionarRecogida(grafoEntrada)
 
     serialize = resultadoComunicacion.serialize(format='xml')
     return serialize, 200

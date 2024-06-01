@@ -31,7 +31,7 @@ from AgentUtil.OntoNamespaces import ACL, DSO
 from rdflib.namespace import RDF, FOAF
 
 
-__author__ = 'ECSDIstore'
+__author__ = 'Marc'
 
 # Definimos los parametros de la linea de comandos
 parser = argparse.ArgumentParser()
@@ -289,7 +289,7 @@ def submitReturn(request):
     grafoDeContenido.add((accion, ECSDI.DireccionadoA, URIRef(sujetoDireccion)))
 
     # Pedimos informacion del Gestor de Devoluciones
-    agente = getAgentInfo(agn.GestorDeDevoluciones, DirectoryAgent, UserAgent, getMessageCount())
+    agente = getAgentInfo(agn.GestorDevoluciones, DirectoryAgent, UserAgent, getMessageCount())
 
     # Enviamos la peticion de retorno al Gestor de Devoluciones
     logger.info("Enviando petición de retorno")
@@ -298,7 +298,7 @@ def submitReturn(request):
                       msgcnt=getMessageCount(),
                       content=accion), agente.address)
     logger.info("Recibido resultado de retorno")
-    return render_template('procesandoRetorno.html')
+    return render_template('procesandoDevolucion.html')
 
 def UserAgentbehavior1():
     """
