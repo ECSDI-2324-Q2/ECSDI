@@ -18,7 +18,7 @@ from rdflib.namespace import RDF, FOAF
 from AgentUtil.OntoNamespaces import ACL, DSO
 from AgentUtil.OntoNamespaces import ECSDI
 from rdflib import XSD
-from AgentUtil.Agent import Agent
+from AgentUtil.Agent import Agent, AgentCL
 
 agn = Namespace("http://www.agentes.org#")
 
@@ -138,3 +138,31 @@ def getAgentInfo(agentType, directoryAgent, sender, messageCount):
     name = gr.value(subject=content, predicate=FOAF.name)
 
     return Agent(name, url, address, None)
+
+
+def getCentroLogisticoMasCercano(agentType, directoryAgent, sender, messageCount, postCode):
+    gmess = Graph()
+    # Construimos el mensaje de registro
+    gmess.bind('foaf', FOAF)
+    gmess.bind('dso', DSO)
+    ask_obj = agn[sender.name + '-Search']
+
+    gmess.add((ask_obj, RDF.type, DSO.Search))
+    gmess.add((ask_obj, DSO.AgentType, agentType))
+    gmess.add((ask_obj, ECSDI.CodigoPostal,Literal(postCode,datatype=XSD.int)))
+    gr = send_message(build_message(gmess, perf=ACL.request, sender=sender.uri, receiver=directoryAgent.uri, msgcnt=messageCount,
+                      content=ask_obj),directoryAgent.address
+    )
+    dic = get_message_properties(gr)
+    content = dic['content']
+    agents = []
+    for (s, p, o) in gr.triples((content, None, None)):
+        if str(p).startswith('http://www.w3.org/1999/02/22-rdf-syntax-ns#_'):
+            address = gr.value(subject=o, predicate=DSO.Address)
+            url = gr.value(subject=o, predicate=DSO.Uri)
+            name = gr.value(subject=o, predicate=FOAF.name)
+            dif = gr.value(subject=o, predicate=ECSDI.DiferenciaCodigoPostal)
+            agent = AgentCL(name, url, address, dif, None)
+            agents += [agent]
+
+    return sorted(agents, key=lambda agent2: agent2.diference)

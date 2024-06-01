@@ -3,11 +3,14 @@
 
 default:Factura1 a default:Factura ;
     default:Facturando default:Producto1,
+        default:ProductoExterno1,
         default:ProductoExterno3,
         <http://www.semanticweb.org/arnaut/ontologies/2024/4/ECSDIShop#Producto1> ;
     default:PrecioTotal "2.0"^^xsd:float,
-        "308.0"^^xsd:float ;
+        "308.0"^^xsd:float,
+        "2000.0"^^xsd:float ;
     default:Tarjeta "12"^^xsd:int,
+        "123"^^xsd:int,
         "1234"^^xsd:int,
         "123123"^^xsd:int,
         "1231232"^^xsd:int .
@@ -16,6 +19,10 @@ default:Factura2 a default:Factura ;
     default:Facturando default:Producto1 ;
     default:PrecioTotal "308.0"^^xsd:float ;
     default:Tarjeta "12"^^xsd:int .
+
+default:ProductoExterno1 a default:Producto ;
+    default:Nombre "pc"^^xsd:string ;
+    default:Precio "2000.0"^^xsd:float .
 
 default:ProductoExterno3 a default:Producto ;
     default:Nombre "gafas"^^xsd:string ;

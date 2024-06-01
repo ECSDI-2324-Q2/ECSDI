@@ -177,7 +177,6 @@ def findProductsByFilter(Nombre=None,PrecioMin=0.0,PrecioMax=sys.float_info.max)
     # Añadimos los productos resultantes de la búsqueda
     for product in graph_query:
         product_nombre = product.Nombre
-        print(product_nombre)
         product_precio = product.Precio
         product_descripcion = product.Descripcion
         product_peso = product.Peso

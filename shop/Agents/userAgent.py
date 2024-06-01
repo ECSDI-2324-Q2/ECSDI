@@ -134,7 +134,6 @@ def procesarVenta(listaDeCompra, prioridad, numTarjeta, direccion, codigoPostal)
         grafoCompra.add((sujetoCompra, ECSDI.Contiene, URIRef(sujetoProducto)))
 
     grafoCompra.add((content,ECSDI.De,URIRef(sujetoCompra)))
-    print(grafoCompra.serialize(format='xml'))
 
     # Pedimos información del agente vendedor
     comerciante = getAgentInfo(agn.ComercianteAgent, DirectoryAgent, UserAgent, getMessageCount())
@@ -155,8 +154,6 @@ def buy(request):
     logger.info("Haciendo petición de compra")
     listaDeCompra = []
     for producto in request.form.getlist("checkbox"):
-        print(int(producto))
-        print(len(listaDeProductos))
         listaDeCompra.append(listaDeProductos[int(producto)])
 
     numTarjeta = int(request.form['numeroTarjeta'])
@@ -214,7 +211,6 @@ def enviarPeticionBusqueda(request):
     
     # Añadimos el nombre del producto a buscar
     if nombreProducto:
-        print(nombreProducto)
         nombreSujeto = ECSDI['FiltroPorNombre' + str(getMessageCount())]
         grafoDeContenido.add((nombreSujeto, RDF.type, ECSDI.FiltroPorNombre))
         grafoDeContenido.add((nombreSujeto, ECSDI.Nombre, Literal(nombreProducto, datatype=XSD.string)))
@@ -225,8 +221,6 @@ def enviarPeticionBusqueda(request):
     
     #Añaadimos el precio minimo y maximo
     if precioMinimo or precioMaximo:
-        print(precioMinimo)
-        print(precioMaximo)
         
         precioSujeto = ECSDI['FiltroPorPrecio' + str(getMessageCount())]
         grafoDeContenido.add((precioSujeto, RDF.type, ECSDI.FiltroPorPrecio))

@@ -8,6 +8,7 @@ Tiene una funcion AgentBehavior1 que se lanza como un thread concurrente
 Asume que el agente de registro esta en el puerto 9000
 """
 import argparse
+from datetime import datetime, timedelta
 import socket
 import sys
 
@@ -103,18 +104,109 @@ def getMessageCount():
 def registrarCompra(grafoEntrada):
     logger.info("Registrando la compra")
     ontologyFile = open('../data/ComprasDB')
-    print(ontologyFile.read())
 
     grafoCompras = Graph()
     grafoCompras.bind('default', ECSDI)
     grafoCompras.parse(ontologyFile, format='turtle')
     grafoCompras += grafoEntrada
 
-    print(grafoCompras.serialize(format='xml'))
-
     # Guardem el graf
     grafoCompras.serialize(destination='../data/ComprasDB', format='turtle')
     logger.info("Registro de compra finalizado")
+
+def procesarEnvio(grafo, contenido):
+    logger.info("Recibida peticion de envio")
+    thread1 = Thread(target=registrarEnvio,args=(grafo,contenido))
+    thread1.start()
+    #thread2 = Thread(target=solicitarEnvio,args=(grafo,contenido))
+    #thread2.start()
+
+def registrarEnvio(grafo, contenido):
+
+    envio = grafo.value(predicate=RDF.type,object=ECSDI.PeticionEnvio)
+    grafo.add((envio,ECSDI.Pagado,Literal(False,datatype=XSD.boolean)))
+    prioridad = grafo.value(subject=contenido, predicate=ECSDI.Prioridad)
+    fecha = datetime.now() + timedelta(days=int(prioridad))
+    grafo.add((envio,ECSDI.FechaEntrega,Literal(fecha, datatype=XSD.date)))
+    logger.info("Registrando el envio")
+    ontologyFile = open('../data/EnviosDB')
+
+    grafoEnvios = Graph()
+    grafoEnvios.bind('default', ECSDI)
+    grafoEnvios.parse(ontologyFile, format='turtle')
+    grafoEnvios += grafo
+
+    # Guardem el graf
+    grafoEnvios.serialize(destination='../data/EnviosDB', format='turtle')
+    logger.info("Registro de envio finalizado")
+
+
+def solicitarEnvio(grafo,contenido):
+    grafoCopia = grafo
+    grafoCopia.bind('default', ECSDI)
+    direccion = grafo.subjects(object=ECSDI.Direccion)
+    codigoPostal = None
+    logger.info("Haciendo peticion envio a Centro Logistico")
+    for d in direccion:
+        codigoPostal = grafo.value(subject=d,predicate=ECSDI.CodigoPostal)
+    centroLogisticoAgente = getAgentInfo(agn.CentroLogisticoDirectoryAgent, DirectoryAgent, ComercianteAgent, getMessageCount())
+    prioridad = grafo.value(subject=contenido,predicate=ECSDI.Prioridad)
+    # solicitamos centros logisticos dependiendo del codigo postal
+    if codigoPostal is not None:
+        agentes = getCentroLogisticoMasCercano(agn.CentroLogisticoAgent, centroLogisticoAgente, ComercianteAgent, getMessageCount(), int(codigoPostal))
+
+
+        grafoCopia.remove((contenido,ECSDI.Tarjeta,None))
+        grafoCopia.remove((contenido,RDF.type,ECSDI.PeticionEnvio))
+        sujeto = ECSDI['PeticionEnvioACentroLogistico' + str(getMessageCount())]
+        grafoCopia.add((sujeto, RDF.type, ECSDI.PeticionEnvioACentroLogistico))
+
+        for a, b, c in grafoCopia:
+            if a == contenido:
+                if b == ECSDI.De: #Compra
+                    grafoCopia.remove((a, b, c))
+                    grafoCopia.add((sujeto, ECSDI.EnvioDe, c))
+                else:
+                    grafoCopia.remove((a,b,c))
+                    grafoCopia.add((sujeto,b,c))
+
+        for ag in agentes:
+            logger.info("Enviando peticion envio a Centro Logistico")
+            respuesta = send_message(
+                build_message(grafoCopia, perf=ACL.request, sender=ComercianteAgent.uri, receiver=ag.uri,
+                              msgcnt=getMessageCount(),
+                              content=sujeto), ag.address)
+            logger.info("Recibida respuesta de envio a Centro Logistico")
+            accion = respuesta.subjects(predicate=RDF.type, object=ECSDI.RespuestaEnvioDesdeCentroLogistico)
+            contenido = None
+            for a in accion:
+                contenido = a
+
+            for item in respuesta.subjects(RDF.type, ACL.FipaAclMessage):
+                respuesta.remove((item, None, None))
+            respuesta.remove((None, RDF.type, ECSDI.RespuestaEnvioDesdeCentroLogistico))
+            respuesta.add((sujeto, RDF.type, ECSDI.PeticionEnvioACentroLogistico))
+
+            grafoCopia = respuesta
+
+            contiene = False
+            for a, b, c in grafoCopia:
+                if a == contenido:
+                    if b == ECSDI.Faltan:  # Compra
+                        grafoCopia.remove((a, b, c))
+                        grafoCopia.add((sujeto, ECSDI.EnvioDe, c))
+
+                    elif b == ECSDI.Contiene:
+                        contiene = True
+                    else:
+                        grafoCopia.remove((a, b, c))
+                        grafoCopia.add((sujeto, b, c))
+
+            if not contiene:
+                break
+            else:
+                logger.info("Faltan productos por enviar. Probamos con otro centro logístico")
+    logger.info("Enviada peticion envio a Centro Logistico")
 
 
 # Función que efectua y organiza en threads el proceso de vender
@@ -135,12 +227,13 @@ def vender(grafoEntrada, content):
                     msgcnt=getMessageCount(),
                     content=content), agente.address)
 
-    # suj = grafoEntrada.value(predicate=RDF.type, object=ECSDI.PeticionCompra)
-    # grafoEntrada.add((suj, ECSDI.PrecioTotal, Literal(precioTotal, datatype=XSD.float)))
+    #suj = grafoEntrada.value(predicate=RDF.type, object=ECSDI.PeticionCompra)
+    #grafoEntrada.add((suj, ECSDI.PrecioTotal, Literal(precioTotal, datatype=XSD.float)))
 
     # # Enviar compra a Enviador
     # thread = Thread(target=enviarCompra, args=(grafoEntrada, content))
     # thread.start()
+    procesarEnvio(grafoEntrada, content)
 
     # logger.info("Devolviendo factura")
     return grafoFactura

@@ -4,19 +4,19 @@
 default:PeticionCompra5 a default:PeticionCompra ;
     default:De default:Compra7 ;
     default:Prioridad "1"^^xsd:int ;
-    default:Tarjeta "1234"^^xsd:int .
+    default:Tarjeta "123"^^xsd:int .
 
 default:Compra7 a default:Compra ;
-    default:Contiene default:ProductoExterno3 ;
+    default:Contiene default:ProductoExterno1 ;
     default:Destino default:Direccion6 .
 
 default:Direccion6 a default:Direccion ;
-    default:CodigoPostal "3"^^xsd:int ;
-    default:Direccion "aef"^^xsd:string .
+    default:CodigoPostal "321"^^xsd:int ;
+    default:Direccion "abc"^^xsd:string .
 
-default:ProductoExterno3 a default:Producto ;
-    default:Descripcion "gafas"^^xsd:string ;
-    default:Nombre "gafas"^^xsd:string ;
-    default:Peso "200.0"^^xsd:float ;
-    default:Precio "2.0"^^xsd:float .
+default:ProductoExterno1 a default:Producto ;
+    default:Descripcion "macbook"^^xsd:string ;
+    default:Nombre "pc"^^xsd:string ;
+    default:Peso "100.0"^^xsd:float ;
+    default:Precio "2000.0"^^xsd:float .
 
