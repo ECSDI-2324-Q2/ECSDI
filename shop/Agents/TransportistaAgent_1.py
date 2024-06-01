@@ -8,6 +8,7 @@ Tiene una funcion AgentBehavior1 que se lanza como un thread concurrente
 Asume que el agente de registro esta en el puerto 9000
 """
 import argparse
+import datetime
 import socket
 import sys
 sys.path.append('../')
@@ -71,8 +72,8 @@ agn = Namespace("http://www.agentes.org#")
 mss_cnt = 0
 
 # Datos del Agente
-TransportistaAgent = Agent('TransportistaAgent',
-                    agn.TransportistaAgent,
+TransportistaAgent = Agent('TransportistaAgent1',
+                    agn.TransportistaAgent1,
                     'http://%s:%d/comm' % (hostname, port),
                     'http://%s:%d/Stop' % (hostname, port))
 
@@ -97,7 +98,32 @@ def getMessageCount():
     mss_cnt += 1
     return mss_cnt
 
+def realizarTransporte(grafoEntrada, content):
+    logger.info('Recibida Peticion Envio Lote')
+    logger.info('Su pedido llegara el dia:' + str(datetime.now() + datetime.timedelta(days=1)))
+    logger.info('Soy el transportista:' + TransportistaAgent.name)
 
+def realizarOfertaTransporte(grafoEntrada, content):
+    logger.info("Recibida petición oferta")
+    lote = grafoEntrada.value(subject=content, predicate=ECSDI.DeLote)
+    peso = grafoEntrada.value(subject=lote, predicate=ECSDI.Peso)
+
+    precio = calcularPrecio(float(peso))
+
+    grafoOferta = Graph()
+    grafoOferta.bind('default', ECSDI)
+    logger.info("Haciendo oferta de transporte")
+    contentOferta = ECSDI['RespuestaOfertaTransporte'+ str(getMessageCount())]
+    grafoOferta.add((contentOferta, RDF.type, ECSDI.RespuestaOfertaTransporte))
+    grafoOferta.add((contentOferta, ECSDI.Precio, Literal(precio, datatype=XSD.float)))
+    logger.info("Devolvemos oferta de transporte")
+    return grafoOferta
+
+def calcularPrecio(peso):
+    logger.info("Calculando oferta")
+    oferta = 5.0 + peso*2
+    logger.info("Oferta calculada: " + oferta)
+    return oferta
 
 #funcion llamada en /comm
 @app.route("/comm")
@@ -126,15 +152,21 @@ def communication():
             content = messageProperties['content']
             accion = grafoEntrada.value(subject=content, predicate=RDF.type)
 
-            # # Si la acción es de tipo peticiónCompra emprendemos las acciones consequentes
-            # if accion == ECSDI.GenerarFactura:
+            # # Si la acción es de tipo peticionTrasporte emprendemos las acciones consequentes
+            if accion == ECSDI.PeticionTransporte:
 
-            #     # Eliminar los ACLMessage
-            #     for item in grafoEntrada.subjects(RDF.type, ACL.FipaAclMessage):
-            #         grafoEntrada.remove((item, None, None))
+                # Eliminar los ACLMessage
+                for item in grafoEntrada.subjects(RDF.type, ACL.FipaAclMessage):
+                    grafoEntrada.remove((item, None, None))
 
-            #     resultadoComunicacion = generar_factura(grafoEntrada, content)
+                realizarTransporte(grafoEntrada, content)
 
+            else:
+                if accion == ECSDI.PeticionOfertaTransporte:
+                    # Eliminar los ACLMessage
+                    for item in grafoEntrada.subjects(RDF.type, ACL.FipaAclMessage):
+                        grafoEntrada.remove((item, None, None))
+                    resultadoComunicacion = realizarOfertaTransporte(grafoEntrada, content)
             
 
     serialize = resultadoComunicacion.serialize(format='xml')
