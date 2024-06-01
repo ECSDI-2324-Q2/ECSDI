@@ -8,20 +8,27 @@ Tiene una funcion AgentBehavior1 que se lanza como un thread concurrente
 Asume que el agente de registro esta en el puerto 9000
 """
 import argparse
+from datetime import datetime, timedelta
 import socket
 import threading
+import sys
+
+sys.path.append('../')
 from multiprocessing import Queue, Process
 from time import sleep
 
 from flask import Flask, request
-from rdflib import *
+from rdflib import URIRef, XSD, Namespace, Literal
 
-from utils.ACLMessages import *
-from utils.Agent import Agent
-from utils.FlaskServer import shutdown_server
-from utils.Logging import config_logger
-from utils.OntologyNamespaces import ECSDI
-__author__ = 'ECSDIstore'
+from AgentUtil.ACLMessages import *
+from AgentUtil.Agent import Agent
+from AgentUtil.FlaskServer import shutdown_server
+from AgentUtil.Logging import config_logger
+from AgentUtil.OntoNamespaces import ECSDI
+from AgentUtil.OntoNamespaces import ACL, DSO
+from rdflib.namespace import FOAF, RDF, RDFS
+
+__author__ = 'Arnau'
 
 # Definimos los parametros de la linea de comandos
 parser = argparse.ArgumentParser()

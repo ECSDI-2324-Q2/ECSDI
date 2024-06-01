@@ -9,20 +9,25 @@ Utiliza un registro simple que guarda en un grafo RDF
 El registro no es persistente y se mantiene mientras el agente funciona
 
 """
-
 import argparse
+from datetime import datetime, timedelta
 import socket
-from multiprocessing import Process, Queue
-from flask import Flask, request, render_template
-from rdflib import Graph, RDF, Namespace, RDFS, BNode, URIRef
-from rdflib.namespace import FOAF
-from utils.OntologyNamespaces import ACL, DSO
+import sys
 
-from utils.ACLMessages import *
-from utils.Agent import Agent
-from utils.FlaskServer import shutdown_server
-from utils.Logging import config_logger
-from utils.OntologyNamespaces import ECSDI
+sys.path.append('../')
+from multiprocessing import Queue, Process
+from threading import Thread
+
+from flask import Flask, request
+from rdflib import URIRef, XSD, Namespace, Literal
+
+from AgentUtil.ACLMessages import *
+from AgentUtil.Agent import Agent
+from AgentUtil.FlaskServer import shutdown_server
+from AgentUtil.Logging import config_logger
+from AgentUtil.OntoNamespaces import ECSDI
+from AgentUtil.OntoNamespaces import ACL, DSO
+from rdflib.namespace import FOAF, RDF, RDFS
 
 __author__ = 'Arnau'
 
@@ -117,7 +122,7 @@ def register():
         logger.info('Peticion de registro centro logistico')
 
         agn_add = gm.value(subject=content, predicate=DSO.Address)
-        agn_name = gm.value(subject=content, predicate=FOAF.Name)
+        agn_name = gm.value(subject=content, predicate=FOAF.name)
         agn_uri = gm.value(subject=content, predicate=DSO.Uri)
         agn_type = gm.value(subject=content, predicate=DSO.AgentType)
         agn_cp = gm.value(subject=content,predicate=ECSDI.CodigoPostal)
