@@ -40,6 +40,7 @@ default:PeticionCompra5 a default:PeticionCompra ;
     default:Prioridad "1"^^xsd:int ;
     default:Tarjeta "123"^^xsd:int,
         "132"^^xsd:int,
+        "2222"^^xsd:int,
         "123123"^^xsd:int,
         "12332312"^^xsd:int,
         "123456789"^^xsd:int .
@@ -168,8 +169,10 @@ default:Direccion6 a default:Direccion ;
         "123"^^xsd:int,
         "213"^^xsd:int,
         "321"^^xsd:int,
-        "89500"^^xsd:int ;
-    default:Direccion "abc"^^xsd:string,
+        "89500"^^xsd:int,
+        "1234434"^^xsd:int ;
+    default:Direccion "123"^^xsd:string,
+        "abc"^^xsd:string,
         "ad"^^xsd:string,
         "adb"^^xsd:string,
         "adw"^^xsd:string,

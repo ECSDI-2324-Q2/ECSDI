@@ -8,6 +8,12 @@ ns1:message--1475597233197073418-0002 a ns1:FipaAclMessage ;
     ns1:receiver <http://www.agentes.org#FinancieroAgent> ;
     ns1:sender <http://www.agentes.org#ComercianteAgent> .
 
+ns1:message--3090505097449465825-0002 a ns1:FipaAclMessage ;
+    ns1:content default:PeticionCompra5 ;
+    ns1:performative ns1:request ;
+    ns1:receiver <http://www.agentes.org#FinancieroAgent> ;
+    ns1:sender <http://www.agentes.org#ComercianteAgent> .
+
 ns1:message--5619215762375910943-0002 a ns1:FipaAclMessage ;
     ns1:content default:PeticionCompra5 ;
     ns1:performative ns1:request ;
@@ -37,6 +43,7 @@ default:PeticionEnvio3 a default:GenerarFactura,
     default:Prioridad "1"^^xsd:int ;
     default:Tarjeta "123"^^xsd:int,
         "132"^^xsd:int,
+        "2222"^^xsd:int,
         "12332312"^^xsd:int .
 
 default:Producto1 a default:Producto ;
@@ -51,8 +58,13 @@ default:Producto8 a default:Producto ;
     default:Peso "0.5"^^xsd:float ;
     default:Precio "1.0"^^xsd:float .
 
+default:ProductoExterno1 a default:Producto ;
+    default:Descripcion "macbook"^^xsd:string ;
+    default:Nombre "pc"^^xsd:string ;
+    default:Peso "100.0"^^xsd:float ;
+    default:Precio "2000.0"^^xsd:float .
+
 default:Compra13 a default:Compra ;
-    default:Contiene default:ProductoExterno1 ;
     default:Destino default:Direccion12 .
 
 default:Compra7 a default:Compra ;
@@ -66,12 +78,8 @@ default:Direccion12 a default:Direccion ;
         "wqe"^^xsd:string .
 
 default:Direccion6 a default:Direccion ;
-    default:CodigoPostal "13"^^xsd:int ;
-    default:Direccion "ad"^^xsd:string .
-
-default:ProductoExterno1 a default:Producto ;
-    default:Descripcion "macbook"^^xsd:string ;
-    default:Nombre "pc"^^xsd:string ;
-    default:Peso "100.0"^^xsd:float ;
-    default:Precio "2000.0"^^xsd:float .
+    default:CodigoPostal "13"^^xsd:int,
+        "1234434"^^xsd:int ;
+    default:Direccion "123"^^xsd:string,
+        "ad"^^xsd:string .
 

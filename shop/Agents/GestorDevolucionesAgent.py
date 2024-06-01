@@ -103,7 +103,7 @@ def validarDevolucion(content, grafoEntrada):
     motivo = next(grafoEntrada.objects(predicate=ECSDI.MotivoDevolucion), None)
     logger.info("Recibida peticion de retorno con motivo: " + motivo)
 
-    if motivo == "No Satisfactorio":
+    if motivo == "noSatisface":
         products = grafoEntrada.objects(subject=content, predicate= ECSDI.Auna)
 
         limit = datetime.now() - timedelta(days=15)

@@ -15,6 +15,7 @@ default:Factura1 a default:Factura ;
         "123"^^xsd:int,
         "132"^^xsd:int,
         "1234"^^xsd:int,
+        "2222"^^xsd:int,
         "123123"^^xsd:int,
         "1231232"^^xsd:int,
         "12332312"^^xsd:int,
