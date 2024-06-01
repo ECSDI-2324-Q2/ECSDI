@@ -135,6 +135,9 @@ def procesarVenta(listaDeCompra, prioridad, numTarjeta, direccion, codigoPostal)
 
     grafoCompra.add((content,ECSDI.De,URIRef(sujetoCompra)))
 
+    # Pedimos información del agente filtrador
+    #comerciante = getAgentInfo(agn.ComercianteAgent, DirectoryAgent, UserAgent, getMessageCount())
+
     # Pedimos información del agente vendedor
     comerciante = getAgentInfo(agn.ComercianteAgent, DirectoryAgent, UserAgent, getMessageCount())
     
@@ -177,10 +180,9 @@ def buy(request):
 
 @app.route("/")
 def index():
-
     return render_template('index.html')
 
-@app.route("/search", methods=['GET', 'POST'])
+@app.route("/search", methods=['GET', 'POST']) # type: ignore
 def search():
     global listaDeProductos
     if request.method == 'GET':
@@ -191,6 +193,112 @@ def search():
         elif request.form['submit'] == 'Buy':
             print("Comprando")
             return buy(request)
+        
+@app.route("/return",methods=['GET', 'POST'])  # type: ignore
+def getProductsToReturn():
+    global listaDeProductos
+    if request.method == 'POST':
+        if request.form['return'] == 'submit':
+            return verProductosRetorno(request)
+
+        elif request.form['return'] == 'Submit':
+            return submitReturn(request)
+        
+
+def verProductosRetorno(request):
+    global listaDeProductos
+    logger.info("Haciendo petición de productos enviados")
+    grafoDeContenido = Graph()
+
+    accion = ECSDI["PeticionProductosEnviados" + str(getMessageCount())]
+    grafoDeContenido.add((accion, RDF.type, ECSDI.PeticionProductosEnviados))
+    tarjeta = request.form['tarjeta']
+    grafoDeContenido.add((accion, ECSDI.Tarjeta, Literal(tarjeta, datatype=XSD.int)))
+
+    logger.info("enviando petición de productos enviados a gestor de devoluciones")
+
+    # Pedimos información del Gestor de Devoluciones
+    agente = getAgentInfo(agn.GestorDevoluciones, DirectoryAgent, UserAgent, getMessageCount())
+
+    logger.info("Enviando petición de productos enviados")
+    # Enviamos petición de productos enviados al agente Gestor de Devoluciones
+    grafoBusqueda = send_message(
+        build_message(grafoDeContenido, perf=ACL.request, sender=UserAgent.uri, receiver=agente.uri,
+                      msgcnt=getMessageCount(),
+                      content=accion), agente.address)
+
+    logger.info("Recibido resultado de productos enviados")
+    listaDeProductos = []
+    posicionDeSujetos = {}
+    indice = 0
+    for s, p, o in grafoBusqueda:
+        if s not in posicionDeSujetos:
+            posicionDeSujetos[s] = indice
+            indice += 1
+            listaDeProductos.append({})
+        if s in posicionDeSujetos:
+            producto = listaDeProductos[posicionDeSujetos[s]]
+            if p == ECSDI.Nombre:
+                producto["Nombre"] = o
+            elif p == ECSDI.Precio:
+                producto["Precio"] = o
+            elif p == ECSDI.Descripcion:
+                producto["Descripcion"] = o
+            elif p == ECSDI.Id:
+                producto["Id"] = o
+            elif p == ECSDI.Peso:
+                producto["Peso"] = o
+            elif p == RDF.type:
+                producto["Sujeto"] = s
+            elif p == ECSDI.EsDe:
+                producto["Compra"] = o
+            listaDeProductos[posicionDeSujetos[s]] = producto
+
+    # Mostramos la lista de productos enviados
+    return render_template('devolucion.html', products=listaDeProductos)
+
+def submitReturn(request):
+    global listaDeProductos
+    logger.info("Haciendo petición de retorno")
+    listaDeDevoluciones = []
+    for producto in request.form.getlist("checkbox"):
+        listaDeDevoluciones.append(listaDeProductos[int(producto)])
+
+    # ACCION -> Peticion Retorno
+    accion = ECSDI["PeticionRetorno" + str(getMessageCount())]
+    grafoDeContenido = Graph()
+    grafoDeContenido.add((accion, RDF.type, ECSDI.PeticionRetorno))
+    direccion = request.form['direccion']
+    codigoPostal = int(request.form['codigoPostal'])
+
+    # Añadimos los productos a devolver
+    for producto in listaDeDevoluciones:
+        sujetoProducto = producto['Sujeto']
+        grafoDeContenido.add((sujetoProducto, RDF.type, ECSDI.ProductoEnviado))
+        grafoDeContenido.add((sujetoProducto, ECSDI.Descripcion, producto['Descripcion']))
+        grafoDeContenido.add((sujetoProducto, ECSDI.Nombre, producto['Nombre']))
+        grafoDeContenido.add((sujetoProducto, ECSDI.Precio, producto['Precio']))
+        grafoDeContenido.add((sujetoProducto, ECSDI.Peso, producto['Peso']))
+        grafoDeContenido.add((sujetoProducto, ECSDI.EsDe, producto['Compra']))
+        grafoDeContenido.add((accion, ECSDI.Auna, URIRef(sujetoProducto)))
+
+    sujetoDireccion = ECSDI['Direccion' + str(getMessageCount())]
+    grafoDeContenido.add((sujetoDireccion, RDF.type, ECSDI.Direccion))
+    grafoDeContenido.add((sujetoDireccion, ECSDI.Direccion, Literal(direccion, datatype=XSD.string)))
+    grafoDeContenido.add((sujetoDireccion, ECSDI.CodigoPostal, Literal(codigoPostal, datatype=XSD.int)))
+    grafoDeContenido.add((accion, ECSDI.DireccionadoA, URIRef(sujetoDireccion)))
+
+    # Pedimos informacion del Gestor de Devoluciones
+    agente = getAgentInfo(agn.GestorDeDevoluciones, DirectoryAgent, UserAgent, getMessageCount())
+
+    # Enviamos la peticion de retorno al Gestor de Devoluciones
+    logger.info("Enviando petición de retorno")
+    grafoBusqueda = send_message(
+        build_message(grafoDeContenido, perf=ACL.request, sender=UserAgent.uri, receiver=agente.uri,
+                      msgcnt=getMessageCount(),
+                      content=accion), agente.address)
+    logger.info("Recibido resultado de retorno")
+    return render_template('procesandoRetorno.html')
 
 def UserAgentbehavior1():
     """

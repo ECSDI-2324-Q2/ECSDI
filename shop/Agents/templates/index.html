@@ -17,20 +17,56 @@
         }
         table {
             width: 80%;
-            margin: 0 auto;
+            margin: 50px auto;
             border-collapse: collapse;
+            box-shadow: 0px 0px 20px #bbb;
+            border-radius: 10px;
+            overflow: hidden;
         }
         td {
             padding: 15px;
             text-align: left;
             border-bottom: 1px solid #ddd;
+            background-color: #fff;
         }
         a {
-            color: #333;
+            color: white;
             text-decoration: none;
         }
-        a:hover {
-            color: #1387c6;
+        button{
+            background-color: #1387c6;
+            border: none;
+            color: white;
+            padding: 15px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            border-radius: 12px;
+            transition: background-color 0.3s ease;
+        }
+        button:hover{
+            background-color: #1d526f;
+            color: white;
+        }
+        input[type="text"] {
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            width: 100%;
+            margin-bottom: 10px;
+        }
+        input[type="submit"] {
+            background-color: #1387c6;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        input[type="submit"]:hover {
+            background-color: #1d526f;
         }
     </style>
 </head>
@@ -38,10 +74,19 @@
     <h1><b>Bienvenido a tu tienda favorita!</b></h1>
     <table>
         <tr>
-            <td><a href="./search">Búsqueda de productos</a></td>
+            <td><button><a href="./search">Búsqueda de productos</a></button></td>
+        </tr>
+        <tr><td></td></tr>
+        <tr>
+            <td>Para devolver productos indica la tarjeta con la que lo has comprado</td>
         </tr>
         <tr>
-            <td><a>Realizar una devolución</a></td>
+            <td>
+                <form method="post" action="/return" >
+                <input type="text" name="tarjeta" placeholder="Tarjeta..."/><br>
+                <input type="submit" name="return" value="submit">
+                </form>
+            </td>
         </tr>
     </table>
 </body>
