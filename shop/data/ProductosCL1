@@ -1,0 +1,86 @@
+@prefix default: <http://www.owl-ontologies.com/ECSDIstore#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+default:Stock1 a default:Stock ;
+    default:Tiene default:Producto1 ;
+
+default:Stock2 a default:Stock ;
+    default:Tiene default:Producto2 ;
+
+default:Stock3 a default:Stock ;
+    default:Tiene default:Producto3 ;
+
+default:Stock4 a default:Stock ;
+    default:Tiene default:Producto4 ;
+
+default:Stock6 a default:Stock ;
+    default:Tiene default:Producto6 ;
+
+default:Stock7 a default:Stock ;
+    default:Tiene default:Producto7 ;
+
+default:Stock9 a default:Stock ;
+    default:Tiene default:Producto9 ;
+
+default:Producto1 a default:Producto ;
+    default:Descripcion "Esto son Patatas"^^xsd:string ;
+    default:Id 1 ;
+    default:Nombre "Patatas"^^xsd:string ;
+    default:Peso "23.0"^^xsd:float ;
+    default:Precio "308.0"^^xsd:float .
+
+default:Producto2 a default:Producto ;
+    default:Descripcion "Esto es un Mouse"^^xsd:string ;
+    default:Id 2 ;
+    default:Nombre "Mouse"^^xsd:string ;
+    default:Peso "1.0"^^xsd:float ;
+    default:Precio "32.0"^^xsd:float .
+
+default:Producto3 a default:Producto ;
+    default:Descripcion "Esto es un Teclado"^^xsd:string ;
+    default:Id 3 ;
+    default:Nombre "Teclado"^^xsd:string ;
+    default:Peso "2.0"^^xsd:float ;
+    default:Precio "55.0"^^xsd:float .
+
+default:Producto4 a default:Producto ;
+    default:Descripcion "Esto es un Barco"^^xsd:string ;
+    default:Id 4 ;
+    default:Nombre "Barco"^^xsd:string ;
+    default:Peso "1000.0"^^xsd:float ;
+    default:Precio "20000.0"^^xsd:float .
+
+default:Producto5 a default:Producto ;
+    default:Descripcion "Esto es un Ordenador"^^xsd:string ;
+    default:Id 5 ;
+    default:Nombre "Ordenador"^^xsd:string ;
+    default:Peso "2.0"^^xsd:float ;
+    default:Precio "1000.0"^^xsd:float .
+
+default:Producto6 a default:Producto ;
+    default:Descripcion "Esto son unos Auriculares"^^xsd:string ;
+    default:Id 6 ;
+    default:Nombre "Auriculares"^^xsd:string ;
+    default:Peso "0.5"^^xsd:float ;
+    default:Precio "20.0"^^xsd:float .
+
+default:Producto7 a default:Producto ;
+    default:Descripcion "Esto es un Cable"^^xsd:string ;
+    default:Id 7 ;
+    default:Nombre "Cable"^^xsd:string ;
+    default:Peso "0.5"^^xsd:float ;
+    default:Precio "5.0"^^xsd:float .
+
+default:Producto8 a default:Producto ;
+    default:Descripcion "Esto es un Platano"^^xsd:string ;
+    default:Id 8 ;
+    default:Nombre "Platano"^^xsd:string ;
+    default:Peso "0.5"^^xsd:float ;
+    default:Precio "1.0"^^xsd:float .
+
+default:Producto9 a default:Producto ;
+    default:Descripcion "Esto es una Nuria "^^xsd:string ;
+    default:Id 9 ;
+    default:Nombre "Nuria Bruch"^^xsd:string ;
+    default:Peso "55.0"^^xsd:float ;
+    default:Precio "23000000.0"^^xsd:float .

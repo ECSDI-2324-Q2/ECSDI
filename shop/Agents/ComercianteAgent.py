@@ -241,8 +241,9 @@ def vender(grafoEntrada, content):
     # # Enviar compra
     thread = Thread(target=enviarCompra, args=(grafoEntrada, content))
     thread.start()
+    solicitarEnvio(grafoEntrada, content)
 
-    # logger.info("Devolviendo factura")
+    logger.info("Devolviendo factura")
     return grafoFactura
 
 def enviarCompra(grafoEntrada,content):
