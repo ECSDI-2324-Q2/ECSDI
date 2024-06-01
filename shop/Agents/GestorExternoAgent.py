@@ -99,7 +99,7 @@ def getMessageCount():
     return mss_cnt
 
 # Función que agrega un Producto Externo a la base de datos
-def agregarProducto(content, grafoEntrada):
+def añadirProducto(content, grafoEntrada):
     logger.info("Recibida peticion de agregar productos")
     for item in grafoEntrada.subjects(RDF.type, ACL.FipaAclMessage):
         grafoEntrada.remove((item, None, None))
@@ -131,8 +131,8 @@ def procesarProductoExterno(graph):
         elif b == ECSDI.Tarjeta:
             tarjeta = c
 
-    logger.info("Registrando producto " + nombre + " " + descripcion + " que pesa " + peso + " con precio " + precio)
-    # Añadimos el producto externo a la base de datos de productos
+    logger.info("Registrando producto " + nombre + " con descripcion: " + descripcion + " que pesa: " + peso + " con precio: " + precio)
+    # Añadimos el producto externo a la base de datos de productos del sistema
     graph = Graph()
     ontologyFile = open('../data/BDProductos.owl')
     graph.parse(ontologyFile, format='turtle')
@@ -176,8 +176,8 @@ def communication():
             accion = grafoEntrada.value(subject=content, predicate=RDF.type)
 
             # Si la acción es de tipo busqueda emprendemos las acciones consequentes
-            if accion == ECSDI.PeticionAgregarProducto:
-                resultadoComunicacion = agregarProducto(content, grafoEntrada)
+            if accion == ECSDI.PeticionAgregarProductoExterno:
+                resultadoComunicacion = añadirProducto(content, grafoEntrada)
 
 
 

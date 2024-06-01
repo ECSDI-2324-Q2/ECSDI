@@ -109,7 +109,7 @@ def addProducto(request):
     gestionExterna = request.form.get('gestionExterna') is None
 
     logger.info("Haciendo petición de agregar producto")
-    sujeto = ECSDI["PeticionAgregarProducto" + str(getMessageCount())]
+    sujeto = ECSDI["PeticionAgregarProductoExterno" + str(getMessageCount())]
     graph = Graph()
     graph.add((sujeto, RDF.type, ECSDI.PeticionAgregarProducto))
     graph.add((sujeto, ECSDI.Nombre, Literal(nombreProducto, datatype=XSD.string)))
