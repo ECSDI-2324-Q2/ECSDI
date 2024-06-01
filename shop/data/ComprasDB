@@ -5,12 +5,18 @@ default:PeticionCompra14 a default:PeticionCompra ;
     default:De default:Compra16 ;
     default:Prioridad "1"^^xsd:int ;
     default:Tarjeta "13"^^xsd:int,
+        "123"^^xsd:int,
         "213"^^xsd:int .
 
 default:PeticionCompra23 a default:PeticionCompra ;
     default:De default:Compra25 ;
     default:Prioridad "1"^^xsd:int ;
     default:Tarjeta "312"^^xsd:int .
+
+default:PeticionCompra26 a default:PeticionCompra ;
+    default:De default:Compra28 ;
+    default:Prioridad "1"^^xsd:int ;
+    default:Tarjeta "123"^^xsd:int .
 
 default:PeticionCompra32 a default:PeticionCompra ;
     default:De default:Compra34 ;
@@ -26,7 +32,10 @@ default:PeticionCompra5 a default:PeticionCompra ;
     default:De default:Compra7 ;
     default:Prioridad "1"^^xsd:int ;
     default:Tarjeta "123"^^xsd:int,
-        "132"^^xsd:int .
+        "132"^^xsd:int,
+        "123123"^^xsd:int,
+        "12332312"^^xsd:int,
+        "123456789"^^xsd:int .
 
 default:PeticionCompra50 a default:PeticionCompra ;
     default:De default:Compra52 ;
@@ -66,6 +75,10 @@ default:Compra25 a default:Compra ;
     default:Contiene default:ProductoExterno1 ;
     default:Destino default:Direccion24 .
 
+default:Compra28 a default:Compra ;
+    default:Contiene default:Producto1 ;
+    default:Destino default:Direccion27 .
+
 default:Compra34 a default:Compra ;
     default:Contiene default:ProductoExterno1 ;
     default:Destino default:Direccion33 .
@@ -103,13 +116,19 @@ default:Compra97 a default:Compra ;
 
 default:Direccion15 a default:Direccion ;
     default:CodigoPostal "13"^^xsd:int,
+        "123"^^xsd:int,
         "132"^^xsd:int ;
-    default:Direccion "dsf"^^xsd:string,
+    default:Direccion "daw"^^xsd:string,
+        "dsf"^^xsd:string,
         "qwe"^^xsd:string .
 
 default:Direccion24 a default:Direccion ;
     default:CodigoPostal "123"^^xsd:int ;
     default:Direccion "fea"^^xsd:string .
+
+default:Direccion27 a default:Direccion ;
+    default:CodigoPostal "123"^^xsd:int ;
+    default:Direccion "wef"^^xsd:string .
 
 default:Direccion33 a default:Direccion ;
     default:CodigoPostal "213"^^xsd:int ;
@@ -124,13 +143,19 @@ default:Direccion51 a default:Direccion ;
     default:Direccion "awd"^^xsd:string .
 
 default:Direccion6 a default:Direccion ;
-    default:CodigoPostal "23"^^xsd:int,
+    default:CodigoPostal "13"^^xsd:int,
+        "23"^^xsd:int,
         "123"^^xsd:int,
-        "321"^^xsd:int ;
+        "213"^^xsd:int,
+        "321"^^xsd:int,
+        "89500"^^xsd:int ;
     default:Direccion "abc"^^xsd:string,
         "adb"^^xsd:string,
         "adw"^^xsd:string,
-        "rgs"^^xsd:string .
+        "casitaaaa"^^xsd:string,
+        "rgs"^^xsd:string,
+        "wadad"^^xsd:string,
+        "wda"^^xsd:string .
 
 default:Direccion60 a default:Direccion ;
     default:CodigoPostal "13"^^xsd:int ;
@@ -151,6 +176,12 @@ default:Direccion87 a default:Direccion ;
 default:Direccion96 a default:Direccion ;
     default:CodigoPostal "132"^^xsd:int ;
     default:Direccion "awd"^^xsd:string .
+
+default:Producto1 a default:Producto ;
+    default:Descripcion "Esto son Patatas"^^xsd:string ;
+    default:Nombre "Patatas"^^xsd:string ;
+    default:Peso "23.0"^^xsd:float ;
+    default:Precio "308.0"^^xsd:float .
 
 default:ProductoExterno3 a default:Producto ;
     default:Descripcion "gafas"^^xsd:string ;

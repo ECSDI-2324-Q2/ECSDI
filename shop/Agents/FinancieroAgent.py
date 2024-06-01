@@ -25,7 +25,7 @@ from AgentUtil.OntoNamespaces import ECSDI
 from AgentUtil.OntoNamespaces import ACL, DSO
 from rdflib.namespace import RDF, FOAF
 
-__author__ = 'ECSDIstore'
+__author__ = 'Miquel'
 
 # Definimos los parametros de la linea de comandos
 parser = argparse.ArgumentParser()
@@ -99,11 +99,13 @@ def getMessageCount():
 
 def registrarFactura(grafoEntrada):
     logger.info("Registrando la factura")
-    ontologyFile = open('../data/FacturasDB')
 
     grafoFacturas = Graph()
     grafoFacturas.bind('default', ECSDI)
-    grafoFacturas.parse(ontologyFile, format='turtle')
+
+    with open('../data/FacturasDB') as ontologyFile:
+        grafoFacturas.parse(ontologyFile, format='turtle')
+
     grafoFacturas += grafoEntrada
 
     # Guardem el graf
@@ -114,6 +116,8 @@ def generar_factura(grafoEntrada, content):
     logger.info("Generando factura")
 
     tarjeta = grafoEntrada.value(subject=content, predicate=ECSDI.Tarjeta)
+    compra = grafoEntrada.value(subject=content, predicate=ECSDI.De)
+
     grafoFactura = Graph()
     grafoFactura.bind('default', ECSDI)
 
@@ -122,27 +126,24 @@ def generar_factura(grafoEntrada, content):
     grafoFactura.add((sujeto, RDF.type, ECSDI.Factura))
     grafoFactura.add((sujeto, ECSDI.Tarjeta, Literal(tarjeta, datatype=XSD.int)))
 
-    compra = grafoEntrada.value(subject=content, predicate=ECSDI.De)
-
     precioTotal = 0
-    for producto in grafoEntrada.objects(subject=compra, predicate=ECSDI.Contiene):
-        grafoFactura.add((producto, RDF.type, ECSDI.Producto))
-
+    productos = grafoEntrada.objects(subject=compra, predicate=ECSDI.Contiene)
+    for producto in productos:
         nombreProducto = grafoEntrada.value(subject=producto, predicate=ECSDI.Nombre)
+        precioProducto = float(grafoEntrada.value(subject=producto, predicate=ECSDI.Precio))
+
+        grafoFactura.add((producto, RDF.type, ECSDI.Producto))
         grafoFactura.add((producto, ECSDI.Nombre, Literal(nombreProducto, datatype=XSD.string)))
-
-        precioProducto = grafoEntrada.value(subject=producto, predicate=ECSDI.Precio)
-        grafoFactura.add((producto, ECSDI.Precio, Literal(float(precioProducto), datatype=XSD.float)))
-        precioTotal += float(precioProducto)
-
+        grafoFactura.add((producto, ECSDI.Precio, Literal(precioProducto, datatype=XSD.float)))
         grafoFactura.add((sujeto, ECSDI.Facturando, URIRef(producto)))
+
+        precioTotal += precioProducto
 
     grafoFactura.add((sujeto, ECSDI.PrecioTotal, Literal(precioTotal, datatype=XSD.float)))
 
     # Guardar Factura
-    thread = Thread(target=registrarFactura, args=(grafoFactura,))
-    thread.start()
-    
+    Thread(target=registrarFactura, args=(grafoFactura,)).start()
+
     logger.info("Devolviendo factura")
     return grafoFactura
 

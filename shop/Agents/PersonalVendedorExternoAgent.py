@@ -22,7 +22,7 @@ from AgentUtil.Logging import config_logger
 from rdflib.namespace import RDF, FOAF
 from AgentUtil.OntoNamespaces import ACL, DSO
 
-__author__ = 'ECSDIstore'
+__author__ = 'Miquel'
 
 # Definimos los parametros de la linea de comandos
 parser = argparse.ArgumentParser()

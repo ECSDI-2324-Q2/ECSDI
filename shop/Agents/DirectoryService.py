@@ -37,7 +37,7 @@ from AgentUtil.OntoNamespaces import ACL, DSO
 from AgentUtil.Agent import Agent
 from AgentUtil.Logging import config_logger
 
-__author__ = 'ECSDIShop'
+__author__ = 'Marc Miquel'
 
 def obscure(dir):
     """
@@ -49,9 +49,6 @@ def obscure(dir):
         odir[d] = (dir[d][0], f'{uuid4()}:{port}', dir[d][2])
 
     return odir
-
-
-__author__ = 'ECSDIstore'
 
 # Definimos los parametros de la linea de comandos
 parser = argparse.ArgumentParser()
