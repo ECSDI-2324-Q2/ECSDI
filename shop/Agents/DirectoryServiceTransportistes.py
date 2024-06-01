@@ -1,10 +1,10 @@
 """
-.. module:: DirectoryService
+.. module:: DirectoryServiceTransportistes
 
-DirectoryService
+DirectoryServiceTransportistes
 *************
 
-:Description: DirectoryService
+:Description: DirectoryServiceTransportistes
 
  Registra los agentes/servicios activos y reparte la carga de las busquedas mediante
  un round robin
@@ -26,7 +26,8 @@ import socket
 import argparse
 from AgentUtil.FlaskServer import shutdown_server
 from AgentUtil.ACLMessages import build_message, get_message_properties
-
+from multiprocessing import Process, Queue
+from AgentUtil.ACLMessages import *
 from flask import Flask, request, render_template
 import numpy as np
 import time
@@ -37,7 +38,7 @@ from AgentUtil.OntoNamespaces import ACL, DSO
 from AgentUtil.Agent import Agent
 from AgentUtil.Logging import config_logger
 
-__author__ = 'Marc Miquel'
+__author__ = 'ECSDIShop'
 
 def obscure(dir):
     """
@@ -50,11 +51,15 @@ def obscure(dir):
 
     return odir
 
+
+__author__ = 'ECSDIstore'
+
 # Definimos los parametros de la linea de comandos
 parser = argparse.ArgumentParser()
 parser.add_argument('--open', help="Define si el servidor est abierto al exterior o no", action='store_true',
                     default=False)
 parser.add_argument('--port', type=int, help="Puerto de comunicacion del agente")
+parser.add_argument('--dhost', default=socket.gethostname(), help="Host del agente de directorio")
 
 # Logging
 logger = config_logger(level=1)
@@ -62,9 +67,11 @@ logger = config_logger(level=1)
 # parsing de los parametros de la linea de comandos
 args = parser.parse_args()
 
+queue = Queue()
+
 # Configuration stuff
 if args.port is None:
-    port = 9000
+    port = 9006
 else:
     port = args.port
 
@@ -72,6 +79,11 @@ if args.open is None:
     hostname = '0.0.0.0'
 else:
     hostname = socket.gethostname()
+
+if args.dhost is None:
+    dhostname = socket.gethostname()
+else:
+    dhostname = args.dhost
 
 
 app = Flask(__name__)
@@ -91,12 +103,26 @@ dsgraph.bind('rdfs', RDFS)
 dsgraph.bind('foaf', FOAF)
 dsgraph.bind('dso', DSO)
 
+dport = 9000
+
 agn = Namespace("http://www.agentes.org#")
-DirectoryAgent = Agent('DirectoryAgent',
-                       agn.Directory,
+# Agent info
+DirectoryAgentTransportistes = Agent('DirectoryAgentTransportistes',
+                       agn.DirectoryAgentTransportistes,
                        'http://%s:%d/Register' % (hostname, port),
                        'http://%s:%d/Stop' % (hostname, port))
 
+# Directory agent address
+DirectoryAgent = Agent('DirectoryAgent',
+                       agn.DirectoryAgent,
+                       'http://%s:%d/Register' % (dhostname, dport),
+                       'http://%s:%d/Stop' % (dhostname, dport))
+
+#función incremental de numero de mensajes
+def getMessageCount():
+    global mss_cnt
+    mss_cnt += 1
+    return mss_cnt
 
 
 @app.route("/Register")
@@ -303,6 +329,15 @@ def stop():
     shutdown_server()
     return "Parando Servidor"
 
+def DirectoryTransportistesBehavior(queue):
+
+    """
+    Agent Behaviour in a concurrent thread.
+    :param queue: the queue
+    :return: something
+    """
+    registerAgent(DirectoryAgentTransportistes, DirectoryAgent, DirectoryAgentTransportistes.uri, getMessageCount())
+
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
@@ -323,7 +358,7 @@ if __name__ == '__main__':
 
     # Configuration stuff
     if args.port is None:
-        port = 9000
+        port = 9006
     else:
         port = args.port
 
@@ -335,6 +370,11 @@ if __name__ == '__main__':
 
     schedule = args.schedule
 
+    queue = Queue()
+
     print('DS Hostname =', hostaddr)
+
+    ab1 = Process(target=DirectoryTransportistesBehavior, args=(queue,))
+    ab1.start()
     # Ponemos en marcha el servidor Flask
     app.run(host=hostname, port=port, debug=False, use_reloader=False)

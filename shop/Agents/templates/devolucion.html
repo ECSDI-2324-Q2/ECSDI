@@ -3,38 +3,106 @@
 <head>
     <meta charset="UTF-8">
     <title>Buscador de productos</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f0f0;
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+            padding: 20px 0;
+        }
+        form {
+            width: 80%;
+            margin: 0 auto;
+        }
+        input[type="text"], input[type="number"] {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            box-sizing: border-box;
+        }
+        input[type="submit"] {
+            background-color: #1387c6;
+            color: white;
+            padding: 14px 20px;
+            margin: 10px 0;
+            border: none;
+            cursor: pointer;
+            width: 100%;
+        }
+        input[type="submit"]:hover {
+            opacity: 0.8;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        a {
+            display: block;
+            text-align: center;
+            padding: 20px 0;
+            color: #333;
+            text-decoration: none;
+        }
+        select {
+            width: 100%;
+            padding: 5px;
+            border: none;
+            border-radius: 4px;
+            background-color: #f1f1f1;
+        }
+    </style>
 </head>
 <body>
-     <h1>Busqueda de productos</h1>
+    <h1>Busqueda de productos</h1>
     {% if not products %}
-       <h2>No hay productos a devolver</h2>
+        <h2 style="margin-left:10px">No hay productos a devolver</h2>
     {% else %}
-         <form method="post">
-                <table style="width:85%; border-collapse:collapse;" align="center" border="1px solid black">
-                  <tr align="left">
-                      <th style="padding:15px">Nombre</th>
-                      <th style="padding:15px">Precio</th>
-                      <th style="padding:15px">Descripción</th>
-                      <th style="padding:15px">Compra</th>
-
-
-                  </tr>
-                  {% for product in products %}
+        <form method="post">
+            <table>
+                <tr>
+                    <th>Nombre</th>
+                    <th>Precio</th>
+                    <th>Descripción</th>
+                    <th>Fecha de entrega</th>
+                </tr>
+                {% for product in products %}
                     <tr> 
-                        <td style="padding:15px">{{ product.Nombre }}</td>
-                        <td style="padding:15px">{{ product.Precio }}</td>
-                        <td style="padding:15px">{{ product.Descripcion }}</td>
-                        <td style="padding:15px">{{ product.Compra }}</td>
-                        <td style="padding:15px"><input type="checkbox" name="checkbox" value="{{ products.index(product) }}"></td>
+                        <td>{{ product.Nombre }}</td>
+                        <td>{{ product.Precio }}</td>
+                        <td>{{ product.Descripcion }}</td>
+                        <td>{{ product.FechaDeEntrega }}</td>
+                        <td>
+                            <input type="checkbox" name="checkbox" value="{{ products.index(product) }}">
+                        </td>
                     </tr>
-                  {% endfor %}
-                </table>
-                Direccion: <input type="text" name="direccion"><br>
-                Codigo postal: <input type="text" name="codigoPostal"><br>
-                <input type="submit" name="return" value="Submit">
-         </form>
-     {% endif %}
-     <br>
-     <a href="javascript:history.back()">Volver</a>
+                {% endfor %}
+            <br>
+            </table>
+            <label>Direccion: </label>
+            <input type="text" name="direccion">
+            <label>Codigo postal: </label>
+            <input type="text" name="codigoPostal">
+            <label for="motivo">Motivo de la devolucion:</label>
+            <select name="motivo" id="motivo">
+                <option value="defectuoso">Producto defectuoso</option>
+                <option value="equivocado">Producto equivocado</option>
+                <option value="noSatisface">No Satisfactorio</option>
+            </select>
+
+            <input type="submit" name="return" value="Submit">
+        </form>
+    {% endif %}
+    <br>
+    <a href="javascript:history.back()">Volver</a>
 </body>
 </html>

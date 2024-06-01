@@ -32,7 +32,7 @@ from AgentUtil.FlaskServer import shutdown_server
 from AgentUtil.Logging import config_logger
 from AgentUtil.OntoNamespaces import ECSDI, ACL, DSO
 
-__author__ = 'ECSDIstore'
+__author__ = 'Arnau'
 
 # Definimos los parametros de la linea de comandos
 parser = argparse.ArgumentParser()
