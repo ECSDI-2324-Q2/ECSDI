@@ -28,7 +28,7 @@ from AgentUtil.OntoNamespaces import ECSDI
 from AgentUtil.OntoNamespaces import ACL, DSO
 from rdflib.namespace import RDF, FOAF
 
-__author__ = 'ECSDIstore'
+__author__ = 'Marc Arnau Miquel'
 
 # Definimos los parametros de la linea de comandos
 parser = argparse.ArgumentParser()
@@ -122,19 +122,22 @@ def procesarEnvio(grafo, contenido):
     #thread2.start()
 
 def registrarEnvio(grafo, contenido):
+    logger.info("Registrando el envio")
 
-    envio = grafo.value(predicate=RDF.type,object=ECSDI.PeticionEnvio)
+    envio = grafo.value(predicate=RDF.type, object=ECSDI.PeticionEnvio)
+    grafo.add((envio, ECSDI.Pagado, Literal(False, datatype=XSD.boolean)))
 
-    grafo.add((envio,ECSDI.Pagado,Literal(False,datatype=XSD.boolean)))
     prioridad = grafo.value(subject=envio, predicate=ECSDI.Prioridad)
     fecha = datetime.now() + timedelta(days=int(prioridad))
-    grafo.add((envio,ECSDI.FechaEntrega,Literal(fecha, datatype=XSD.date)))
-    logger.info("Registrando el envio")
-    ontologyFile = open('../data/EnviosDB')
+    fecha_datetime = datetime.combine(fecha, datetime.min.time())  # convert date to datetime
+    grafo.add((envio, ECSDI.FechaEntrega, Literal(fecha_datetime, datatype=XSD.dateTime)))
 
     grafoEnvios = Graph()
     grafoEnvios.bind('default', ECSDI)
-    grafoEnvios.parse(ontologyFile, format='turtle')
+
+    with open('../data/EnviosDB') as ontologyFile:
+        grafoEnvios.parse(ontologyFile, format='turtle')
+
     grafoEnvios += grafo
 
     # Guardem el graf
@@ -213,9 +216,9 @@ def solicitarEnvio(grafo,contenido):
 # Función que efectua y organiza en threads el proceso de vender
 def vender(grafoEntrada, content):
     logger.info("Recibida peticion de compra")
+
     # Guardar Compra
-    thread = Thread(target=registrarCompra, args=(grafoEntrada,))
-    thread.start()
+    Thread(target=registrarCompra, args=(grafoEntrada,)).start()
 
     agente = getAgentInfo(agn.FinancieroAgent, DirectoryAgent, ComercianteAgent, getMessageCount())
 
@@ -225,37 +228,31 @@ def vender(grafoEntrada, content):
     grafoEntrada.add((content, RDF.type, ECSDI.GenerarFactura))
     grafoFactura = send_message(
         build_message(grafoEntrada, perf=ACL.request, sender=ComercianteAgent.uri, receiver=agente.uri,
-                    msgcnt=getMessageCount(),
-                    content=content), agente.address)
+                      msgcnt=getMessageCount(),
+                      content=content), agente.address)
 
-    for s, p, o in grafoFactura:
-    # If the predicate is ECSDI.PrecioTotal, extract the object as the precioTotal
-        if p == ECSDI.PrecioTotal:
-            precioTotal = o
-            break
+    precioTotal = next((o for s, p, o in grafoFactura if p == ECSDI.PrecioTotal), None)
+    logger.info(f"Precio total de la compra: {precioTotal}")
 
-    logger.info("Precio total de la compra: " + str(precioTotal))
     suj = grafoEntrada.value(predicate=RDF.type, object=ECSDI.GenerarFactura)
     grafoEntrada.add((suj, ECSDI.PrecioTotal, Literal(precioTotal, datatype=XSD.float)))
 
-    # # Enviar compra
-    thread = Thread(target=enviarCompra, args=(grafoEntrada, content))
-    thread.start()
+    # Enviar compra
+    Thread(target=enviarCompra, args=(grafoEntrada, content)).start()
 
-    # logger.info("Devolviendo factura")
     return grafoFactura
 
-def enviarCompra(grafoEntrada,content):
-    # Enviar mensaje con la compra a enviador
+def enviarCompra(grafoEntrada, content):
     logger.info("Haciendo peticion envio")
-    grafoEntrada.remove((content, RDF.type, ECSDI.GenerarFactura))
+
     sujeto = ECSDI['PeticionEnvio' + str(getMessageCount())]
     grafoEntrada.add((sujeto, RDF.type, ECSDI.PeticionEnvio))
 
-    for a, b, c in grafoEntrada:
-        if a == content:
-            grafoEntrada.remove((a, b, c))
-            grafoEntrada.add((sujeto, b, c))
+    triples_to_remove = [(a, b, c) for a, b, c in grafoEntrada if a == content]
+    for triple in triples_to_remove:
+        grafoEntrada.remove(triple)
+        grafoEntrada.add((sujeto, triple[1], triple[2]))
+
     logger.info("Enviando peticion envio")
     procesarEnvio(grafoEntrada, content)
     logger.info("Enviada peticion envio")
