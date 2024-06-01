@@ -59,6 +59,7 @@ parser = argparse.ArgumentParser()
 parser.add_argument('--open', help="Define si el servidor est abierto al exterior o no", action='store_true',
                     default=False)
 parser.add_argument('--port', type=int, help="Puerto de comunicacion del agente")
+parser.add_argument('--dhost', default=socket.gethostname(), help="Host del agente de directorio")
 
 # Logging
 logger = config_logger(level=1)
@@ -78,6 +79,11 @@ if args.open is None:
     hostname = '0.0.0.0'
 else:
     hostname = socket.gethostname()
+
+if args.dhost is None:
+    dhostname = socket.gethostname()
+else:
+    dhostname = args.dhost
 
 
 app = Flask(__name__)
@@ -109,8 +115,8 @@ DirectoryAgentTransportistes = Agent('DirectoryAgentTransportistes',
 # Directory agent address
 DirectoryAgent = Agent('DirectoryAgent',
                        agn.DirectoryAgent,
-                       'http://%s:%d/Register' % (hostname, dport),
-                       'http://%s:%d/Stop' % (hostname, dport))
+                       'http://%s:%d/Register' % (dhostname, dport),
+                       'http://%s:%d/Stop' % (dhostname, dport))
 
 #función incremental de numero de mensajes
 def getMessageCount():
