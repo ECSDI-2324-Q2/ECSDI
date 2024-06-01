@@ -2,50 +2,72 @@
 @prefix ns1: <http://www.nuin.org/ontology/fipa/acl#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-ns1:message--5884039335736434935-0002 a ns1:FipaAclMessage ;
+ns1:message--1475597233197073418-0002 a ns1:FipaAclMessage ;
+    ns1:content default:PeticionCompra11 ;
+    ns1:performative ns1:request ;
+    ns1:receiver <http://www.agentes.org#FinancieroAgent> ;
+    ns1:sender <http://www.agentes.org#ComercianteAgent> .
+
+ns1:message--5619215762375910943-0002 a ns1:FipaAclMessage ;
     ns1:content default:PeticionCompra5 ;
     ns1:performative ns1:request ;
     ns1:receiver <http://www.agentes.org#FinancieroAgent> ;
     ns1:sender <http://www.agentes.org#ComercianteAgent> .
 
-ns1:message--5884039335736434935-0005 a ns1:FipaAclMessage ;
-    ns1:content default:PeticionCompra14 ;
+ns1:message--7266775634979101892-0002 a ns1:FipaAclMessage ;
+    ns1:content default:PeticionCompra11 ;
+    ns1:performative ns1:request ;
+    ns1:receiver <http://www.agentes.org#FinancieroAgent> ;
+    ns1:sender <http://www.agentes.org#ComercianteAgent> .
+
+ns1:message-3928708127615668516-0002 a ns1:FipaAclMessage ;
+    ns1:content default:PeticionCompra11 ;
     ns1:performative ns1:request ;
     ns1:receiver <http://www.agentes.org#FinancieroAgent> ;
     ns1:sender <http://www.agentes.org#ComercianteAgent> .
 
 default:PeticionEnvio3 a default:GenerarFactura,
         default:PeticionEnvio ;
-    default:De default:Compra7 ;
+    default:De default:Compra13,
+        default:Compra7 ;
     default:FechaEntrega "2024-06-02T00:00:00"^^xsd:dateTime ;
     default:Pagado false ;
-    default:PrecioTotal "0.0"^^xsd:float ;
+    default:PrecioTotal "309.0"^^xsd:float,
+        "2000.0"^^xsd:float ;
     default:Prioridad "1"^^xsd:int ;
-    default:Tarjeta "123123"^^xsd:int .
+    default:Tarjeta "123"^^xsd:int,
+        "132"^^xsd:int,
+        "12332312"^^xsd:int .
 
-default:PeticionEnvio6 a default:GenerarFactura,
-        default:PeticionEnvio ;
-    default:De default:Compra16 ;
-    default:FechaEntrega "2024-06-02T00:00:00"^^xsd:dateTime ;
-    default:Pagado false ;
-    default:PrecioTotal "2000.0"^^xsd:float ;
-    default:Prioridad "1"^^xsd:int ;
-    default:Tarjeta "123"^^xsd:int .
+default:Producto1 a default:Producto ;
+    default:Descripcion "Esto son Patatas"^^xsd:string ;
+    default:Nombre "Patatas"^^xsd:string ;
+    default:Peso "23.0"^^xsd:float ;
+    default:Precio "308.0"^^xsd:float .
 
-default:Compra16 a default:Compra ;
+default:Producto8 a default:Producto ;
+    default:Descripcion "Esto es un Platano"^^xsd:string ;
+    default:Nombre "Platano"^^xsd:string ;
+    default:Peso "0.5"^^xsd:float ;
+    default:Precio "1.0"^^xsd:float .
+
+default:Compra13 a default:Compra ;
     default:Contiene default:ProductoExterno1 ;
-    default:Destino default:Direccion15 .
+    default:Destino default:Direccion12 .
 
 default:Compra7 a default:Compra ;
     default:Destino default:Direccion6 .
 
-default:Direccion15 a default:Direccion ;
-    default:CodigoPostal "123"^^xsd:int ;
-    default:Direccion "daw"^^xsd:string .
+default:Direccion12 a default:Direccion ;
+    default:CodigoPostal "13"^^xsd:int,
+        "123"^^xsd:int ;
+    default:Direccion "awd"^^xsd:string,
+        "qwad"^^xsd:string,
+        "wqe"^^xsd:string .
 
 default:Direccion6 a default:Direccion ;
-    default:CodigoPostal "213"^^xsd:int ;
-    default:Direccion "wadad"^^xsd:string .
+    default:CodigoPostal "13"^^xsd:int ;
+    default:Direccion "ad"^^xsd:string .
 
 default:ProductoExterno1 a default:Producto ;
     default:Descripcion "macbook"^^xsd:string ;

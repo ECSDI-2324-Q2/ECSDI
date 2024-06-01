@@ -3,11 +3,13 @@
 
 default:Factura1 a default:Factura ;
     default:Facturando default:Producto1,
+        default:Producto8,
         default:ProductoExterno1,
         default:ProductoExterno3 ;
     default:PrecioTotal "0.0"^^xsd:float,
         "2.0"^^xsd:float,
         "308.0"^^xsd:float,
+        "309.0"^^xsd:float,
         "2000.0"^^xsd:float ;
     default:Tarjeta "12"^^xsd:int,
         "123"^^xsd:int,
@@ -70,6 +72,10 @@ default:Factura9 a default:Factura ;
     default:Facturando default:ProductoExterno1 ;
     default:PrecioTotal "2000.0"^^xsd:float ;
     default:Tarjeta "123"^^xsd:int .
+
+default:Producto8 a default:Producto ;
+    default:Nombre "Platano"^^xsd:string ;
+    default:Precio "1.0"^^xsd:float .
 
 default:ProductoExterno3 a default:Producto ;
     default:Nombre "gafas"^^xsd:string ;

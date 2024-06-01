@@ -99,21 +99,47 @@ def getMessageCount():
     mss_cnt += 1
     return mss_cnt
 
+def validarDevolucion(content, grafoEntrada):
+    motivo = next(grafoEntrada.objects(predicate=ECSDI.MotivoDevolucion), None)
+    logger.info("Recibida peticion de retorno con motivo: " + motivo)
+
+    if motivo == "Producto defectuoso":
+        return True
+    else:
+        products = grafoEntrada.objects(subject=content, predicate= ECSDI.Auna)
+
+        limit = datetime.now() - timedelta(days=15)
+
+        for product in products:
+            fecha = grafoEntrada.value(subject=product, predicate=ECSDI.FechaDeEntrega)
+            fecha = datetime.strptime(str(fecha), '%Y-%m-%dT%H:%M:%S')
+
+            if fecha >= limit:
+                print(f"Product {product} is within 15 days.")
+            else:
+                return False
+    return True
+    
+
 # Función encargada del retorno de productos distribuyendo el trabajo en diversos threads
 def retornarProductos(content, grafoEntrada):
-    logger.info("Recibida peticion de retorno")
+    result = Graph()
+    sujeto = ECSDI['PeticionDevolucion' + str(getMessageCount())]
+    
+    if not validarDevolucion(content, grafoEntrada):
+        logger.error("Devolucion no valida")
+        result.add((sujeto, RDF.type, ECSDI.DevolucionNoValida))
+        return result
     
     direccionRetorno = next(grafoEntrada.objects(predicate=ECSDI.Direccion), None)
     codigoPostal = next(grafoEntrada.objects(predicate=ECSDI.CodigoPostal), None)
-    
-    print(codigoPostal, direccionRetorno)
     
     Thread(target=solicitarRecogida, args=(direccionRetorno, codigoPostal)).start()
     Thread(target=borrarProductosRetornados, args=(grafoEntrada, content)).start()
     
     logger.info("Respondiendo peticion de retorno")
-    
-    return Graph()
+    result.add((sujeto, RDF.type, ECSDI.DevolucionValida))
+    return result
 
 # Función que atiende la petición de retorno de todos los productos enviados por un usuario con una tarjeta
 def solicitarProductosEnviados(content, grafoEntrada):
@@ -146,8 +172,7 @@ def solicitarProductosEnviados(content, grafoEntrada):
             ?Producto default:Precio ?Precio .
             ?Producto default:Descripcion ?Descripcion .
             ?Producto default:Peso ?Peso .
-            FILTER(?Tarjeta = "{tarjeta}" && 
-                   ?FechaEntrega > '{str(datetime.now() - timedelta(days=15))}'^^xsd:date)
+            FILTER(?Tarjeta = {tarjeta})
         }}
         """
     resultadoConsulta = graph.query(query)
@@ -161,7 +186,7 @@ def solicitarProductosEnviados(content, grafoEntrada):
         resultadoComunicacion.add((sujeto, ECSDI.Precio, Literal(product.Precio, datatype=XSD.float)))
         resultadoComunicacion.add((sujeto, ECSDI.Descripcion, Literal(product.Descripcion, datatype=XSD.string)))
         resultadoComunicacion.add((sujeto, ECSDI.Peso, Literal(product.Peso, datatype=XSD.float)))
-        resultadoComunicacion.add((sujeto, ECSDI.EsDe, product.Compra))
+        resultadoComunicacion.add((sujeto, ECSDI.FechaDeEntrega, Literal(product.FechaEntrega, datatype=XSD.dateTime)))
     
     logger.info("Respondiendo peticion de devolucion de productos enviados")
     

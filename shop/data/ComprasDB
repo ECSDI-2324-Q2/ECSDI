@@ -1,6 +1,13 @@
 @prefix default: <http://www.owl-ontologies.com/ECSDIstore#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
+default:PeticionCompra11 a default:PeticionCompra ;
+    default:De default:Compra13 ;
+    default:Prioridad "1"^^xsd:int ;
+    default:Tarjeta "123"^^xsd:int,
+        "132"^^xsd:int,
+        "12332312"^^xsd:int .
+
 default:PeticionCompra14 a default:PeticionCompra ;
     default:De default:Compra16 ;
     default:Prioridad "1"^^xsd:int ;
@@ -67,6 +74,12 @@ default:PeticionCompra95 a default:PeticionCompra ;
     default:Prioridad "1"^^xsd:int ;
     default:Tarjeta "132"^^xsd:int .
 
+default:Compra13 a default:Compra ;
+    default:Contiene default:Producto1,
+        default:Producto8,
+        default:ProductoExterno1 ;
+    default:Destino default:Direccion12 .
+
 default:Compra16 a default:Compra ;
     default:Contiene default:ProductoExterno1 ;
     default:Destino default:Direccion15 .
@@ -114,6 +127,13 @@ default:Compra97 a default:Compra ;
     default:Contiene default:ProductoExterno1 ;
     default:Destino default:Direccion96 .
 
+default:Direccion12 a default:Direccion ;
+    default:CodigoPostal "13"^^xsd:int,
+        "123"^^xsd:int ;
+    default:Direccion "awd"^^xsd:string,
+        "qwad"^^xsd:string,
+        "wqe"^^xsd:string .
+
 default:Direccion15 a default:Direccion ;
     default:CodigoPostal "13"^^xsd:int,
         "123"^^xsd:int,
@@ -150,6 +170,7 @@ default:Direccion6 a default:Direccion ;
         "321"^^xsd:int,
         "89500"^^xsd:int ;
     default:Direccion "abc"^^xsd:string,
+        "ad"^^xsd:string,
         "adb"^^xsd:string,
         "adw"^^xsd:string,
         "casitaaaa"^^xsd:string,
@@ -177,17 +198,23 @@ default:Direccion96 a default:Direccion ;
     default:CodigoPostal "132"^^xsd:int ;
     default:Direccion "awd"^^xsd:string .
 
-default:Producto1 a default:Producto ;
-    default:Descripcion "Esto son Patatas"^^xsd:string ;
-    default:Nombre "Patatas"^^xsd:string ;
-    default:Peso "23.0"^^xsd:float ;
-    default:Precio "308.0"^^xsd:float .
+default:Producto8 a default:Producto ;
+    default:Descripcion "Esto es un Platano"^^xsd:string ;
+    default:Nombre "Platano"^^xsd:string ;
+    default:Peso "0.5"^^xsd:float ;
+    default:Precio "1.0"^^xsd:float .
 
 default:ProductoExterno3 a default:Producto ;
     default:Descripcion "gafas"^^xsd:string ;
     default:Nombre "gafas"^^xsd:string ;
     default:Peso "200.0"^^xsd:float ;
     default:Precio "2.0"^^xsd:float .
+
+default:Producto1 a default:Producto ;
+    default:Descripcion "Esto son Patatas"^^xsd:string ;
+    default:Nombre "Patatas"^^xsd:string ;
+    default:Peso "23.0"^^xsd:float ;
+    default:Precio "308.0"^^xsd:float .
 
 default:ProductoExterno1 a default:Producto ;
     default:Descripcion "macbook"^^xsd:string ;

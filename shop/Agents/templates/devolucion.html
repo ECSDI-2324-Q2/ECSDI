@@ -65,7 +65,7 @@
 <body>
     <h1>Busqueda de productos</h1>
     {% if not products %}
-        <h2>No hay productos a devolver</h2>
+        <h2 style="margin-left:10px">No hay productos a devolver</h2>
     {% else %}
         <form method="post">
             <table>
@@ -73,24 +73,31 @@
                     <th>Nombre</th>
                     <th>Precio</th>
                     <th>Descripción</th>
-                    <th>Compra</th>
+                    <th>Fecha de entrega</th>
                 </tr>
                 {% for product in products %}
                     <tr> 
                         <td>{{ product.Nombre }}</td>
                         <td>{{ product.Precio }}</td>
                         <td>{{ product.Descripcion }}</td>
-                        <td>{{ product.Compra }}</td>
+                        <td>{{ product.FechaDeEntrega }}</td>
                         <td>
                             <input type="checkbox" name="checkbox" value="{{ products.index(product) }}">
                         </td>
                     </tr>
                 {% endfor %}
+            <br>
             </table>
             <label>Direccion: </label>
             <input type="text" name="direccion">
             <label>Codigo postal: </label>
             <input type="text" name="codigoPostal">
+            <label for="motivo">Motivo de la devolucion:</label>
+            <select name="motivo" id="motivo">
+                <option value="defectuoso">Producto defectuoso</option>
+                <option value="noSatisface">No Satisfactorio</option>
+            </select>
+
             <input type="submit" name="return" value="Submit">
         </form>
     {% endif %}
