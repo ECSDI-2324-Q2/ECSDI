@@ -174,7 +174,6 @@ def communication():
             content = messageProperties['content']
             accion = grafoEntrada.value(subject=content, predicate=RDF.type)
 
-            print(accion)
             # Si la acción es de tipo peticiónCompra emprendemos las acciones consequentes
             if accion == ECSDI.GenerarFactura:
 

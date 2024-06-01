@@ -124,8 +124,9 @@ def procesarEnvio(grafo, contenido):
 def registrarEnvio(grafo, contenido):
 
     envio = grafo.value(predicate=RDF.type,object=ECSDI.PeticionEnvio)
+
     grafo.add((envio,ECSDI.Pagado,Literal(False,datatype=XSD.boolean)))
-    prioridad = grafo.value(subject=contenido, predicate=ECSDI.Prioridad)
+    prioridad = grafo.value(subject=envio, predicate=ECSDI.Prioridad)
     fecha = datetime.now() + timedelta(days=int(prioridad))
     grafo.add((envio,ECSDI.FechaEntrega,Literal(fecha, datatype=XSD.date)))
     logger.info("Registrando el envio")
@@ -227,16 +228,37 @@ def vender(grafoEntrada, content):
                     msgcnt=getMessageCount(),
                     content=content), agente.address)
 
-    #suj = grafoEntrada.value(predicate=RDF.type, object=ECSDI.PeticionCompra)
-    #grafoEntrada.add((suj, ECSDI.PrecioTotal, Literal(precioTotal, datatype=XSD.float)))
+    for s, p, o in grafoFactura:
+    # If the predicate is ECSDI.PrecioTotal, extract the object as the precioTotal
+        if p == ECSDI.PrecioTotal:
+            precioTotal = o
+            break
 
-    # # Enviar compra a Enviador
-    # thread = Thread(target=enviarCompra, args=(grafoEntrada, content))
-    # thread.start()
-    procesarEnvio(grafoEntrada, content)
+    logger.info("Precio total de la compra: " + str(precioTotal))
+    suj = grafoEntrada.value(predicate=RDF.type, object=ECSDI.GenerarFactura)
+    grafoEntrada.add((suj, ECSDI.PrecioTotal, Literal(precioTotal, datatype=XSD.float)))
+
+    # # Enviar compra
+    thread = Thread(target=enviarCompra, args=(grafoEntrada, content))
+    thread.start()
 
     # logger.info("Devolviendo factura")
     return grafoFactura
+
+def enviarCompra(grafoEntrada,content):
+    # Enviar mensaje con la compra a enviador
+    logger.info("Haciendo peticion envio")
+    grafoEntrada.remove((content, RDF.type, ECSDI.GenerarFactura))
+    sujeto = ECSDI['PeticionEnvio' + str(getMessageCount())]
+    grafoEntrada.add((sujeto, RDF.type, ECSDI.PeticionEnvio))
+
+    for a, b, c in grafoEntrada:
+        if a == content:
+            grafoEntrada.remove((a, b, c))
+            grafoEntrada.add((sujeto, b, c))
+    logger.info("Enviando peticion envio")
+    procesarEnvio(grafoEntrada, content)
+    logger.info("Enviada peticion envio")
 
 #funcion llamada en /comm
 @app.route("/comm")
