@@ -1,26 +1,47 @@
 @prefix default: <http://www.owl-ontologies.com/ECSDIstore#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+default:Producto7 a default:Producto ;
+    default:Descripcion "Esto es un Cable"^^xsd:string ;
+    default:Id 7 ;
+    default:Nombre "Cable"^^xsd:string ;
+    default:Peso "0.5"^^xsd:float ;
+    default:Precio "5.0"^^xsd:float .
 
 default:Stock1 a default:Stock ;
     default:Tiene default:Producto1 ;
+    default:UnidadesEnStock "999999"^^xsd:int .
 
 default:Stock2 a default:Stock ;
     default:Tiene default:Producto2 ;
+    default:UnidadesEnStock "999994"^^xsd:int .
 
 default:Stock3 a default:Stock ;
     default:Tiene default:Producto3 ;
+    default:UnidadesEnStock "999984"^^xsd:int .
 
 default:Stock4 a default:Stock ;
     default:Tiene default:Producto4 ;
+    default:UnidadesEnStock "999999"^^xsd:int .
+
+default:Stock5 a default:Stock ;
+    default:Tiene default:Producto5 ;
+    default:UnidadesEnStock "999998"^^xsd:int .
 
 default:Stock6 a default:Stock ;
     default:Tiene default:Producto6 ;
+    default:UnidadesEnStock "999999"^^xsd:int .
 
-default:Stock7 a default:Stock ;
-    default:Tiene default:Producto7 ;
+default:Stock8 a default:Stock ;
+    default:Tiene default:Producto8 ;
+    default:UnidadesEnStock "999999"^^xsd:int .
 
 default:Stock9 a default:Stock ;
     default:Tiene default:Producto9 ;
+    default:UnidadesEnStock "999999"^^xsd:int .
 
 default:Producto1 a default:Producto ;
     default:Descripcion "Esto son Patatas"^^xsd:string ;
@@ -63,13 +84,6 @@ default:Producto6 a default:Producto ;
     default:Nombre "Auriculares"^^xsd:string ;
     default:Peso "0.5"^^xsd:float ;
     default:Precio "20.0"^^xsd:float .
-
-default:Producto7 a default:Producto ;
-    default:Descripcion "Esto es un Cable"^^xsd:string ;
-    default:Id 7 ;
-    default:Nombre "Cable"^^xsd:string ;
-    default:Peso "0.5"^^xsd:float ;
-    default:Precio "5.0"^^xsd:float .
 
 default:Producto8 a default:Producto ;
     default:Descripcion "Esto es un Platano"^^xsd:string ;
