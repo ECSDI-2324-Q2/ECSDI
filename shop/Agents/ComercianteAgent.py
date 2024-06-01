@@ -118,8 +118,8 @@ def procesarEnvio(grafo, contenido):
     logger.info("Recibida peticion de envio")
     thread1 = Thread(target=registrarEnvio,args=(grafo,contenido))
     thread1.start()
-    #thread2 = Thread(target=solicitarEnvio,args=(grafo,contenido))
-    #thread2.start()
+    thread2 = Thread(target=solicitarEnvio,args=(grafo,contenido))
+    thread2.start()
 
 def registrarEnvio(grafo, contenido):
     logger.info("Registrando el envio")

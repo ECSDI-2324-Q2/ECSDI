@@ -20,4 +20,8 @@ python TransportistaDevolucionesAgent.py &
 sleep 1
 python DirectoryServiceTransportistes.py &
 sleep 2
-python TransportistaAgent_1.py
+python TransportistaAgent_1.py &
+sleep 1
+python CentroLogisticoDirectoryService.py &
+sleep 2
+python CentroLogisticoAgent.py
