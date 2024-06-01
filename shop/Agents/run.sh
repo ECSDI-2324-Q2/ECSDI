@@ -16,4 +16,8 @@ python PersonalVendedorExternoAgent.py &
 sleep 1
 python GestorDevolucionesAgent.py &
 sleep 1
-python TransportistaDevolucionesAgent.py
+python TransportistaDevolucionesAgent.py &
+sleep 1
+python DirectoryServiceTransportistes.py &
+sleep 2
+python TransportistaAgent_1.py
