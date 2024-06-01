@@ -1,55 +1,46 @@
 @prefix default: <http://www.owl-ontologies.com/ECSDIstore#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-default1:Factura1 a default1:Factura ;
-    default1:Facturando default1:Producto1,
-        default1:ProductoExterno1,
-        default1:ProductoExterno3,
-        default:Producto1 ;
-    default1:PrecioTotal "2.0"^^xsd:float,
+default:Factura1 a default:Factura ;
+    default:Facturando default:Producto1,
+        default:ProductoExterno1,
+        default:ProductoExterno3 ;
+    default:PrecioTotal "2.0"^^xsd:float,
         "308.0"^^xsd:float,
         "2000.0"^^xsd:float ;
-    default1:Tarjeta "12"^^xsd:int,
+    default:Tarjeta "12"^^xsd:int,
         "123"^^xsd:int,
+        "132"^^xsd:int,
         "1234"^^xsd:int,
         "123123"^^xsd:int,
         "1231232"^^xsd:int .
 
-default1:Factura2 a default1:Factura ;
-    default1:Facturando default1:Producto1 ;
-    default1:PrecioTotal "308.0"^^xsd:float ;
-    default1:Tarjeta "12"^^xsd:int .
-
-default:Factura1 a default:Factura ;
-    default:Facturando default1:ProductoExterno1,
-        default1:ProductoExterno3 ;
-    default:PrecioTotal "2.0"^^xsd:float,
-        "2000.0"^^xsd:float ;
-    default:Tarjeta "123"^^xsd:int,
-        "132"^^xsd:int .
-
 default:Factura10 a default:Factura ;
-    default:Facturando default1:ProductoExterno1 ;
+    default:Facturando default:ProductoExterno1 ;
     default:PrecioTotal "2000.0"^^xsd:float ;
     default:Tarjeta "123"^^xsd:int .
 
 default:Factura11 a default:Factura ;
-    default:Facturando default1:ProductoExterno1 ;
+    default:Facturando default:ProductoExterno1 ;
     default:PrecioTotal "2000.0"^^xsd:float ;
     default:Tarjeta "132"^^xsd:int .
 
 default:Factura2 a default:Factura ;
-    default:Facturando default1:ProductoExterno1 ;
-    default:PrecioTotal "2000.0"^^xsd:float ;
-    default:Tarjeta "213"^^xsd:int .
+    default:Facturando default:Producto1,
+        default:ProductoExterno1 ;
+    default:PrecioTotal "308.0"^^xsd:float,
+        "2000.0"^^xsd:float ;
+    default:Tarjeta "12"^^xsd:int,
+        "13"^^xsd:int,
+        "213"^^xsd:int .
 
 default:Factura3 a default:Factura ;
-    default:Facturando default1:ProductoExterno1 ;
+    default:Facturando default:ProductoExterno1 ;
     default:PrecioTotal "2000.0"^^xsd:float ;
     default:Tarjeta "312"^^xsd:int .
 
 default:Factura4 a default:Factura ;
-    default:Facturando default1:ProductoExterno1 ;
+    default:Facturando default:ProductoExterno1 ;
     default:PrecioTotal "2000.0"^^xsd:float ;
     default:Tarjeta "123"^^xsd:int .
 
@@ -58,7 +49,7 @@ default:Factura5 a default:Factura ;
     default:Tarjeta "321"^^xsd:int .
 
 default:Factura6 a default:Factura ;
-    default:Facturando default1:ProductoExterno1 ;
+    default:Facturando default:ProductoExterno1 ;
     default:PrecioTotal "2000.0"^^xsd:float ;
     default:Tarjeta "123"^^xsd:int .
 
@@ -67,34 +58,24 @@ default:Factura7 a default:Factura ;
     default:Tarjeta "132"^^xsd:int .
 
 default:Factura8 a default:Factura ;
-    default:Facturando default1:ProductoExterno1 ;
+    default:Facturando default:ProductoExterno1 ;
     default:PrecioTotal "2000.0"^^xsd:float ;
     default:Tarjeta "132"^^xsd:int .
 
 default:Factura9 a default:Factura ;
-    default:Facturando default1:ProductoExterno1 ;
+    default:Facturando default:ProductoExterno1 ;
     default:PrecioTotal "2000.0"^^xsd:float ;
     default:Tarjeta "123"^^xsd:int .
 
-default:Producto1 a default1:Producto ;
-    default1:Nombre "Patatas"^^xsd:string ;
-    default1:Precio "308.0"^^xsd:float .
-
-default1:Producto1 a default1:Producto ;
-    default1:Nombre "Patatas"^^xsd:string ;
-    default1:Precio "308.0"^^xsd:float .
-
-default1:ProductoExterno3 a default1:Producto,
-        default:Producto ;
-    default1:Nombre "gafas"^^xsd:string ;
-    default1:Precio "2.0"^^xsd:float ;
+default:ProductoExterno3 a default:Producto ;
     default:Nombre "gafas"^^xsd:string ;
     default:Precio "2.0"^^xsd:float .
 
-default1:ProductoExterno1 a default1:Producto,
-        default:Producto ;
-    default1:Nombre "pc"^^xsd:string ;
-    default1:Precio "2000.0"^^xsd:float ;
+default:Producto1 a default:Producto ;
+    default:Nombre "Patatas"^^xsd:string ;
+    default:Precio "308.0"^^xsd:float .
+
+default:ProductoExterno1 a default:Producto ;
     default:Nombre "pc"^^xsd:string ;
     default:Precio "2000.0"^^xsd:float .
 

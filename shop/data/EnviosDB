@@ -1,33 +1,32 @@
-@prefix default: <http://www.semanticweb.org/arnaut/ontologies/2024/4/ECSDIShop#> .
-@prefix default1: <http://www.owl-ontologies.com/ECSDIstore#> .
+@prefix default: <http://www.owl-ontologies.com/ECSDIstore#> .
 @prefix ns1: <http://www.nuin.org/ontology/fipa/acl#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-ns1:message-3001103032599571017-0002 a ns1:FipaAclMessage ;
-    ns1:content default:PeticionCompra104 ;
+ns1:message-5708565758263715828-0005 a ns1:FipaAclMessage ;
+    ns1:content default:PeticionCompra14 ;
     ns1:performative ns1:request ;
     ns1:receiver <http://www.agentes.org#FinancieroAgent> ;
     ns1:sender <http://www.agentes.org#ComercianteAgent> .
 
-default:PeticionEnvio3 a default:PeticionEnvio ;
-    default:De default:Compra106 ;
-    default:FechaEntrega "2024-06-02T10:13:39.892977"^^xsd:date ;
+default:PeticionEnvio6 a default:PeticionEnvio ;
+    default:De default:Compra16 ;
+    default:FechaEntrega "2024-06-02T11:27:10.626785"^^xsd:date ;
     default:Pagado false ;
     default:PrecioTotal "2000.0"^^xsd:float ;
     default:Prioridad "1"^^xsd:int ;
-    default:Tarjeta "123"^^xsd:int .
+    default:Tarjeta "13"^^xsd:int .
 
-default1:ProductoExterno1 a default:Producto ;
+default:Compra16 a default:Compra ;
+    default:Contiene default:ProductoExterno1 ;
+    default:Destino default:Direccion15 .
+
+default:Direccion15 a default:Direccion ;
+    default:CodigoPostal "13"^^xsd:int ;
+    default:Direccion "qwe"^^xsd:string .
+
+default:ProductoExterno1 a default:Producto ;
     default:Descripcion "macbook"^^xsd:string ;
     default:Nombre "pc"^^xsd:string ;
     default:Peso "100.0"^^xsd:float ;
     default:Precio "2000.0"^^xsd:float .
-
-default:Compra106 a default:Compra ;
-    default:Contiene default1:ProductoExterno1 ;
-    default:Destino default:Direccion105 .
-
-default:Direccion105 a default:Direccion ;
-    default:CodigoPostal "123"^^xsd:int ;
-    default:Direccion "wad"^^xsd:string .
 
