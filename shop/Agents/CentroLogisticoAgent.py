@@ -282,9 +282,9 @@ def crearLotes():
 
     nouLote.add((contentLote, ECSDI.Peso, Literal(pesoLote, datatype=XSD.float)))
 
-    if pesoLote != 0:
-        thread = threading.Thread(target=enviarLote, args=(nouLote,contentLote,))
-        thread.start()
+    #if pesoLote != 0:
+        #thread = threading.Thread(target=enviarLote, args=(nouLote,contentLote,))
+        #thread.start()
 
     graph.serialize(destination="../data/ProductosPendientes1DB", format='turtle')
 
@@ -383,7 +383,7 @@ def communication():
 
     message = request.args['content']
     grafoEntrada = Graph()
-    grafoEntrada.parse(data=message)
+    grafoEntrada.parse(format='xml', data=message)
 
     messageProp = get_message_properties(grafoEntrada)
     res = Graph()

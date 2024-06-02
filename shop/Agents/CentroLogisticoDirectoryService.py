@@ -19,7 +19,7 @@ from multiprocessing import Queue, Process
 from threading import Thread
 
 from flask import Flask, request
-from rdflib import URIRef, XSD, Namespace, Literal
+from rdflib import BNode, URIRef, XSD, Namespace, Literal
 
 from AgentUtil.ACLMessages import *
 from AgentUtil.Agent import Agent
