@@ -87,9 +87,9 @@ DirectoryAgent = Agent('DirectoryAgent',
                        'http://%s:%d/Stop' % (dhostname, dport))
 
 CentroLogisticoDirectoryAgent = Agent('CentroLogisticoDirectoryAgent',
-                       agn.CentroLogisticoDirectory,
-                       'http://%s:9010/Register' % (hostname),
-                       'http://%s:9010/Stop' % (hostname))
+                       agn.CentroLogisticoDirectoryAgent,
+                       'http://%s:9010/Register' % (dhostname),
+                       'http://%s:9010/Stop' % (dhostname))
 
 # Global triplestore graph
 dsGraph = Graph()
@@ -370,9 +370,8 @@ def register_message():
     """
 
     logger.info('Nos registramos')
-    gr = registerCentroLogistico(CentroLogisticoAgent, CentroLogisticoDirectoryAgent, CentroLogisticoAgent.uri, getMessageCount(),8028)
-    gr = registerAgent(CentroLogisticoAgent, DirectoryAgent, CentroLogisticoAgent.uri, getMessageCount())
-    return gr
+    registerCentroLogistico(CentroLogisticoAgent, CentroLogisticoDirectoryAgent, CentroLogisticoAgent.uri, getMessageCount(),8028)
+    #registerAgent(CentroLogisticoAgent, DirectoryAgent, CentroLogisticoAgent.uri, getMessageCount())
 
 @app.route("/comm")
 def communication():
@@ -444,13 +443,13 @@ def centroLogistico1Behaviour(queue):
     :param queue: the queue
     :return: something
     """
-    gr = register_message()
+    register_message()
 
 if __name__ == '__main__':
     # ------------------------------------------------------------------------------------------------------
     # Run behaviors
-    thread = threading.Thread(target=crearLotesThread)
-    thread.start()
+    #thread = threading.Thread(target=crearLotesThread)
+    #thread.start()
     ab1 = Process(target=centroLogistico1Behaviour, args=(queue,))
     ab1.start()
 
@@ -459,5 +458,5 @@ if __name__ == '__main__':
 
     # Wait behaviors
     ab1.join()
-    thread.join()
+    #thread.join()
     print('The End')

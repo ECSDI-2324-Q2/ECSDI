@@ -98,8 +98,7 @@ def register_message():
 
     logger.info('Nos registramos')
 
-    gr = registerAgent(CentroLogisticoDirectoryAgent, DirectoryAgent, CentroLogisticoDirectoryAgent.uri, getMessageCount())
-    return gr
+    registerAgent(CentroLogisticoDirectoryAgent, DirectoryAgent, CentroLogisticoDirectoryAgent.uri, getMessageCount())
 
 
 @app.route("/Register")
@@ -201,7 +200,7 @@ def register():
     # Extraemos el mensaje y creamos un grafo con él
     message = request.args['content']
     gm = Graph()
-    gm.parse(data=message)
+    gm.parse(format='xml', data=message)
 
     msgdic = get_message_properties(gm)
 
@@ -282,7 +281,7 @@ def CentroLogisticoDirectoryBehaviour():
     :param queue: the queue
     :return: something
     """
-    gr = register_message()
+    register_message()
 
 
 if __name__ == '__main__':
