@@ -448,8 +448,8 @@ def centroLogistico1Behaviour(queue):
 if __name__ == '__main__':
     # ------------------------------------------------------------------------------------------------------
     # Run behaviors
-    #thread = threading.Thread(target=crearLotesThread)
-    #thread.start()
+    thread = threading.Thread(target=crearLotesThread)
+    thread.start()
     ab1 = Process(target=centroLogistico1Behaviour, args=(queue,))
     ab1.start()
 
@@ -458,5 +458,5 @@ if __name__ == '__main__':
 
     # Wait behaviors
     ab1.join()
-    #thread.join()
+    thread.join()
     print('The End')
