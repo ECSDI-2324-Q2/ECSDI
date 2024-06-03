@@ -23,6 +23,9 @@
         <Class IRI="#BuscarProducto"/>
     </Declaration>
     <Declaration>
+        <Class IRI="#CentroLogistico"/>
+    </Declaration>
+    <Declaration>
         <Class IRI="#Compra"/>
     </Declaration>
     <Declaration>
@@ -30,6 +33,9 @@
     </Declaration>
     <Declaration>
         <Class IRI="#EnviarLote"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Envio"/>
     </Declaration>
     <Declaration>
         <Class IRI="#Factura"/>
@@ -53,10 +59,22 @@
         <Class IRI="#OfertaTransportista"/>
     </Declaration>
     <Declaration>
+        <Class IRI="#PeticionAgregarProductoExterno"/>
+    </Declaration>
+    <Declaration>
         <Class IRI="#PeticionCompra"/>
     </Declaration>
     <Declaration>
+        <Class IRI="#PeticionEnvio"/>
+    </Declaration>
+    <Declaration>
         <Class IRI="#PeticionEnvioCentroLogistico"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#PeticionOfertaTransporte"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#PeticionRetorno"/>
     </Declaration>
     <Declaration>
         <Class IRI="#Producto"/>
@@ -77,10 +95,22 @@
         <Class IRI="#RespuestaDeBusqueda"/>
     </Declaration>
     <Declaration>
+        <Class IRI="#RespuestaOfertaTransporte"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#RespuestaProductosEnviados"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#VendedorExterno"/>
+    </Declaration>
+    <Declaration>
         <ObjectProperty IRI="#Contiene"/>
     </Declaration>
     <Declaration>
         <ObjectProperty IRI="#De"/>
+    </Declaration>
+    <Declaration>
+        <ObjectProperty IRI="#DeLote"/>
     </Declaration>
     <Declaration>
         <ObjectProperty IRI="#DestinadaA"/>
@@ -111,6 +141,9 @@
     </Declaration>
     <Declaration>
         <ObjectProperty IRI="#PendienteDeEnvio"/>
+    </Declaration>
+    <Declaration>
+        <ObjectProperty IRI="#VendidoPor"/>
     </Declaration>
     <Declaration>
         <DataProperty IRI="#codigoPostal"/>
@@ -178,11 +211,27 @@
         <Class IRI="#Filtro"/>
     </SubClassOf>
     <SubClassOf>
+        <Class IRI="#PeticionAgregarProductoExterno"/>
+        <Class IRI="#Accion"/>
+    </SubClassOf>
+    <SubClassOf>
         <Class IRI="#PeticionCompra"/>
         <Class IRI="#Accion"/>
     </SubClassOf>
     <SubClassOf>
+        <Class IRI="#PeticionEnvio"/>
+        <Class IRI="#Accion"/>
+    </SubClassOf>
+    <SubClassOf>
         <Class IRI="#PeticionEnvioCentroLogistico"/>
+        <Class IRI="#Accion"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#PeticionOfertaTransporte"/>
+        <Class IRI="#Accion"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#PeticionRetorno"/>
         <Class IRI="#Accion"/>
     </SubClassOf>
     <SubClassOf>
@@ -199,6 +248,14 @@
     </SubClassOf>
     <SubClassOf>
         <Class IRI="#RespuestaDeBusqueda"/>
+        <Class IRI="#Respuesta"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#RespuestaOfertaTransporte"/>
+        <Class IRI="#Respuesta"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#RespuestaProductosEnviados"/>
         <Class IRI="#Respuesta"/>
     </SubClassOf>
     <DisjointClasses>
@@ -224,6 +281,10 @@
     <ObjectPropertyDomain>
         <ObjectProperty IRI="#De"/>
         <Class IRI="#PeticionCompra"/>
+    </ObjectPropertyDomain>
+    <ObjectPropertyDomain>
+        <ObjectProperty IRI="#DeLote"/>
+        <Class IRI="#Envio"/>
     </ObjectPropertyDomain>
     <ObjectPropertyDomain>
         <ObjectProperty IRI="#DestinadaA"/>
@@ -265,6 +326,10 @@
         <ObjectProperty IRI="#PendienteDeEnvio"/>
         <Class IRI="#EnviarLote"/>
     </ObjectPropertyDomain>
+    <ObjectPropertyDomain>
+        <ObjectProperty IRI="#VendidoPor"/>
+        <Class IRI="#ProductoExterno"/>
+    </ObjectPropertyDomain>
     <ObjectPropertyRange>
         <ObjectProperty IRI="#Contiene"/>
         <Class IRI="#Producto"/>
@@ -272,6 +337,10 @@
     <ObjectPropertyRange>
         <ObjectProperty IRI="#De"/>
         <Class IRI="#Compra"/>
+    </ObjectPropertyRange>
+    <ObjectPropertyRange>
+        <ObjectProperty IRI="#DeLote"/>
+        <Class IRI="#LoteProductos"/>
     </ObjectPropertyRange>
     <ObjectPropertyRange>
         <ObjectProperty IRI="#DestinadaA"/>
@@ -312,6 +381,10 @@
     <ObjectPropertyRange>
         <ObjectProperty IRI="#PendienteDeEnvio"/>
         <Class IRI="#LoteProductos"/>
+    </ObjectPropertyRange>
+    <ObjectPropertyRange>
+        <ObjectProperty IRI="#VendidoPor"/>
+        <Class IRI="#VendedorExterno"/>
     </ObjectPropertyRange>
     <SubDataPropertyOf>
         <DataProperty IRI="#codigoPostal"/>
