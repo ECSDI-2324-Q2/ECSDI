@@ -35,7 +35,7 @@ python NOMAGENT.py
 ### 🔍 Búsqueda de productos
 - **Búsqueda sin filtro:** Te deben salir todos los productos.
 - **Buscar por nombre ‘Patatas’:** Retorna un producto llamado ‘Patatas’.
-- **Buscar por precio máximo: **Retorna productos con precio inferior al indicado.
+- **Buscar por precio máximo:** Retorna productos con precio inferior al indicado.
 - **Buscar por precio mínimo:** Retorna productos con precio mayor al indicado.
 - **Buscar por precio máximo y mínimo:** Retorna productos con precio entre los dos valores.
 
