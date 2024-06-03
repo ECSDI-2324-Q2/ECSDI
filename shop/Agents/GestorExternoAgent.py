@@ -149,6 +149,9 @@ def procesarProductoExterno(graph):
     graph.serialize(destination='../data/BDProductos.owl', format='turtle')
     logger.info("Registro de nuevo producto finalizado")
 
+def notificarVendedorExterno(content, grafoEntrada):
+    print('OOOOOOKKKKKK')
+
 #funcion llamada en /comm
 @app.route("/comm")
 def communication():
@@ -174,11 +177,12 @@ def communication():
             # Extraemos el contenido que ha de ser una accion de la ontologia definida en Protege
             content = messageProperties['content']
             accion = grafoEntrada.value(subject=content, predicate=RDF.type)
-
             # Si la acción es de tipo busqueda emprendemos las acciones consequentes
             if accion == ECSDI.PeticionAgregarProductoExterno:
                 resultadoComunicacion = añadirProducto(content, grafoEntrada)
 
+            elif accion == ECSDI.NotificarVendedorExterno:
+                resultadoComunicacion = notificarVendedorExterno(content, grafoEntrada)
 
 
     serialize = resultadoComunicacion.serialize(format='xml')

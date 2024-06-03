@@ -137,7 +137,7 @@ def findProductsByFilter(Nombre=None,PrecioMin=0.0,PrecioMax=sys.float_info.max)
     PREFIX default: <http://www.owl-ontologies.com/ECSDIstore#>
     PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
     PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
-    SELECT ?Producto ?Nombre ?Precio ?Descripcion ?Peso
+    SELECT ?Producto ?Nombre ?Precio ?Descripcion ?Peso ?GestionExterna ?Tarjeta
     where {
         ?Producto rdf:type ?type .
         FILTER (?type IN (default:Producto, default:ProductoExterno))
@@ -145,6 +145,8 @@ def findProductsByFilter(Nombre=None,PrecioMin=0.0,PrecioMax=sys.float_info.max)
         ?Producto default:Precio ?Precio .
         ?Producto default:Descripcion ?Descripcion .
         ?Producto default:Peso ?Peso .
+        OPTIONAL {?Producto default:GestionExterna ?GestionExterna .}
+        OPTIONAL {?Producto default:Tarjeta ?Tarjeta .} 
         FILTER("""
 
     if Nombre is not None:
@@ -181,11 +183,22 @@ def findProductsByFilter(Nombre=None,PrecioMin=0.0,PrecioMax=sys.float_info.max)
         product_descripcion = product.Descripcion
         product_peso = product.Peso
         sujeto = product.Producto
+        product_type = graph.value(sujeto, RDF.type)
+        if str(product_type) == "http://www.owl-ontologies.com/ECSDIstore#ProductoExterno":
+            product_gestion_externa = product.GestionExterna if hasattr(product, 'GestionExterna') else None
+            product_tarjeta = product.Tarjeta if hasattr(product, 'Tarjeta') else None
+        else:
+            product_gestion_externa = None
+            product_tarjeta = None
         products_graph.add((sujeto, RDF.type, ECSDI.Producto))
         products_graph.add((sujeto, ECSDI.Nombre, Literal(product_nombre, datatype=XSD.string)))
         products_graph.add((sujeto, ECSDI.Precio, Literal(product_precio, datatype=XSD.float)))
         products_graph.add((sujeto, ECSDI.Descripcion, Literal(product_descripcion, datatype=XSD.string)))
         products_graph.add((sujeto, ECSDI.Peso, Literal(product_peso, datatype=XSD.float)))
+        if product_gestion_externa is not None:
+            products_graph.add((sujeto, ECSDI.GestionExterna, Literal(product_gestion_externa, datatype=XSD.boolean)))
+        if product_tarjeta is not None:
+            products_graph.add((sujeto, ECSDI.Tarjeta, Literal(product_tarjeta, datatype=XSD.string)))
         products_graph.add((sujetoRespuesta, ECSDI.Muestra, URIRef(sujeto)))
         
         # Grafo de los filtros
