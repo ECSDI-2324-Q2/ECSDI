@@ -46,7 +46,7 @@ args = parser.parse_args()
 
 # Configuration stuff
 if args.port is None:
-    port = 9011
+    port = 9013
 else:
     port = args.port
 
@@ -75,8 +75,8 @@ mss_cnt = 0
 
 # Data Agent
 # Datos del Agente
-CentroLogisticoAgent = Agent('CentroLogisticoAgent1',
-                    agn.CentroLogisticoAgent,
+CentroLogisticoAgent = Agent('CentroLogisticoAgent2',
+                    agn.CentroLogisticoAgent2,
                     'http://%s:%d/comm' % (hostname, port),
                     'http://%s:%d/Stop' % (hostname, port))
 
@@ -135,7 +135,7 @@ def add_product_to_lote(graph, content_lote, producto, peso_lote):
 
 def crear_lotes(codigo_postal, prioridad, productos_compra):
     graph = Graph()
-    datos_lotes = open("../Data/LotesPendientesCL1DB.owl")
+    datos_lotes = open("../Data/LotesPendientesCL2DB.owl")
     graph.parse(datos_lotes, format='turtle')
     
     lote_existente = find_existing_lote(graph, codigo_postal, prioridad)
@@ -153,7 +153,7 @@ def crear_lotes(codigo_postal, prioridad, productos_compra):
 
     graph.set((content_lote, ECSDI.Peso, Literal(peso_lote, datatype=XSD.float)))
     
-    graph.serialize(destination="../Data/LotesPendientesCL1DB.owl", format='turtle')
+    graph.serialize(destination="../Data/LotesPendientesCL2DB.owl", format='turtle')
 
     return
     
@@ -231,7 +231,7 @@ def decrease_priority(graph, producto_pendiente):
 
 def crearLotes():
     graph = Graph()
-    ontologyFile = open("../Data/LotesPendientesCL1DB.owl")
+    ontologyFile = open("../Data/LotesPendientesCL2DB.owl")
     graph.parse(ontologyFile, format='turtle')
 
     nouLote = Graph()
@@ -262,7 +262,7 @@ def crearLotes():
         thread = threading.Thread(target=enviarLote, args=(nouLote,contentLote,))
         thread.start()
 
-    graph.serialize(destination="../Data/LotesPendientesCL1DB.owl", format='turtle')
+    graph.serialize(destination="../Data/LotesPendientesCL2DB.owl", format='turtle')
 
     return
 
@@ -359,7 +359,7 @@ def sort_lotes(lotes):
 
 def escoger_lotes():
     g = Graph()
-    g.parse('../Data/LotesPendientesCL1DB.owl', format='turtle')
+    g.parse('../Data/LotesPendientesCL2DB.owl', format='turtle')
 
     lotes = [get_lote_data(g, lote) for lote in g.subjects(predicate=ECSDI.Prioridad)]
     lotes = sort_lotes(lotes)
@@ -376,7 +376,7 @@ def borrar_lotes_enviados():
     logger.info("Borrando lotes enviados")
     graph = Graph()
     # Serialize the empty graph to the file
-    graph.serialize(destination="../Data/LotesPendientesCL1DB.owl", format='turtle')
+    graph.serialize(destination="../Data/LotesPendientesCL2DB.owl", format='turtle')
 
 
 def escoger_lotes_periodico():
@@ -385,7 +385,7 @@ def escoger_lotes_periodico():
     thread.start()
     thread.join()
     logger.info("Lotes seleccionados para su envío")
-    sleep(500)
+    sleep(120)
 
     escoger_lotes_periodico()
 
@@ -399,7 +399,7 @@ def register_message():
     """
 
     logger.info('Nos registramos')
-    registerCentroLogistico(CentroLogisticoAgent, CentroLogisticoDirectoryAgent, CentroLogisticoAgent.uri, getMessageCount(),8028, '../data/ProductosCL1.owl')
+    registerCentroLogistico(CentroLogisticoAgent, CentroLogisticoDirectoryAgent, agn.CentroLogisticoAgent, getMessageCount(),3029, '../data/ProductosCL2.owl')
 
 @app.route("/comm")
 def communication():

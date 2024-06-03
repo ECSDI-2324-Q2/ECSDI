@@ -17,11 +17,15 @@ sleep 1
 python GestorDevolucionesAgent.py &
 sleep 1
 python TransportistaDevolucionesAgent.py &
-#sleep 1
-#python DirectoryServiceTransportistes.py &
-#sleep 2
-#python TransportistaAgent_1.py &
-#sleep 1
-python CentroLogisticoDirectoryService.py
-#sleep 2
-#python CentroLogisticoAgent.py
+sleep 1
+python DirectoryServiceTransportistes.py &
+sleep 2
+python TransportistaAgent_1.py &
+sleep 1
+python TransportistaAgent_2.py &
+sleep 1
+python CentroLogisticoDirectoryService.py &
+sleep 1
+python CentroLogisticoAgent1.py &
+sleep 1
+python CentroLogisticoAgent2.py

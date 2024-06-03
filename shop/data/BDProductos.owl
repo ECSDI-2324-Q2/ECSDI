@@ -57,13 +57,6 @@ default:Producto8 a default:Producto ;
     default:Peso "0.5"^^xsd:float ;
     default:Precio "1.0"^^xsd:float .
 
-default:Producto9 a default:Producto ;
-    default:Descripcion "Esto es una Nuria" ;
-    default:Id 9 ;
-    default:Nombre "Nuria Bruch" ;
-    default:Peso "55.0"^^xsd:float ;
-    default:Precio "23000000.0"^^xsd:float .
-
 default:ProductoExterno1 a default:ProductoExterno ;
     default:Descripcion "macbook"^^xsd:string ;
     default:GestionExterna true ;

@@ -3,6 +3,7 @@
 
 default:Factura1 a default:Factura ;
     default:Facturando default:Producto1,
+        default:Producto2,
         default:Producto5,
         default:Producto8,
         default:ProductoExterno1,
@@ -12,6 +13,7 @@ default:Factura1 a default:Factura ;
         "308.0"^^xsd:float,
         "309.0"^^xsd:float,
         "1000.0"^^xsd:float,
+        "1032.0"^^xsd:float,
         "2000.0"^^xsd:float ;
     default:Tarjeta "12"^^xsd:int,
         "123"^^xsd:int,
@@ -20,6 +22,7 @@ default:Factura1 a default:Factura ;
         "231"^^xsd:int,
         "1234"^^xsd:int,
         "2222"^^xsd:int,
+        "12312"^^xsd:int,
         "123123"^^xsd:int,
         "1231232"^^xsd:int,
         "12332312"^^xsd:int,
@@ -190,11 +193,14 @@ default:Factura35 a default:Factura ;
     default:Tarjeta "132"^^xsd:int .
 
 default:Factura4 a default:Factura ;
-    default:Facturando default:Producto5,
+    default:Facturando default:Producto2,
+        default:Producto5,
         default:ProductoExterno1 ;
     default:PrecioTotal "1000.0"^^xsd:float,
+        "1032.0"^^xsd:float,
         "2000.0"^^xsd:float ;
-    default:Tarjeta "123"^^xsd:int .
+    default:Tarjeta "123"^^xsd:int,
+        "12312"^^xsd:int .
 
 default:Factura5 a default:Factura ;
     default:Facturando default:Producto5 ;
@@ -242,10 +248,6 @@ default:ProductoExterno3 a default:Producto ;
     default:Nombre "gafas"^^xsd:string ;
     default:Precio "2.0"^^xsd:float .
 
-default:Producto2 a default:Producto ;
-    default:Nombre "Mouse"^^xsd:string ;
-    default:Precio "32.0"^^xsd:float .
-
 default:Producto3 a default:Producto ;
     default:Nombre "Teclado"^^xsd:string ;
     default:Precio "55.0"^^xsd:float .
@@ -253,6 +255,10 @@ default:Producto3 a default:Producto ;
 default:Producto1 a default:Producto ;
     default:Nombre "Patatas"^^xsd:string ;
     default:Precio "308.0"^^xsd:float .
+
+default:Producto2 a default:Producto ;
+    default:Nombre "Mouse"^^xsd:string ;
+    default:Precio "32.0"^^xsd:float .
 
 default:ProductoExterno1 a default:Producto ;
     default:Nombre "pc"^^xsd:string ;

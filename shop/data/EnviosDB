@@ -80,6 +80,12 @@ ns1:message--1886855251477527711-0014 a ns1:FipaAclMessage ;
     ns1:receiver <http://www.agentes.org#FinancieroAgent> ;
     ns1:sender <http://www.agentes.org#ComercianteAgent> .
 
+ns1:message--1886855251477527711-0020 a ns1:FipaAclMessage ;
+    ns1:content default:PeticionCompra28 ;
+    ns1:performative ns1:request ;
+    ns1:receiver <http://www.agentes.org#FinancieroAgent> ;
+    ns1:sender <http://www.agentes.org#ComercianteAgent> .
+
 ns1:message--2210253665435953550-0002 a ns1:FipaAclMessage ;
     ns1:content default:PeticionCompra51 ;
     ns1:performative ns1:request ;
@@ -218,6 +224,12 @@ ns1:message--769732556547395473-0002 a ns1:FipaAclMessage ;
     ns1:receiver <http://www.agentes.org#FinancieroAgent> ;
     ns1:sender <http://www.agentes.org#ComercianteAgent> .
 
+ns1:message--781911139742630409-0002 a ns1:FipaAclMessage ;
+    ns1:content default:PeticionCompra4 ;
+    ns1:performative ns1:request ;
+    ns1:receiver <http://www.agentes.org#FinancieroAgent> ;
+    ns1:sender <http://www.agentes.org#ComercianteAgent> .
+
 ns1:message--9027783859556741593-0002 a ns1:FipaAclMessage ;
     ns1:content default:PeticionCompra80 ;
     ns1:performative ns1:request ;
@@ -319,12 +331,15 @@ default:PeticionEnvio17 a default:GenerarFactura,
 default:PeticionEnvio21 a default:GenerarFactura,
         default:PeticionEnvio ;
     default:De default:Compra217,
-        default:Compra249 ;
+        default:Compra249,
+        default:Compra30 ;
     default:FechaEntrega "2024-06-04T00:00:00"^^xsd:dateTime ;
     default:Pagado false ;
-    default:PrecioTotal "1000.0"^^xsd:float ;
+    default:PrecioTotal "1000.0"^^xsd:float,
+        "1032.0"^^xsd:float ;
     default:Prioridad "1"^^xsd:int ;
-    default:Tarjeta "132"^^xsd:int .
+    default:Tarjeta "132"^^xsd:int,
+        "12312"^^xsd:int .
 
 default:PeticionEnvio27 a default:GenerarFactura,
         default:PeticionEnvio ;
@@ -369,6 +384,7 @@ default:PeticionEnvio3 a default:GenerarFactura,
     default:PrecioTotal "309.0"^^xsd:float,
         "395.0"^^xsd:float,
         "1000.0"^^xsd:float,
+        "1032.0"^^xsd:float,
         "2000.0"^^xsd:float ;
     default:Prioridad "1"^^xsd:int ;
     default:Tarjeta "123"^^xsd:int,
@@ -378,6 +394,7 @@ default:PeticionEnvio3 a default:GenerarFactura,
         "312"^^xsd:int,
         "2222"^^xsd:int,
         "4321"^^xsd:int,
+        "12312"^^xsd:int,
         "12332312"^^xsd:int .
 
 default:PeticionEnvio33 a default:GenerarFactura,
@@ -535,6 +552,11 @@ default:Compra273 a default:Compra ;
     default:Contiene default:Producto5 ;
     default:Destino default:Direccion272 .
 
+default:Compra30 a default:Compra ;
+    default:Contiene default:Producto2,
+        default:Producto5 ;
+    default:Destino default:Direccion29 .
+
 default:Compra37 a default:Compra ;
     default:Contiene default:Producto5 ;
     default:Destino default:Direccion36 .
@@ -548,7 +570,8 @@ default:Compra53 a default:Compra ;
     default:Destino default:Direccion52 .
 
 default:Compra6 a default:Compra ;
-    default:Contiene default:Producto5 ;
+    default:Contiene default:Producto2,
+        default:Producto5 ;
     default:Destino default:Direccion5 .
 
 default:Compra64 a default:Compra ;
@@ -702,6 +725,10 @@ default:Direccion272 a default:Direccion ;
     default:CodigoPostal "123"^^xsd:int ;
     default:Direccion "adw"^^xsd:string .
 
+default:Direccion29 a default:Direccion ;
+    default:CodigoPostal "3029"^^xsd:int ;
+    default:Direccion "casita"^^xsd:string .
+
 default:Direccion36 a default:Direccion ;
     default:CodigoPostal "312"^^xsd:int ;
     default:Direccion "aed"^^xsd:string .
@@ -711,8 +738,10 @@ default:Direccion44 a default:Direccion ;
     default:Direccion "ad"^^xsd:string .
 
 default:Direccion5 a default:Direccion ;
-    default:CodigoPostal "123"^^xsd:int ;
-    default:Direccion "adw"^^xsd:string .
+    default:CodigoPostal "123"^^xsd:int,
+        "3029"^^xsd:int ;
+    default:Direccion "adw"^^xsd:string,
+        "casita"^^xsd:string .
 
 default:Direccion52 a default:Direccion ;
     default:CodigoPostal "123"^^xsd:int ;
@@ -764,12 +793,6 @@ default:Producto1 a default:Producto ;
     default:Peso "23.0"^^xsd:float ;
     default:Precio "308.0"^^xsd:float .
 
-default:Producto2 a default:Producto ;
-    default:Descripcion "Esto es un Mouse"^^xsd:string ;
-    default:Nombre "Mouse"^^xsd:string ;
-    default:Peso "1.0"^^xsd:float ;
-    default:Precio "32.0"^^xsd:float .
-
 default:Producto3 a default:Producto ;
     default:Descripcion "Esto es un Teclado"^^xsd:string ;
     default:Nombre "Teclado"^^xsd:string ;
@@ -781,6 +804,12 @@ default:ProductoExterno1 a default:Producto ;
     default:Nombre "pc"^^xsd:string ;
     default:Peso "100.0"^^xsd:float ;
     default:Precio "2000.0"^^xsd:float .
+
+default:Producto2 a default:Producto ;
+    default:Descripcion "Esto es un Mouse"^^xsd:string ;
+    default:Nombre "Mouse"^^xsd:string ;
+    default:Peso "1.0"^^xsd:float ;
+    default:Precio "32.0"^^xsd:float .
 
 default:Producto5 a default:Producto ;
     default:Descripcion "Esto es un Ordenador"^^xsd:string ;
