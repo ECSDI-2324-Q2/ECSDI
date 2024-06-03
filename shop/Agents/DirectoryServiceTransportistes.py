@@ -19,7 +19,7 @@ DirectoryServiceTransportistes
 """
 import sys
 
-from rdflib import Graph, RDF, RDFS, FOAF, Namespace
+from rdflib import BNode, Graph, RDF, RDFS, FOAF, Namespace
 sys.path.append('../')
 from AgentUtil.Util import gethostname
 import socket
@@ -182,25 +182,36 @@ def register():
         agn_type = gm.value(subject=content, predicate=DSO.AgentType)
         rsearch = dsgraph.triples((None, DSO.AgentType, agn_type))
 
+        i = 0
+        graph = Graph()
+        graph.bind('dso', DSO)
+        bag = BNode()
+        graph.add((bag, RDF.type, RDF.Bag))
+
+        for a, b, c in rsearch:
+            agn_uri2 = a
+            agn_add = dsgraph.value(subject=agn_uri2, predicate=DSO.Address)
+            agn_name = dsgraph.value(subject=agn_uri2, predicate=FOAF.name)
+
+            rsp_obj = agn['Directory-response' + str(i)]
+            graph.add((rsp_obj, DSO.Address, agn_add))
+            graph.add((rsp_obj, DSO.Uri, agn_uri2))
+            graph.add((rsp_obj, FOAF.name, agn_name))
+            graph.add((bag, URIRef(u'http://www.w3.org/1999/02/22-rdf-syntax-ns#_') + str(i), rsp_obj))
+            logger.info("Agente encontrado: " + agn_name)
+            i += 1
+
         if rsearch is not None:
-            agn_uri = list(rsearch)[0][0]
-            agn_add = dsgraph.value(subject=agn_uri, predicate=DSO.Address)
-            gr = Graph()
-            gr.bind('dso', DSO)
-            rsp_obj = agn['Directory-response']
-            gr.add((rsp_obj, DSO.Address, agn_add))
-            gr.add((rsp_obj, DSO.Uri, agn_uri))
-            return build_message(gr,
+            return build_message(graph,
                                  ACL.inform,
-                                 sender=DirectoryAgent.uri,
+                                 sender=DirectoryAgentTransportistes.uri,
                                  msgcnt=mss_cnt,
-                                 receiver=agn_uri,
-                                 content=rsp_obj)
+                                 content=bag)
         else:
             # Si no encontramos nada retornamos un inform sin contenido
             return build_message(Graph(),
                                  ACL.inform,
-                                 sender=DirectoryAgent.uri,
+                                 sender=DirectoryAgentTransportistes.uri,
                                  msgcnt=mss_cnt)
     
     global dsgraph

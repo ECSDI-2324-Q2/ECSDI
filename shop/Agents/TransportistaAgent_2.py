@@ -44,7 +44,7 @@ args = parser.parse_args()
 
 # Configuration stuff
 if args.port is None:
-    port = 9009
+    port = 9012
 else:
     port = args.port
 
@@ -72,8 +72,8 @@ agn = Namespace("http://www.agentes.org#")
 mss_cnt = 0
 
 # Datos del Agente
-TransportistaAgent = Agent('TransportistaAgent1',
-                    agn.TransportistaAgent1,
+TransportistaAgent = Agent('TransportistaAgent2',
+                    agn.TransportistaAgent2,
                     'http://%s:%d/comm' % (hostname, port),
                     'http://%s:%d/Stop' % (hostname, port))
 
@@ -121,7 +121,8 @@ def realizarOfertaTransporte(grafoEntrada, content):
 
 def calcularPrecio(peso):
     logger.info("Calculando oferta")
-    oferta = 5.0 + peso*2
+    #int random = random.randint(1, 10)
+    oferta = 3.0 + peso*2
     logger.info("Oferta calculada: " + str(oferta))
     return oferta
 

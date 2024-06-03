@@ -3,6 +3,7 @@
 
 default:Factura1 a default:Factura ;
     default:Facturando default:Producto1,
+        default:Producto5,
         default:Producto8,
         default:ProductoExterno1,
         default:ProductoExterno3 ;
@@ -10,11 +11,13 @@ default:Factura1 a default:Factura ;
         "2.0"^^xsd:float,
         "308.0"^^xsd:float,
         "309.0"^^xsd:float,
+        "1000.0"^^xsd:float,
         "2000.0"^^xsd:float ;
     default:Tarjeta "12"^^xsd:int,
         "123"^^xsd:int,
         "132"^^xsd:int,
         "213"^^xsd:int,
+        "231"^^xsd:int,
         "1234"^^xsd:int,
         "2222"^^xsd:int,
         "123123"^^xsd:int,
@@ -23,19 +26,69 @@ default:Factura1 a default:Factura ;
         "123456789"^^xsd:int .
 
 default:Factura10 a default:Factura ;
-    default:Facturando default:ProductoExterno1 ;
-    default:PrecioTotal "2000.0"^^xsd:float ;
-    default:Tarjeta "123"^^xsd:int .
+    default:Facturando default:Producto5,
+        default:ProductoExterno1 ;
+    default:PrecioTotal "1000.0"^^xsd:float,
+        "2000.0"^^xsd:float ;
+    default:Tarjeta "123"^^xsd:int,
+        "132"^^xsd:int .
 
 default:Factura11 a default:Factura ;
-    default:Facturando default:ProductoExterno1 ;
-    default:PrecioTotal "2000.0"^^xsd:float ;
+    default:Facturando default:Producto5,
+        default:ProductoExterno1 ;
+    default:PrecioTotal "1000.0"^^xsd:float,
+        "2000.0"^^xsd:float ;
+    default:Tarjeta "132"^^xsd:int .
+
+default:Factura12 a default:Factura ;
+    default:Facturando default:Producto5 ;
+    default:PrecioTotal "1000.0"^^xsd:float ;
+    default:Tarjeta "132"^^xsd:int .
+
+default:Factura13 a default:Factura ;
+    default:Facturando default:Producto5 ;
+    default:PrecioTotal "1000.0"^^xsd:float ;
+    default:Tarjeta "132"^^xsd:int .
+
+default:Factura14 a default:Factura ;
+    default:Facturando default:Producto5 ;
+    default:PrecioTotal "1000.0"^^xsd:float ;
+    default:Tarjeta "132"^^xsd:int .
+
+default:Factura15 a default:Factura ;
+    default:Facturando default:Producto5 ;
+    default:PrecioTotal "1000.0"^^xsd:float ;
+    default:Tarjeta "132"^^xsd:int .
+
+default:Factura16 a default:Factura ;
+    default:Facturando default:Producto5 ;
+    default:PrecioTotal "1000.0"^^xsd:float ;
+    default:Tarjeta "132"^^xsd:int .
+
+default:Factura17 a default:Factura ;
+    default:Facturando default:Producto5 ;
+    default:PrecioTotal "1000.0"^^xsd:float ;
+    default:Tarjeta "132"^^xsd:int .
+
+default:Factura18 a default:Factura ;
+    default:Facturando default:Producto5 ;
+    default:PrecioTotal "1000.0"^^xsd:float ;
+    default:Tarjeta "132"^^xsd:int .
+
+default:Factura19 a default:Factura ;
+    default:Facturando default:Producto5 ;
+    default:PrecioTotal "1000.0"^^xsd:float ;
     default:Tarjeta "132"^^xsd:int .
 
 default:Factura2 a default:Factura ;
     default:Facturando default:Producto1,
+        default:Producto2,
+        default:Producto3,
+        default:Producto5,
         default:ProductoExterno1 ;
     default:PrecioTotal "308.0"^^xsd:float,
+        "395.0"^^xsd:float,
+        "1000.0"^^xsd:float,
         "2000.0"^^xsd:float ;
     default:Tarjeta "12"^^xsd:int,
         "13"^^xsd:int,
@@ -43,39 +96,143 @@ default:Factura2 a default:Factura ;
         "132"^^xsd:int,
         "213"^^xsd:int .
 
+default:Factura20 a default:Factura ;
+    default:Facturando default:Producto5 ;
+    default:PrecioTotal "1000.0"^^xsd:float ;
+    default:Tarjeta "132"^^xsd:int .
+
+default:Factura21 a default:Factura ;
+    default:Facturando default:Producto5 ;
+    default:PrecioTotal "1000.0"^^xsd:float ;
+    default:Tarjeta "132"^^xsd:int .
+
+default:Factura22 a default:Factura ;
+    default:Facturando default:Producto5 ;
+    default:PrecioTotal "1000.0"^^xsd:float ;
+    default:Tarjeta "132"^^xsd:int .
+
+default:Factura23 a default:Factura ;
+    default:Facturando default:Producto5 ;
+    default:PrecioTotal "1000.0"^^xsd:float ;
+    default:Tarjeta "132"^^xsd:int .
+
+default:Factura24 a default:Factura ;
+    default:Facturando default:Producto5 ;
+    default:PrecioTotal "1000.0"^^xsd:float ;
+    default:Tarjeta "132"^^xsd:int .
+
+default:Factura25 a default:Factura ;
+    default:Facturando default:Producto5 ;
+    default:PrecioTotal "1000.0"^^xsd:float ;
+    default:Tarjeta "132"^^xsd:int .
+
+default:Factura26 a default:Factura ;
+    default:Facturando default:Producto5 ;
+    default:PrecioTotal "1000.0"^^xsd:float ;
+    default:Tarjeta "132"^^xsd:int .
+
+default:Factura27 a default:Factura ;
+    default:Facturando default:Producto5 ;
+    default:PrecioTotal "1000.0"^^xsd:float ;
+    default:Tarjeta "132"^^xsd:int .
+
+default:Factura28 a default:Factura ;
+    default:Facturando default:Producto5 ;
+    default:PrecioTotal "1000.0"^^xsd:float ;
+    default:Tarjeta "132"^^xsd:int .
+
+default:Factura29 a default:Factura ;
+    default:Facturando default:Producto5 ;
+    default:PrecioTotal "1000.0"^^xsd:float ;
+    default:Tarjeta "132"^^xsd:int .
+
 default:Factura3 a default:Factura ;
-    default:Facturando default:ProductoExterno1 ;
-    default:PrecioTotal "2000.0"^^xsd:float ;
-    default:Tarjeta "312"^^xsd:int,
+    default:Facturando default:Producto1,
+        default:Producto2,
+        default:Producto3,
+        default:Producto5,
+        default:ProductoExterno1 ;
+    default:PrecioTotal "395.0"^^xsd:float,
+        "1000.0"^^xsd:float,
+        "2000.0"^^xsd:float ;
+    default:Tarjeta "132"^^xsd:int,
+        "312"^^xsd:int,
         "234234"^^xsd:int .
 
+default:Factura30 a default:Factura ;
+    default:Facturando default:Producto5 ;
+    default:PrecioTotal "1000.0"^^xsd:float ;
+    default:Tarjeta "132"^^xsd:int .
+
+default:Factura31 a default:Factura ;
+    default:Facturando default:Producto5 ;
+    default:PrecioTotal "1000.0"^^xsd:float ;
+    default:Tarjeta "132"^^xsd:int .
+
+default:Factura32 a default:Factura ;
+    default:Facturando default:Producto5 ;
+    default:PrecioTotal "1000.0"^^xsd:float ;
+    default:Tarjeta "132"^^xsd:int .
+
+default:Factura33 a default:Factura ;
+    default:Facturando default:Producto5 ;
+    default:PrecioTotal "1000.0"^^xsd:float ;
+    default:Tarjeta "132"^^xsd:int .
+
+default:Factura34 a default:Factura ;
+    default:Facturando default:Producto5 ;
+    default:PrecioTotal "1000.0"^^xsd:float ;
+    default:Tarjeta "132"^^xsd:int .
+
+default:Factura35 a default:Factura ;
+    default:Facturando default:Producto5 ;
+    default:PrecioTotal "1000.0"^^xsd:float ;
+    default:Tarjeta "132"^^xsd:int .
+
 default:Factura4 a default:Factura ;
-    default:Facturando default:ProductoExterno1 ;
-    default:PrecioTotal "2000.0"^^xsd:float ;
+    default:Facturando default:Producto5,
+        default:ProductoExterno1 ;
+    default:PrecioTotal "1000.0"^^xsd:float,
+        "2000.0"^^xsd:float ;
     default:Tarjeta "123"^^xsd:int .
 
 default:Factura5 a default:Factura ;
-    default:PrecioTotal "0.0"^^xsd:float ;
-    default:Tarjeta "321"^^xsd:int .
+    default:Facturando default:Producto5 ;
+    default:PrecioTotal "0.0"^^xsd:float,
+        "1000.0"^^xsd:float ;
+    default:Tarjeta "213"^^xsd:int,
+        "321"^^xsd:int .
 
 default:Factura6 a default:Factura ;
-    default:Facturando default:ProductoExterno1 ;
-    default:PrecioTotal "2000.0"^^xsd:float ;
-    default:Tarjeta "123"^^xsd:int .
+    default:Facturando default:Producto5,
+        default:ProductoExterno1 ;
+    default:PrecioTotal "1000.0"^^xsd:float,
+        "2000.0"^^xsd:float ;
+    default:Tarjeta "123"^^xsd:int,
+        "132"^^xsd:int .
 
 default:Factura7 a default:Factura ;
-    default:PrecioTotal "0.0"^^xsd:float ;
-    default:Tarjeta "132"^^xsd:int .
+    default:Facturando default:Producto5 ;
+    default:PrecioTotal "0.0"^^xsd:float,
+        "1000.0"^^xsd:float ;
+    default:Tarjeta "132"^^xsd:int,
+        "4321"^^xsd:int .
 
 default:Factura8 a default:Factura ;
-    default:Facturando default:ProductoExterno1 ;
-    default:PrecioTotal "2000.0"^^xsd:float ;
-    default:Tarjeta "132"^^xsd:int .
+    default:Facturando default:Producto5,
+        default:ProductoExterno1 ;
+    default:PrecioTotal "1000.0"^^xsd:float,
+        "2000.0"^^xsd:float ;
+    default:Tarjeta "132"^^xsd:int,
+        "4321"^^xsd:int .
 
 default:Factura9 a default:Factura ;
-    default:Facturando default:ProductoExterno1 ;
-    default:PrecioTotal "2000.0"^^xsd:float ;
-    default:Tarjeta "123"^^xsd:int .
+    default:Facturando default:Producto5,
+        default:ProductoExterno1 ;
+    default:PrecioTotal "1000.0"^^xsd:float,
+        "2000.0"^^xsd:float ;
+    default:Tarjeta "123"^^xsd:int,
+        "132"^^xsd:int .
 
 default:Producto8 a default:Producto ;
     default:Nombre "Platano"^^xsd:string ;
@@ -85,6 +242,14 @@ default:ProductoExterno3 a default:Producto ;
     default:Nombre "gafas"^^xsd:string ;
     default:Precio "2.0"^^xsd:float .
 
+default:Producto2 a default:Producto ;
+    default:Nombre "Mouse"^^xsd:string ;
+    default:Precio "32.0"^^xsd:float .
+
+default:Producto3 a default:Producto ;
+    default:Nombre "Teclado"^^xsd:string ;
+    default:Precio "55.0"^^xsd:float .
+
 default:Producto1 a default:Producto ;
     default:Nombre "Patatas"^^xsd:string ;
     default:Precio "308.0"^^xsd:float .
@@ -92,4 +257,8 @@ default:Producto1 a default:Producto ;
 default:ProductoExterno1 a default:Producto ;
     default:Nombre "pc"^^xsd:string ;
     default:Precio "2000.0"^^xsd:float .
+
+default:Producto5 a default:Producto ;
+    default:Nombre "Ordenador"^^xsd:string ;
+    default:Precio "1000.0"^^xsd:float .
 

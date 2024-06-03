@@ -155,61 +155,61 @@ def solicitarEnvio(grafo,contenido):
         codigoPostal = grafo.value(subject=d,predicate=ECSDI.CodigoPostal)
     centroLogisticoAgente = getAgentInfo(agn.CentroLogisticoDirectoryAgent, DirectoryAgent, ComercianteAgent, getMessageCount())
     prioridad = grafo.value(subject=contenido,predicate=ECSDI.Prioridad)
-    # solicitamos centros logisticos dependiendo del codigo postal
-    if codigoPostal is not None:
-        agentes = getCentroLogisticoMasCercano(agn.CentroLogisticoAgent, centroLogisticoAgente, ComercianteAgent, getMessageCount(), int(codigoPostal))
 
+    grafoCopia.remove((contenido,ECSDI.Tarjeta,None))
+    grafoCopia.remove((contenido,RDF.type,ECSDI.PeticionEnvio))
+    sujeto = ECSDI['PeticionEnvioACentroLogistico' + str(getMessageCount())]
+    grafoCopia.add((sujeto, RDF.type, ECSDI.PeticionEnvioACentroLogistico))
 
-        grafoCopia.remove((contenido,ECSDI.Tarjeta,None))
-        grafoCopia.remove((contenido,RDF.type,ECSDI.PeticionEnvio))
-        sujeto = ECSDI['PeticionEnvioACentroLogistico' + str(getMessageCount())]
-        grafoCopia.add((sujeto, RDF.type, ECSDI.PeticionEnvioACentroLogistico))
-
-        for a, b, c in grafoCopia:
-            if a == contenido:
-                if b == ECSDI.De: #Compra
-                    grafoCopia.remove((a, b, c))
-                    grafoCopia.add((sujeto, ECSDI.EnvioDe, c))
-                else:
-                    grafoCopia.remove((a,b,c))
-                    grafoCopia.add((sujeto,b,c))
-
-        for ag in agentes:
-            logger.info("Enviando peticion envio a Centro Logistico")
-            respuesta = send_message(
-                build_message(grafoCopia, perf=ACL.request, sender=ComercianteAgent.uri, receiver=ag.uri,
-                              msgcnt=getMessageCount(),
-                              content=sujeto), ag.address)
-            logger.info("Recibida respuesta de envio a Centro Logistico")
-            accion = respuesta.subjects(predicate=RDF.type, object=ECSDI.RespuestaEnvioDesdeCentroLogistico)
-            contenido = None
-            for a in accion:
-                contenido = a
-
-            for item in respuesta.subjects(RDF.type, ACL.FipaAclMessage):
-                respuesta.remove((item, None, None))
-            respuesta.remove((None, RDF.type, ECSDI.RespuestaEnvioDesdeCentroLogistico))
-            respuesta.add((sujeto, RDF.type, ECSDI.PeticionEnvioACentroLogistico))
-
-            grafoCopia = respuesta
-
-            contiene = False
-            for a, b, c in grafoCopia:
-                if a == contenido:
-                    if b == ECSDI.Faltan:  # Compra
-                        grafoCopia.remove((a, b, c))
-                        grafoCopia.add((sujeto, ECSDI.EnvioDe, c))
-
-                    elif b == ECSDI.Contiene:
-                        contiene = True
-                    else:
-                        grafoCopia.remove((a, b, c))
-                        grafoCopia.add((sujeto, b, c))
-
-            if not contiene:
-                break
+    for a, b, c in grafoCopia:
+        if a == contenido:
+            if b == ECSDI.De: #Compra
+                grafoCopia.remove((a, b, c))
+                grafoCopia.add((sujeto, ECSDI.EnvioDe, c))
             else:
-                logger.info("Faltan productos por enviar. Probamos con otro centro logístico")
+                grafoCopia.remove((a,b,c))
+                grafoCopia.add((sujeto,b,c))
+
+    agentesCL = getCentroLogisticoMasCercano(agn.CentroLogisticoAgent, centroLogisticoAgente, ComercianteAgent, getMessageCount(), int(codigoPostal))
+
+    compra = grafoCopia.value(subject=contenido,predicate=ECSDI.Compra)
+    compraSize = len(list(grafoCopia.objects(subject=compra, predicate=ECSDI.Contiene)))
+    productosVendidos = 0
+
+    ontologyFile = open('../data/CentrosLogisticosBD.owl')
+
+    productos_centrologistico = Graph()
+    productos_centrologistico.bind('default', ECSDI)
+    productos_centrologistico.parse(ontologyFile, format='turtle')
+
+    # Define the Producto URI
+    producto_uri = URIRef("http://www.owl-ontologies.com/ECSDIstore#Producto")    
+
+    while productosVendidos < compraSize:
+        for ag in agentesCL:
+            # Get the product IDs related to the CentroLogistico through the ECSDI.Producto predicate
+            product_ids_centrologistico = [int(o.split('#Producto')[-1]) for o in productos_centrologistico.objects(subject=URIRef(ag.uri), predicate=producto_uri)]
+
+            prod_vender = []
+
+            for prod in grafoCopia.objects(subject=compra, predicate=ECSDI.Contiene):
+                # Extract the product ID from the URI
+                prod_id = int(prod.split('#Producto')[-1])
+
+                if prod_id in product_ids_centrologistico:
+                    prod_vender.append(prod)
+                    productosVendidos += 1
+                    grafoCopia.add((sujeto, ECSDI.Envia, Literal(prod_id)))
+                    grafoCopia.remove((compra, ECSDI.Contiene, prod))
+
+                    print(f'Producto {prod} vendido by {ag.uri}')
+
+            print(grafoCopia.value(subject=sujeto, predicate=RDF.type))
+
+            send_message(
+                        build_message(grafoCopia, perf=ACL.request, sender=ComercianteAgent.uri, receiver=ag.uri,
+                                    msgcnt=mss_cnt), ag.address)
+                
     logger.info("Enviada peticion envio a Centro Logistico")
 
 

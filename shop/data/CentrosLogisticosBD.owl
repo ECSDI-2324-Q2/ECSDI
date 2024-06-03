@@ -1,0 +1,20 @@
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix ns1: <http://www.owl-ontologies.com/ECSDIstore#> .
+@prefix ns2: <http://www.semanticweb.org/directory-service-ontology#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<http://www.agentes.org#CentroLogisticoAgent2> a foaf:Agent ;
+    ns1:CodigoPostal "8029"^^xsd:int ;
+    ns1:Producto "7"^^xsd:int ;
+    ns2:Address "http://Miquels-MacBook-Air.local:9013/comm" ;
+    ns2:AgentType <http://www.agentes.org#CentroLogisticoAgent> ;
+    foaf:name "CentroLogisticoAgent2" .
+
+<http://www.agentes.org#CentroLogisticoAgent> a foaf:Agent ;
+    ns1:CodigoPostal "8028"^^xsd:int ;
+    ns1:Producto "5"^^xsd:int ;
+    ns2:Address "http://Miquels-MacBook-Air.local:9011/comm" ;
+    ns2:AgentType <http://www.agentes.org#CentroLogisticoAgent> ;
+    foaf:name "CentroLogisticoAgent",
+        "CentroLogisticoAgent1" .
+

@@ -139,15 +139,15 @@ def register():
         print(agn_prods)
 
         for prod in agn_prods:
-            dsgraph.add((agn_uri, ECSDI.Producto,prod))
+            dsgraph.add((agn_uri, ECSDI.Producto, Literal(prod, datatype=XSD.int)))
 
-        BDCentros = open("../data/CentrosLogisticosBD.rdf")
+        BDCentros = open("../data/CentrosLogisticosBD.owl")
         graphC = Graph()
         graphC.parse(BDCentros, format='turtle')
 
         graphC += dsgraph
 
-        graphC.serialize(destination="../data/CentrosLogisticosBD", format='turtle')
+        graphC.serialize(destination="../data/CentrosLogisticosBD.owl", format='turtle')
 
         logger.info('Registrado agente: ' + agn_name + ' - tipus:' + agn_type)
 

@@ -134,9 +134,6 @@ def procesarVenta(listaDeCompra, prioridad, numTarjeta, direccion, codigoPostal)
 
     grafoCompra.add((content,ECSDI.De,URIRef(sujetoCompra)))
 
-    # Pedimos información del agente filtrador
-    #comerciante = getAgentInfo(agn.ComercianteAgent, DirectoryAgent, UserAgent, getMessageCount())
-
     # Pedimos información del agente vendedor
     comerciante = getAgentInfo(agn.ComercianteAgent, DirectoryAgent, UserAgent, getMessageCount())
     
