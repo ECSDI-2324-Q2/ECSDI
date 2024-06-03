@@ -107,9 +107,10 @@ def realizarTransporte(grafoEntrada, content):
         delote = s
     prioridad = grafoEntrada.value(subject=delote, predicate=ECSDI.Prioridad)
     dias = 1
-    if int(prioridad) == 2:
+    prioridad = str(prioridad)
+    if prioridad == '2':
         dias = random.randint(3, 5)
-    elif int(prioridad) == 3:
+    elif prioridad == '3':
         dias = random.randint(1, 20)
 
     logger.info('Su pedido llegara el dia:' + str(datetime.now() + timedelta(days=dias)))

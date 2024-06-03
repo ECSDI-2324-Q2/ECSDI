@@ -49,6 +49,7 @@ python NOMAGENT.py
 - **Comprar un producto de peso menor a 48 cuando los centros logísticos no tienen nada pendiente de envío:** El paquete será enviado por el Transportista 2.
 - **Comprar un producto de peso mayor a 49 cuando los centros logísticos no tienen nada pendiente de envío:** El paquete será enviado por el Transportista 1.
 - **Comprar producto externo con gestión externa:** El paquete no será enviado por ningún transportista sino por el vendedor externo.
+- **Comprar producto externo con gestión interna:** El paquete será enviado por un centro logístico.
 
 ### 💳 Devoluciones
 - **Hacer una devolución con una tarjeta con la que se ha hecho la compra previamente y poner de  motivo ‘Producto defectuoso’:** Nos dirá que nuestra devolución está siendo procesada

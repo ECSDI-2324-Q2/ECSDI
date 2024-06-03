@@ -1,22 +1,4 @@
 @prefix ns1: <http://www.owl-ontologies.com/ECSDIstore#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-ns1:Lote1 a ns1:Lote ;
-    ns1:CodigoPostal "23"^^xsd:int ;
-    ns1:CompuestoPor ns1:Producto2,
-        ns1:Producto3 ;
-    ns1:Peso "326.0"^^xsd:float ;
-    ns1:Prioridad "1"^^xsd:int .
-
-ns1:Producto2 a ns1:Producto ;
-    ns1:Descripcion "Esto es un Ordenador"^^xsd:string ;
-    ns1:Nombre "Ordenador"^^xsd:string ;
-    ns1:Peso "2.0"^^xsd:float ;
-    ns1:Precio "1000.0"^^xsd:float .
-
-ns1:Producto3 a ns1:Producto ;
-    ns1:Descripcion "werf"^^xsd:string ;
-    ns1:Nombre "iphone"^^xsd:string ;
-    ns1:Peso "324.0"^^xsd:float ;
-    ns1:Precio "13.0"^^xsd:float .
 

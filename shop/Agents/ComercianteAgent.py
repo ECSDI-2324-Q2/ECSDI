@@ -185,8 +185,6 @@ def solicitarEnvio(grafo,contenido):
     # Define the Producto URI
     producto_uri = URIRef("http://www.owl-ontologies.com/ECSDIstore#Producto")   
 
-    print(grafoCopia.serialize(format='turtle')) 
-
     for ag in agentesCL:
         if productosVendidos == compraSize:
             break
@@ -203,9 +201,10 @@ def solicitarEnvio(grafo,contenido):
                 grafoCopia.add((sujeto, ECSDI.Envia, Literal(prod_id_str)))
                 grafoCopia.remove((compra, ECSDI.Contiene, prod))
 
-        send_message(
-                    build_message(grafoCopia, perf=ACL.request, sender=ComercianteAgent.uri, receiver=ag.uri,
-                                msgcnt=mss_cnt), ag.address)
+        if len(prod_vender) > 0:
+            send_message(
+                        build_message(grafoCopia, perf=ACL.request, sender=ComercianteAgent.uri, receiver=ag.uri,
+                                    msgcnt=mss_cnt), ag.address)
                 
     logger.info("Enviada peticion envio a Centro Logistico")
 
@@ -235,7 +234,6 @@ def vender(grafoEntrada, content):
     grafoEntrada.add((suj, ECSDI.PrecioTotal, Literal(precioTotal, datatype=XSD.float)))
 
     grafoProductoExterno = Graph()
-    grafoProductoExterno.add((content, RDF.type, ECSDI.NotificarVendedorExterno))
     for s in grafoEntrada.subjects(predicate=RDF.type, object=ECSDI.ProductoExterno):
         if grafoEntrada.value(subject=s, predicate=ECSDI.GestionExterna).toPython() is True:
             # Iterate over all triples with the subject
@@ -251,12 +249,15 @@ def vender(grafoEntrada, content):
     Thread(target=enviarCompra, args=(grafoEntrada, content)).start()
     
     #Notificar vendedor externo
-    #Thread(target=notificarVendedorExterno, args=(grafoProductoExterno, content)).start()
+    Thread(target=notificarVendedorExterno, args=(grafoProductoExterno, content)).start()
 
     return grafoFactura
 
 
 def notificarVendedorExterno(grafo, content): 
+    sujeto = ECSDI["NotificarVendedorExterno" + str(getMessageCount())]
+    grafo.add((sujeto, RDF.type, ECSDI.NotificarVendedorExterno))
+
     agent = getAgentInfo(agn.GestorExterno, DirectoryAgent, ComercianteAgent, getMessageCount())
     logger.info("Notificando al vendedor externo")
     send_message(

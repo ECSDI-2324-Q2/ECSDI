@@ -102,7 +102,7 @@ def getMessageCount():
 def validarDevolucion(content, grafoEntrada):
     motivo = next(grafoEntrada.objects(predicate=ECSDI.MotivoDevolucion), None)
     logger.info("Recibida peticion de retorno con motivo: " + motivo)
-
+    motivo = str(motivo)
     if motivo == "noSatisface":
         products = grafoEntrada.objects(subject=content, predicate= ECSDI.Auna)
 
