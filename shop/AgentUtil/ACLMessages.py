@@ -10,6 +10,7 @@ Created on 08/02/2014 ###
 """
 __author__ = 'javier'
 
+from io import StringIO
 from typing import Literal
 from xml.parsers.expat import ExpatError
 import requests
@@ -166,3 +167,63 @@ def getCentroLogisticoMasCercano(agentType, directoryAgent, sender, messageCount
             agents += [agent]
 
     return sorted(agents, key=lambda agent2: agent2.diference)
+
+def registerCentroLogistico(agent, directoryAgent, typeOfAgent, messageCount,codigoPostal, DB):
+    gmess = Graph()
+
+    gmess.bind('foaf', FOAF)
+    gmess.bind('dso', DSO)
+    gmess.bind('default', ECSDI)
+    reg_obj = agn[agent.name + '-Register']
+    gmess.add((reg_obj, RDF.type, DSO.Register))
+    gmess.add((reg_obj, DSO.Uri, agent.uri))
+    gmess.add((reg_obj, FOAF.name, Literal(agent.name)))
+    gmess.add((reg_obj, DSO.Address, Literal(agent.address)))
+    gmess.add((reg_obj, DSO.AgentType, typeOfAgent))
+    gmess.add((reg_obj, ECSDI.CodigoPostal,Literal(codigoPostal,datatype=XSD.int)))
+
+    with open(DB, 'r') as file:
+        data = file.read()
+
+    products = Graph()
+    products.parse(data=data, format='turtle')
+
+    for s, p, o in products.triples((None, RDF.type, ECSDI.Producto)):
+        id = products.value(subject=s, predicate = ECSDI.Id)
+        if id:
+            gmess.add((reg_obj, ECSDI.Producto, id))    
+
+    # Lo metemos en un envoltorio FIPA-ACL y lo enviamos
+    gr = send_message(build_message(gmess, perf=ACL.request,
+                      sender=agent.uri,
+                      receiver=directoryAgent.uri,
+                      content=reg_obj,
+                      msgcnt=messageCount),
+        directoryAgent.address)
+    
+def getTransportistas(agentType, directoryAgent, sender, messageCount):
+    gmess = Graph()
+    # Construimos el mensaje de registro
+    gmess.bind('foaf', FOAF)
+    gmess.bind('dso', DSO)
+    ask_obj = agn[sender.name + '-Search']
+
+    gmess.add((ask_obj, RDF.type, DSO.Search))
+    gmess.add((ask_obj, DSO.AgentType, agentType))
+    gr = send_message(
+        build_message(gmess, perf=ACL.request, sender=sender.uri, receiver=directoryAgent.uri, msgcnt=messageCount,
+                      content=ask_obj),
+        directoryAgent.address
+    )
+    dic = get_message_properties(gr)
+    content = dic['content']
+    agents = []
+    for (s, p, o) in gr.triples((content, None, None)):
+        if str(p).startswith('http://www.w3.org/1999/02/22-rdf-syntax-ns#_'):
+            address = gr.value(subject=o, predicate=DSO.Address)
+            url = gr.value(subject=o, predicate=DSO.Uri)
+            name = gr.value(subject=o, predicate=FOAF.name)
+            agent = Agent(name, url, address, None)
+            agents += [agent]
+
+    return agents

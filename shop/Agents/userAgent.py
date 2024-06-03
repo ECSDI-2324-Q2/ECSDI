@@ -12,7 +12,6 @@ Agente que permite interactuar con el usuario
 import argparse
 import socket
 import sys
-from tkinter import N
 
 from requests import get
 sys.path.append('../')
@@ -134,9 +133,6 @@ def procesarVenta(listaDeCompra, prioridad, numTarjeta, direccion, codigoPostal)
         grafoCompra.add((sujetoCompra, ECSDI.Contiene, URIRef(sujetoProducto)))
 
     grafoCompra.add((content,ECSDI.De,URIRef(sujetoCompra)))
-
-    # Pedimos información del agente filtrador
-    #comerciante = getAgentInfo(agn.ComercianteAgent, DirectoryAgent, UserAgent, getMessageCount())
 
     # Pedimos información del agente vendedor
     comerciante = getAgentInfo(agn.ComercianteAgent, DirectoryAgent, UserAgent, getMessageCount())

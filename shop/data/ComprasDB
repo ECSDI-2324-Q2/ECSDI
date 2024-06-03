@@ -1,6 +1,11 @@
 @prefix default: <http://www.owl-ontologies.com/ECSDIstore#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
+default:PeticionCompra103 a default:PeticionCompra ;
+    default:De default:Compra105 ;
+    default:Prioridad "1"^^xsd:int ;
+    default:Tarjeta "132"^^xsd:int .
+
 default:PeticionCompra11 a default:PeticionCompra ;
     default:De default:Compra13 ;
     default:Prioridad "1"^^xsd:int ;
@@ -8,38 +13,188 @@ default:PeticionCompra11 a default:PeticionCompra ;
         "132"^^xsd:int,
         "12332312"^^xsd:int .
 
+default:PeticionCompra111 a default:PeticionCompra ;
+    default:De default:Compra113 ;
+    default:Prioridad "1"^^xsd:int ;
+    default:Tarjeta "132"^^xsd:int .
+
+default:PeticionCompra119 a default:PeticionCompra ;
+    default:De default:Compra121 ;
+    default:Prioridad "1"^^xsd:int ;
+    default:Tarjeta "132"^^xsd:int .
+
+default:PeticionCompra12 a default:PeticionCompra ;
+    default:De default:Compra14 ;
+    default:Prioridad "1"^^xsd:int ;
+    default:Tarjeta "132"^^xsd:int .
+
+default:PeticionCompra127 a default:PeticionCompra ;
+    default:De default:Compra129 ;
+    default:Prioridad "1"^^xsd:int ;
+    default:Tarjeta "132"^^xsd:int .
+
+default:PeticionCompra13 a default:PeticionCompra ;
+    default:De default:Compra15 ;
+    default:Prioridad "1"^^xsd:int ;
+    default:Tarjeta "123"^^xsd:int .
+
+default:PeticionCompra135 a default:PeticionCompra ;
+    default:De default:Compra137 ;
+    default:Prioridad "1"^^xsd:int ;
+    default:Tarjeta "132"^^xsd:int .
+
 default:PeticionCompra14 a default:PeticionCompra ;
     default:De default:Compra16 ;
     default:Prioridad "1"^^xsd:int ;
     default:Tarjeta "13"^^xsd:int,
         "123"^^xsd:int,
+        "132"^^xsd:int,
         "213"^^xsd:int .
+
+default:PeticionCompra143 a default:PeticionCompra ;
+    default:De default:Compra145 ;
+    default:Prioridad "1"^^xsd:int ;
+    default:Tarjeta "132"^^xsd:int .
+
+default:PeticionCompra151 a default:PeticionCompra ;
+    default:De default:Compra153 ;
+    default:Prioridad "1"^^xsd:int ;
+    default:Tarjeta "132"^^xsd:int .
+
+default:PeticionCompra159 a default:PeticionCompra ;
+    default:De default:Compra161 ;
+    default:Prioridad "1"^^xsd:int ;
+    default:Tarjeta "132"^^xsd:int .
+
+default:PeticionCompra167 a default:PeticionCompra ;
+    default:De default:Compra169 ;
+    default:Prioridad "1"^^xsd:int ;
+    default:Tarjeta "132"^^xsd:int .
+
+default:PeticionCompra175 a default:PeticionCompra ;
+    default:De default:Compra177 ;
+    default:Prioridad "1"^^xsd:int ;
+    default:Tarjeta "132"^^xsd:int .
+
+default:PeticionCompra183 a default:PeticionCompra ;
+    default:De default:Compra185 ;
+    default:Prioridad "1"^^xsd:int ;
+    default:Tarjeta "132"^^xsd:int .
+
+default:PeticionCompra191 a default:PeticionCompra ;
+    default:De default:Compra193 ;
+    default:Prioridad "1"^^xsd:int ;
+    default:Tarjeta "132"^^xsd:int .
+
+default:PeticionCompra199 a default:PeticionCompra ;
+    default:De default:Compra201 ;
+    default:Prioridad "1"^^xsd:int ;
+    default:Tarjeta "132"^^xsd:int .
+
+default:PeticionCompra20 a default:PeticionCompra ;
+    default:De default:Compra22 ;
+    default:Prioridad "1"^^xsd:int ;
+    default:Tarjeta "132"^^xsd:int .
+
+default:PeticionCompra207 a default:PeticionCompra ;
+    default:De default:Compra209 ;
+    default:Prioridad "1"^^xsd:int ;
+    default:Tarjeta "132"^^xsd:int .
+
+default:PeticionCompra215 a default:PeticionCompra ;
+    default:De default:Compra217 ;
+    default:Prioridad "1"^^xsd:int ;
+    default:Tarjeta "132"^^xsd:int .
+
+default:PeticionCompra223 a default:PeticionCompra ;
+    default:De default:Compra225 ;
+    default:Prioridad "1"^^xsd:int ;
+    default:Tarjeta "132"^^xsd:int .
 
 default:PeticionCompra23 a default:PeticionCompra ;
     default:De default:Compra25 ;
     default:Prioridad "1"^^xsd:int ;
+    default:Tarjeta "312"^^xsd:int,
+        "234234"^^xsd:int .
+
+default:PeticionCompra231 a default:PeticionCompra ;
+    default:De default:Compra233 ;
+    default:Prioridad "1"^^xsd:int ;
+    default:Tarjeta "132"^^xsd:int .
+
+default:PeticionCompra239 a default:PeticionCompra ;
+    default:De default:Compra241 ;
+    default:Prioridad "1"^^xsd:int ;
+    default:Tarjeta "132"^^xsd:int .
+
+default:PeticionCompra24 a default:PeticionCompra ;
+    default:De default:Compra26 ;
+    default:Prioridad "1"^^xsd:int ;
     default:Tarjeta "312"^^xsd:int .
+
+default:PeticionCompra247 a default:PeticionCompra ;
+    default:De default:Compra249 ;
+    default:Prioridad "1"^^xsd:int ;
+    default:Tarjeta "132"^^xsd:int .
+
+default:PeticionCompra255 a default:PeticionCompra ;
+    default:De default:Compra257 ;
+    default:Prioridad "1"^^xsd:int ;
+    default:Tarjeta "132"^^xsd:int .
 
 default:PeticionCompra26 a default:PeticionCompra ;
     default:De default:Compra28 ;
     default:Prioridad "1"^^xsd:int ;
     default:Tarjeta "123"^^xsd:int .
 
+default:PeticionCompra263 a default:PeticionCompra ;
+    default:De default:Compra265 ;
+    default:Prioridad "1"^^xsd:int ;
+    default:Tarjeta "132"^^xsd:int .
+
+default:PeticionCompra271 a default:PeticionCompra ;
+    default:De default:Compra273 ;
+    default:Prioridad "1"^^xsd:int ;
+    default:Tarjeta "132"^^xsd:int .
+
+default:PeticionCompra28 a default:PeticionCompra ;
+    default:De default:Compra30 ;
+    default:Prioridad "1"^^xsd:int ;
+    default:Tarjeta "12312"^^xsd:int .
+
 default:PeticionCompra32 a default:PeticionCompra ;
     default:De default:Compra34 ;
     default:Prioridad "1"^^xsd:int ;
     default:Tarjeta "123"^^xsd:int .
+
+default:PeticionCompra35 a default:PeticionCompra ;
+    default:De default:Compra37 ;
+    default:Prioridad "1"^^xsd:int ;
+    default:Tarjeta "123"^^xsd:int .
+
+default:PeticionCompra4 a default:PeticionCompra ;
+    default:De default:Compra6 ;
+    default:Prioridad "1"^^xsd:int ;
+    default:Tarjeta "132"^^xsd:int,
+        "12312"^^xsd:int .
 
 default:PeticionCompra41 a default:PeticionCompra ;
     default:De default:Compra43 ;
     default:Prioridad "1"^^xsd:int ;
     default:Tarjeta "321"^^xsd:int .
 
+default:PeticionCompra43 a default:PeticionCompra ;
+    default:De default:Compra45 ;
+    default:Prioridad "1"^^xsd:int ;
+    default:Tarjeta "213"^^xsd:int .
+
 default:PeticionCompra5 a default:PeticionCompra ;
     default:De default:Compra7 ;
     default:Prioridad "1"^^xsd:int ;
     default:Tarjeta "123"^^xsd:int,
         "132"^^xsd:int,
+        "213"^^xsd:int,
+        "231"^^xsd:int,
         "2222"^^xsd:int,
         "123123"^^xsd:int,
         "12332312"^^xsd:int,
@@ -50,13 +205,33 @@ default:PeticionCompra50 a default:PeticionCompra ;
     default:Prioridad "1"^^xsd:int ;
     default:Tarjeta "123"^^xsd:int .
 
+default:PeticionCompra51 a default:PeticionCompra ;
+    default:De default:Compra53 ;
+    default:Prioridad "1"^^xsd:int ;
+    default:Tarjeta "132"^^xsd:int .
+
 default:PeticionCompra59 a default:PeticionCompra ;
     default:De default:Compra61 ;
     default:Prioridad "1"^^xsd:int ;
     default:Tarjeta "132"^^xsd:int .
 
+default:PeticionCompra62 a default:PeticionCompra ;
+    default:De default:Compra64 ;
+    default:Prioridad "1"^^xsd:int ;
+    default:Tarjeta "4321"^^xsd:int .
+
+default:PeticionCompra67 a default:PeticionCompra ;
+    default:De default:Compra69 ;
+    default:Prioridad "1"^^xsd:int ;
+    default:Tarjeta "4321"^^xsd:int .
+
 default:PeticionCompra68 a default:PeticionCompra ;
     default:De default:Compra70 ;
+    default:Prioridad "1"^^xsd:int ;
+    default:Tarjeta "132"^^xsd:int .
+
+default:PeticionCompra75 a default:PeticionCompra ;
+    default:De default:Compra77 ;
     default:Prioridad "1"^^xsd:int ;
     default:Tarjeta "132"^^xsd:int .
 
@@ -65,15 +240,46 @@ default:PeticionCompra77 a default:PeticionCompra ;
     default:Prioridad "1"^^xsd:int ;
     default:Tarjeta "123"^^xsd:int .
 
+default:PeticionCompra80 a default:PeticionCompra ;
+    default:De default:Compra82 ;
+    default:Prioridad "1"^^xsd:int ;
+    default:Tarjeta "132"^^xsd:int .
+
+default:PeticionCompra85 a default:PeticionCompra ;
+    default:De default:Compra87 ;
+    default:Prioridad "1"^^xsd:int ;
+    default:Tarjeta "132"^^xsd:int .
+
 default:PeticionCompra86 a default:PeticionCompra ;
     default:De default:Compra88 ;
     default:Prioridad "1"^^xsd:int ;
     default:Tarjeta "123"^^xsd:int .
 
+default:PeticionCompra90 a default:PeticionCompra ;
+    default:De default:Compra92 ;
+    default:Prioridad "1"^^xsd:int ;
+    default:Tarjeta "132"^^xsd:int .
+
 default:PeticionCompra95 a default:PeticionCompra ;
     default:De default:Compra97 ;
     default:Prioridad "1"^^xsd:int ;
     default:Tarjeta "132"^^xsd:int .
+
+default:Compra105 a default:Compra ;
+    default:Contiene default:Producto5 ;
+    default:Destino default:Direccion104 .
+
+default:Compra113 a default:Compra ;
+    default:Contiene default:Producto5 ;
+    default:Destino default:Direccion112 .
+
+default:Compra121 a default:Compra ;
+    default:Contiene default:Producto5 ;
+    default:Destino default:Direccion120 .
+
+default:Compra129 a default:Compra ;
+    default:Contiene default:Producto5 ;
+    default:Destino default:Direccion128 .
 
 default:Compra13 a default:Compra ;
     default:Contiene default:Producto1,
@@ -81,31 +287,153 @@ default:Compra13 a default:Compra ;
         default:ProductoExterno1 ;
     default:Destino default:Direccion12 .
 
+default:Compra137 a default:Compra ;
+    default:Contiene default:Producto5 ;
+    default:Destino default:Direccion136 .
+
+default:Compra14 a default:Compra ;
+    default:Contiene default:Producto5 ;
+    default:Destino default:Direccion13 .
+
+default:Compra145 a default:Compra ;
+    default:Contiene default:Producto5 ;
+    default:Destino default:Direccion144 .
+
+default:Compra15 a default:Compra ;
+    default:Contiene default:Producto1,
+        default:Producto2,
+        default:Producto3 ;
+    default:Destino default:Direccion14 .
+
+default:Compra153 a default:Compra ;
+    default:Contiene default:Producto5 ;
+    default:Destino default:Direccion152 .
+
 default:Compra16 a default:Compra ;
     default:Contiene default:ProductoExterno1 ;
     default:Destino default:Direccion15 .
+
+default:Compra161 a default:Compra ;
+    default:Contiene default:Producto5 ;
+    default:Destino default:Direccion160 .
+
+default:Compra169 a default:Compra ;
+    default:Contiene default:Producto5 ;
+    default:Destino default:Direccion168 .
+
+default:Compra177 a default:Compra ;
+    default:Contiene default:Producto5 ;
+    default:Destino default:Direccion176 .
+
+default:Compra185 a default:Compra ;
+    default:Contiene default:Producto5 ;
+    default:Destino default:Direccion184 .
+
+default:Compra193 a default:Compra ;
+    default:Contiene default:Producto5 ;
+    default:Destino default:Direccion192 .
+
+default:Compra201 a default:Compra ;
+    default:Contiene default:Producto5 ;
+    default:Destino default:Direccion200 .
+
+default:Compra209 a default:Compra ;
+    default:Contiene default:Producto5 ;
+    default:Destino default:Direccion208 .
+
+default:Compra217 a default:Compra ;
+    default:Contiene default:Producto5 ;
+    default:Destino default:Direccion216 .
+
+default:Compra22 a default:Compra ;
+    default:Contiene default:Producto5 ;
+    default:Destino default:Direccion21 .
+
+default:Compra225 a default:Compra ;
+    default:Contiene default:Producto5 ;
+    default:Destino default:Direccion224 .
+
+default:Compra233 a default:Compra ;
+    default:Contiene default:Producto5 ;
+    default:Destino default:Direccion232 .
+
+default:Compra241 a default:Compra ;
+    default:Contiene default:Producto5 ;
+    default:Destino default:Direccion240 .
+
+default:Compra249 a default:Compra ;
+    default:Contiene default:Producto5 ;
+    default:Destino default:Direccion248 .
 
 default:Compra25 a default:Compra ;
     default:Contiene default:ProductoExterno1 ;
     default:Destino default:Direccion24 .
 
+default:Compra257 a default:Compra ;
+    default:Contiene default:Producto5 ;
+    default:Destino default:Direccion256 .
+
+default:Compra26 a default:Compra ;
+    default:Contiene default:Producto1,
+        default:Producto2,
+        default:Producto3 ;
+    default:Destino default:Direccion25 .
+
+default:Compra265 a default:Compra ;
+    default:Contiene default:Producto5 ;
+    default:Destino default:Direccion264 .
+
+default:Compra273 a default:Compra ;
+    default:Contiene default:Producto5 ;
+    default:Destino default:Direccion272 .
+
 default:Compra28 a default:Compra ;
     default:Contiene default:Producto1 ;
     default:Destino default:Direccion27 .
+
+default:Compra30 a default:Compra ;
+    default:Contiene default:Producto2,
+        default:Producto5 ;
+    default:Destino default:Direccion29 .
 
 default:Compra34 a default:Compra ;
     default:Contiene default:ProductoExterno1 ;
     default:Destino default:Direccion33 .
 
+default:Compra37 a default:Compra ;
+    default:Contiene default:Producto5 ;
+    default:Destino default:Direccion36 .
+
 default:Compra43 a default:Compra ;
     default:Destino default:Direccion42 .
+
+default:Compra45 a default:Compra ;
+    default:Contiene default:Producto5 ;
+    default:Destino default:Direccion44 .
 
 default:Compra52 a default:Compra ;
     default:Contiene default:ProductoExterno1 ;
     default:Destino default:Direccion51 .
 
+default:Compra53 a default:Compra ;
+    default:Contiene default:Producto5 ;
+    default:Destino default:Direccion52 .
+
+default:Compra6 a default:Compra ;
+    default:Contiene default:Producto2,
+        default:Producto5 ;
+    default:Destino default:Direccion5 .
+
 default:Compra61 a default:Compra ;
     default:Destino default:Direccion60 .
+
+default:Compra64 a default:Compra ;
+    default:Contiene default:Producto5 ;
+    default:Destino default:Direccion63 .
+
+default:Compra69 a default:Compra ;
+    default:Contiene default:Producto5 ;
+    default:Destino default:Direccion68 .
 
 default:Compra7 a default:Compra ;
     default:Contiene default:ProductoExterno1,
@@ -116,17 +444,42 @@ default:Compra70 a default:Compra ;
     default:Contiene default:ProductoExterno1 ;
     default:Destino default:Direccion69 .
 
+default:Compra77 a default:Compra ;
+    default:Contiene default:Producto5 ;
+    default:Destino default:Direccion76 .
+
 default:Compra79 a default:Compra ;
     default:Contiene default:ProductoExterno1 ;
     default:Destino default:Direccion78 .
+
+default:Compra82 a default:Compra ;
+    default:Contiene default:Producto5 ;
+    default:Destino default:Direccion81 .
+
+default:Compra87 a default:Compra ;
+    default:Contiene default:Producto5 ;
+    default:Destino default:Direccion86 .
 
 default:Compra88 a default:Compra ;
     default:Contiene default:ProductoExterno1 ;
     default:Destino default:Direccion87 .
 
+default:Compra92 a default:Compra ;
+    default:Contiene default:Producto5 ;
+    default:Destino default:Direccion91 .
+
 default:Compra97 a default:Compra ;
-    default:Contiene default:ProductoExterno1 ;
+    default:Contiene default:Producto5,
+        default:ProductoExterno1 ;
     default:Destino default:Direccion96 .
+
+default:Direccion104 a default:Direccion ;
+    default:CodigoPostal "123"^^xsd:int ;
+    default:Direccion "adw"^^xsd:string .
+
+default:Direccion112 a default:Direccion ;
+    default:CodigoPostal "123"^^xsd:int ;
+    default:Direccion "adw"^^xsd:string .
 
 default:Direccion12 a default:Direccion ;
     default:CodigoPostal "13"^^xsd:int,
@@ -135,48 +488,173 @@ default:Direccion12 a default:Direccion ;
         "qwad"^^xsd:string,
         "wqe"^^xsd:string .
 
+default:Direccion120 a default:Direccion ;
+    default:CodigoPostal "123"^^xsd:int ;
+    default:Direccion "adw"^^xsd:string .
+
+default:Direccion128 a default:Direccion ;
+    default:CodigoPostal "123"^^xsd:int ;
+    default:Direccion "adw"^^xsd:string .
+
+default:Direccion13 a default:Direccion ;
+    default:CodigoPostal "123"^^xsd:int ;
+    default:Direccion "adw"^^xsd:string .
+
+default:Direccion136 a default:Direccion ;
+    default:CodigoPostal "123"^^xsd:int ;
+    default:Direccion "adw"^^xsd:string .
+
+default:Direccion14 a default:Direccion ;
+    default:CodigoPostal "132"^^xsd:int ;
+    default:Direccion "wda"^^xsd:string .
+
+default:Direccion144 a default:Direccion ;
+    default:CodigoPostal "123"^^xsd:int ;
+    default:Direccion "adw"^^xsd:string .
+
 default:Direccion15 a default:Direccion ;
     default:CodigoPostal "13"^^xsd:int,
         "123"^^xsd:int,
         "132"^^xsd:int ;
     default:Direccion "daw"^^xsd:string,
+        "dsa"^^xsd:string,
         "dsf"^^xsd:string,
         "qwe"^^xsd:string .
 
-default:Direccion24 a default:Direccion ;
+default:Direccion152 a default:Direccion ;
     default:CodigoPostal "123"^^xsd:int ;
-    default:Direccion "fea"^^xsd:string .
+    default:Direccion "adw"^^xsd:string .
+
+default:Direccion160 a default:Direccion ;
+    default:CodigoPostal "123"^^xsd:int ;
+    default:Direccion "adw"^^xsd:string .
+
+default:Direccion168 a default:Direccion ;
+    default:CodigoPostal "123"^^xsd:int ;
+    default:Direccion "adw"^^xsd:string .
+
+default:Direccion176 a default:Direccion ;
+    default:CodigoPostal "123"^^xsd:int ;
+    default:Direccion "adw"^^xsd:string .
+
+default:Direccion184 a default:Direccion ;
+    default:CodigoPostal "123"^^xsd:int ;
+    default:Direccion "adw"^^xsd:string .
+
+default:Direccion192 a default:Direccion ;
+    default:CodigoPostal "123"^^xsd:int ;
+    default:Direccion "adw"^^xsd:string .
+
+default:Direccion200 a default:Direccion ;
+    default:CodigoPostal "123"^^xsd:int ;
+    default:Direccion "adw"^^xsd:string .
+
+default:Direccion208 a default:Direccion ;
+    default:CodigoPostal "123"^^xsd:int ;
+    default:Direccion "adw"^^xsd:string .
+
+default:Direccion21 a default:Direccion ;
+    default:CodigoPostal "123"^^xsd:int ;
+    default:Direccion "adw"^^xsd:string .
+
+default:Direccion216 a default:Direccion ;
+    default:CodigoPostal "123"^^xsd:int ;
+    default:Direccion "adw"^^xsd:string .
+
+default:Direccion224 a default:Direccion ;
+    default:CodigoPostal "123"^^xsd:int ;
+    default:Direccion "adw"^^xsd:string .
+
+default:Direccion232 a default:Direccion ;
+    default:CodigoPostal "123"^^xsd:int ;
+    default:Direccion "adw"^^xsd:string .
+
+default:Direccion24 a default:Direccion ;
+    default:CodigoPostal "123"^^xsd:int,
+        "1234"^^xsd:int ;
+    default:Direccion "awdaw"^^xsd:string,
+        "fea"^^xsd:string .
+
+default:Direccion240 a default:Direccion ;
+    default:CodigoPostal "123"^^xsd:int ;
+    default:Direccion "adw"^^xsd:string .
+
+default:Direccion248 a default:Direccion ;
+    default:CodigoPostal "123"^^xsd:int ;
+    default:Direccion "adw"^^xsd:string .
+
+default:Direccion25 a default:Direccion ;
+    default:CodigoPostal "123"^^xsd:int ;
+    default:Direccion "awd"^^xsd:string .
+
+default:Direccion256 a default:Direccion ;
+    default:CodigoPostal "123"^^xsd:int ;
+    default:Direccion "adw"^^xsd:string .
+
+default:Direccion264 a default:Direccion ;
+    default:CodigoPostal "123"^^xsd:int ;
+    default:Direccion "adw"^^xsd:string .
 
 default:Direccion27 a default:Direccion ;
     default:CodigoPostal "123"^^xsd:int ;
     default:Direccion "wef"^^xsd:string .
 
+default:Direccion272 a default:Direccion ;
+    default:CodigoPostal "123"^^xsd:int ;
+    default:Direccion "adw"^^xsd:string .
+
+default:Direccion29 a default:Direccion ;
+    default:CodigoPostal "3029"^^xsd:int ;
+    default:Direccion "casita"^^xsd:string .
+
 default:Direccion33 a default:Direccion ;
     default:CodigoPostal "213"^^xsd:int ;
     default:Direccion "sdf"^^xsd:string .
+
+default:Direccion36 a default:Direccion ;
+    default:CodigoPostal "312"^^xsd:int ;
+    default:Direccion "aed"^^xsd:string .
 
 default:Direccion42 a default:Direccion ;
     default:CodigoPostal "123"^^xsd:int ;
     default:Direccion "qw"^^xsd:string .
 
+default:Direccion44 a default:Direccion ;
+    default:CodigoPostal "132"^^xsd:int ;
+    default:Direccion "ad"^^xsd:string .
+
+default:Direccion5 a default:Direccion ;
+    default:CodigoPostal "123"^^xsd:int,
+        "3029"^^xsd:int ;
+    default:Direccion "adw"^^xsd:string,
+        "casita"^^xsd:string .
+
 default:Direccion51 a default:Direccion ;
     default:CodigoPostal "123"^^xsd:int ;
     default:Direccion "awd"^^xsd:string .
+
+default:Direccion52 a default:Direccion ;
+    default:CodigoPostal "123"^^xsd:int ;
+    default:Direccion "dwa"^^xsd:string .
 
 default:Direccion6 a default:Direccion ;
     default:CodigoPostal "13"^^xsd:int,
         "23"^^xsd:int,
         "123"^^xsd:int,
         "213"^^xsd:int,
+        "312"^^xsd:int,
         "321"^^xsd:int,
         "89500"^^xsd:int,
+        "1231213"^^xsd:int,
         "1234434"^^xsd:int ;
     default:Direccion "123"^^xsd:string,
         "abc"^^xsd:string,
         "ad"^^xsd:string,
         "adb"^^xsd:string,
         "adw"^^xsd:string,
+        "awd"^^xsd:string,
         "casitaaaa"^^xsd:string,
+        "da"^^xsd:string,
         "rgs"^^xsd:string,
         "wadad"^^xsd:string,
         "wda"^^xsd:string .
@@ -185,7 +663,19 @@ default:Direccion60 a default:Direccion ;
     default:CodigoPostal "13"^^xsd:int ;
     default:Direccion "wad"^^xsd:string .
 
+default:Direccion63 a default:Direccion ;
+    default:CodigoPostal "31"^^xsd:int ;
+    default:Direccion "da"^^xsd:string .
+
+default:Direccion68 a default:Direccion ;
+    default:CodigoPostal "31"^^xsd:int ;
+    default:Direccion "da"^^xsd:string .
+
 default:Direccion69 a default:Direccion ;
+    default:CodigoPostal "123"^^xsd:int ;
+    default:Direccion "adw"^^xsd:string .
+
+default:Direccion76 a default:Direccion ;
     default:CodigoPostal "123"^^xsd:int ;
     default:Direccion "adw"^^xsd:string .
 
@@ -193,13 +683,27 @@ default:Direccion78 a default:Direccion ;
     default:CodigoPostal "123"^^xsd:int ;
     default:Direccion "adw"^^xsd:string .
 
+default:Direccion81 a default:Direccion ;
+    default:CodigoPostal "123"^^xsd:int ;
+    default:Direccion "adw"^^xsd:string .
+
+default:Direccion86 a default:Direccion ;
+    default:CodigoPostal "123"^^xsd:int ;
+    default:Direccion "adw"^^xsd:string .
+
 default:Direccion87 a default:Direccion ;
     default:CodigoPostal "132"^^xsd:int ;
     default:Direccion "wda"^^xsd:string .
 
+default:Direccion91 a default:Direccion ;
+    default:CodigoPostal "123"^^xsd:int ;
+    default:Direccion "adw"^^xsd:string .
+
 default:Direccion96 a default:Direccion ;
-    default:CodigoPostal "132"^^xsd:int ;
-    default:Direccion "awd"^^xsd:string .
+    default:CodigoPostal "123"^^xsd:int,
+        "132"^^xsd:int ;
+    default:Direccion "adw"^^xsd:string,
+        "awd"^^xsd:string .
 
 default:Producto8 a default:Producto ;
     default:Descripcion "Esto es un Platano"^^xsd:string ;
@@ -213,15 +717,33 @@ default:ProductoExterno3 a default:Producto ;
     default:Peso "200.0"^^xsd:float ;
     default:Precio "2.0"^^xsd:float .
 
+default:Producto3 a default:Producto ;
+    default:Descripcion "Esto es un Teclado"^^xsd:string ;
+    default:Nombre "Teclado"^^xsd:string ;
+    default:Peso "2.0"^^xsd:float ;
+    default:Precio "55.0"^^xsd:float .
+
 default:Producto1 a default:Producto ;
     default:Descripcion "Esto son Patatas"^^xsd:string ;
     default:Nombre "Patatas"^^xsd:string ;
     default:Peso "23.0"^^xsd:float ;
     default:Precio "308.0"^^xsd:float .
 
+default:Producto2 a default:Producto ;
+    default:Descripcion "Esto es un Mouse"^^xsd:string ;
+    default:Nombre "Mouse"^^xsd:string ;
+    default:Peso "1.0"^^xsd:float ;
+    default:Precio "32.0"^^xsd:float .
+
 default:ProductoExterno1 a default:Producto ;
     default:Descripcion "macbook"^^xsd:string ;
     default:Nombre "pc"^^xsd:string ;
     default:Peso "100.0"^^xsd:float ;
     default:Precio "2000.0"^^xsd:float .
+
+default:Producto5 a default:Producto ;
+    default:Descripcion "Esto es un Ordenador"^^xsd:string ;
+    default:Nombre "Ordenador"^^xsd:string ;
+    default:Peso "2.0"^^xsd:float ;
+    default:Precio "1000.0"^^xsd:float .
 

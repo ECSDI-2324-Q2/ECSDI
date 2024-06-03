@@ -1,0 +1,9 @@
+@prefix default: <http://www.owl-ontologies.com/ECSDIstore#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+default:Producto2 a default:Producto ;
+    default:Descripcion "Esto es un Mouse" ;
+    default:Id 2 ;
+    default:Nombre "Mouse" ;
+    default:Peso "1.0"^^xsd:float ;
+    default:Precio "32.0"^^xsd:float .

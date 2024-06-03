@@ -1,65 +1,41 @@
+# -*- coding: utf-8 -*-
 """
-.. module:: DirectoryServiceTransportistes
+filename: CentroLogisticoDirectoryService
 
-DirectoryServiceTransportistes
-*************
+Agente que lleva un registro de otros agentes
 
-:Description: DirectoryServiceTransportistes
+Utiliza un registro simple que guarda en un grafo RDF
 
- Registra los agentes/servicios activos y reparte la carga de las busquedas mediante
- un round robin
-
-:Authors: Marc
-    
-
-:Version: 
-
-:Created on: 06/02/2018 8:20 
+El registro no es persistente y se mantiene mientras el agente funciona
 
 """
+import argparse
+from datetime import datetime, timedelta
+import socket
 import sys
 
-from rdflib import BNode, Graph, RDF, RDFS, FOAF, Namespace
 sys.path.append('../')
-from AgentUtil.Util import gethostname
-import socket
-import argparse
-from AgentUtil.FlaskServer import shutdown_server
-from AgentUtil.ACLMessages import build_message, get_message_properties
-from multiprocessing import Process, Queue
+from multiprocessing import Queue, Process
+from threading import Thread
+
+from flask import Flask, request
+from rdflib import BNode, URIRef, XSD, Namespace, Literal
+
 from AgentUtil.ACLMessages import *
-from flask import Flask, request, render_template
-import numpy as np
-import time
-from random import randint
-from uuid import uuid4
-import logging
-from AgentUtil.OntoNamespaces import ACL, DSO
 from AgentUtil.Agent import Agent
+from AgentUtil.FlaskServer import shutdown_server
 from AgentUtil.Logging import config_logger
+from AgentUtil.OntoNamespaces import ECSDI
+from AgentUtil.OntoNamespaces import ACL, DSO
+from rdflib.namespace import FOAF, RDF, RDFS
 
-__author__ = 'ECSDIShop'
-
-def obscure(dir):
-    """
-    Hide real hostnames
-    """
-    odir = {}
-    for d in dir:
-        _,_,port = dir[d][1].split(':')
-        odir[d] = (dir[d][0], f'{uuid4()}:{port}', dir[d][2])
-
-    return odir
-
-
-__author__ = 'ECSDIstore'
+__author__ = 'Arnau'
 
 # Definimos los parametros de la linea de comandos
 parser = argparse.ArgumentParser()
 parser.add_argument('--open', help="Define si el servidor est abierto al exterior o no", action='store_true',
                     default=False)
 parser.add_argument('--port', type=int, help="Puerto de comunicacion del agente")
-parser.add_argument('--dhost', default=socket.gethostname(), help="Host del agente de directorio")
 
 # Logging
 logger = config_logger(level=1)
@@ -67,11 +43,9 @@ logger = config_logger(level=1)
 # parsing de los parametros de la linea de comandos
 args = parser.parse_args()
 
-queue = Queue()
-
 # Configuration stuff
 if args.port is None:
-    port = 9006
+    port = 9010
 else:
     port = args.port
 
@@ -79,19 +53,6 @@ if args.open is None:
     hostname = '0.0.0.0'
 else:
     hostname = socket.gethostname()
-
-if args.dhost is None:
-    dhostname = socket.gethostname()
-else:
-    dhostname = args.dhost
-
-
-app = Flask(__name__)
-mss_cnt = 0
-
-directory = {}
-loadbalance = {}
-schedule = 'equaljobs'
 
 # Directory Service Graph
 dsgraph = Graph()
@@ -103,26 +64,41 @@ dsgraph.bind('rdfs', RDFS)
 dsgraph.bind('foaf', FOAF)
 dsgraph.bind('dso', DSO)
 
-dport = 9000
-
 agn = Namespace("http://www.agentes.org#")
-# Agent info
-DirectoryAgentTransportistes = Agent('DirectoryAgentTransportistes',
-                       agn.DirectoryAgentTransportistes,
+CentroLogisticoDirectoryAgent = Agent('CentroLogisticoDirectoryAgent',
+                       agn.CentroLogisticoDirectoryAgent,
                        'http://%s:%d/Register' % (hostname, port),
                        'http://%s:%d/Stop' % (hostname, port))
 
 # Directory agent address
 DirectoryAgent = Agent('DirectoryAgent',
-                       agn.DirectoryAgent,
-                       'http://%s:%d/Register' % (dhostname, dport),
-                       'http://%s:%d/Stop' % (dhostname, dport))
+                       agn.Directory,
+                       'http://%s:9000/Register' % hostname,
+                       'http://%s:9000/Stop' % hostname)
+
+app = Flask(__name__)
+mss_cnt = 0
+
+queue1 = Queue()
 
 #función incremental de numero de mensajes
 def getMessageCount():
     global mss_cnt
     mss_cnt += 1
     return mss_cnt
+
+def register_message():
+    """
+    Envia un mensaje de registro al servicio de registro
+    usando una performativa Request y una accion Register del
+    servicio de directorio
+
+    :return:
+    """
+
+    logger.info('Nos registramos')
+
+    registerAgent(CentroLogisticoDirectoryAgent, DirectoryAgent, CentroLogisticoDirectoryAgent.uri, getMessageCount())
 
 
 @app.route("/Register")
@@ -142,12 +118,15 @@ def register():
         # Si la hay extraemos el nombre del agente (FOAF.Name), el URI del agente
         # su direccion y su tipo
 
-        logger.info('Peticion de registro')
+        logger.info('Peticion de registro centro logistico')
 
         agn_add = gm.value(subject=content, predicate=DSO.Address)
         agn_name = gm.value(subject=content, predicate=FOAF.name)
         agn_uri = gm.value(subject=content, predicate=DSO.Uri)
         agn_type = gm.value(subject=content, predicate=DSO.AgentType)
+        agn_cp = gm.value(subject=content,predicate=ECSDI.CodigoPostal)
+        agn_prods = gm.value(subject=content,predicate=ECSDI.Producto)
+
 
         # Añadimos la informacion en el grafo de registro vinculandola a la URI
         # del agente y registrandola como tipo FOAF.Agent
@@ -155,18 +134,31 @@ def register():
         dsgraph.add((agn_uri, FOAF.name, agn_name))
         dsgraph.add((agn_uri, DSO.Address, agn_add))
         dsgraph.add((agn_uri, DSO.AgentType, agn_type))
+        dsgraph.add((agn_uri, ECSDI.CodigoPostal,agn_cp))
 
-        logger.info('Registrado agente: ' + agn_name)
+        print(agn_prods)
 
+        for prod in agn_prods:
+            dsgraph.add((agn_uri, ECSDI.Producto, Literal(prod, datatype=XSD.int)))
+
+        BDCentros = open("../data/CentrosLogisticosBD.owl")
+        graphC = Graph()
+        graphC.parse(BDCentros, format='turtle')
+
+        graphC += dsgraph
+
+        graphC.serialize(destination="../data/CentrosLogisticosBD.owl", format='turtle')
+
+        logger.info('Registrado agente: ' + agn_name + ' - tipus:' + agn_type)
 
         # Generamos un mensaje de respuesta
         return build_message(Graph(),
                              ACL.confirm,
-                             sender=DirectoryAgent.uri,
+                             sender=CentroLogisticoDirectoryAgent.uri,
                              receiver=agn_uri,
                              msgcnt=mss_cnt)
-    
-    def process_search():
+
+    def process_search(cp):
         # Asumimos que hay una accion de busqueda que puede tener
         # diferentes parametros en funcion de si se busca un tipo de agente
         # o un agente concreto por URI o nombre
@@ -177,10 +169,11 @@ def register():
         # Buscamos una coincidencia exacta
         # Retornamos el primero de la lista de posibilidades
 
+        " Aqui tenim una variable cp que es el codi postal."
+
         logger.info('Peticion de busqueda')
 
-        agn_type = gm.value(subject=content, predicate=DSO.AgentType)
-        rsearch = dsgraph.triples((None, DSO.AgentType, agn_type))
+        rsearch = dsgraph.triples((None, DSO.AgentType, None))
 
         i = 0
         graph = Graph()
@@ -192,11 +185,13 @@ def register():
             agn_uri2 = a
             agn_add = dsgraph.value(subject=agn_uri2, predicate=DSO.Address)
             agn_name = dsgraph.value(subject=agn_uri2, predicate=FOAF.name)
+            agn_cp = abs(int(dsgraph.value(subject=agn_uri2, predicate= ECSDI.CodigoPostal)) - int(cp))
 
             rsp_obj = agn['Directory-response' + str(i)]
             graph.add((rsp_obj, DSO.Address, agn_add))
             graph.add((rsp_obj, DSO.Uri, agn_uri2))
             graph.add((rsp_obj, FOAF.name, agn_name))
+            graph.add((rsp_obj,ECSDI.DiferenciaCodigoPostal,Literal(agn_cp, datatype=XSD.int)))
             graph.add((bag, URIRef(u'http://www.w3.org/1999/02/22-rdf-syntax-ns#_') + str(i), rsp_obj))
             logger.info("Agente encontrado: " + agn_name)
             i += 1
@@ -204,22 +199,22 @@ def register():
         if rsearch is not None:
             return build_message(graph,
                                  ACL.inform,
-                                 sender=DirectoryAgentTransportistes.uri,
+                                 sender=CentroLogisticoDirectoryAgent.uri,
                                  msgcnt=mss_cnt,
                                  content=bag)
         else:
             # Si no encontramos nada retornamos un inform sin contenido
             return build_message(Graph(),
                                  ACL.inform,
-                                 sender=DirectoryAgentTransportistes.uri,
+                                 sender=CentroLogisticoDirectoryAgent.uri,
                                  msgcnt=mss_cnt)
-    
+
     global dsgraph
     global mss_cnt
     # Extraemos el mensaje y creamos un grafo con él
     message = request.args['content']
     gm = Graph()
-    gm.parse(format='xml',data=message)
+    gm.parse(format='xml', data=message)
 
     msgdic = get_message_properties(gm)
 
@@ -248,8 +243,13 @@ def register():
             # Accion de registro
             if accion == DSO.Register:
                 gr = process_register()
+            # Accion de busqueda
             elif accion == DSO.Search:
-                gr = process_search()
+                cp = gm.objects(subject=content, predicate=ECSDI.CodigoPostal)
+                codigoPostal = None
+                for c in cp:
+                    codigoPostal = c
+                gr = process_search(codigoPostal)
             # No habia ninguna accion en el mensaje
             else:
                 gr = build_message(Graph(),
@@ -259,69 +259,8 @@ def register():
     mss_cnt += 1
     return gr.serialize(format='xml')
 
-@app.route("/message")
-def message():
-    """
-    Entrypoint para todas las comunicaciones
 
-    :return:
-    """
-    global directory
-    global loadbalance
-
-    mess = request.args['message']
-
-
-    if '|' not in mess:
-        return 'ERROR: INVALID MESSAGE'
-    else:
-        # Sintaxis de los mensajes "TIPO|PARAMETROS"
-        messtype, messparam = mess.split('|')
-
-        if messtype not in ['REGISTER', 'SEARCH', 'UNREGISTER']:
-            return 'ERROR: NO SUCH ACTION'
-        else:
-            # parametros mensaje REGISTER = "ID,TIPO,ADDRESS"
-            if messtype == 'REGISTER':
-                param = messparam.split(',')
-                if len(param) == 3:
-                    serid, sertype, seraddress = param
-                    if serid not in directory:
-                        directory[serid] = (sertype, seraddress, time.strftime('%Y-%m-%d %H:%M'))
-                        loadbalance[serid] = 0
-                        return 'OK: REGISTER SUCCESS'
-                    else:
-                        return 'ERROR: ID ALREADY REGISTERED'
-                else:
-                    return 'ERROR: REGISTER INVALID PARAMETERS'
-            # parametros del mensaje SEARCH = 'TIPO'
-            elif messtype == 'SEARCH':
-                sertype = messparam
-                found = [(id, directory[id][1]) for id in directory if directory[id][0] == sertype]
-                if len(found) != 0:
-                    if schedule == 'equaljobs':
-                        # balanceo por igual numero de jobs
-                        bal = [loadbalance[id] for id, _ in found]
-                        pos = np.argmin(bal)
-                    elif schedule == 'random':
-                        pos = randint(0, len(found) - 1)
-                    else:
-                        pos = 0
-                    loadbalance[found[pos][0]] += 1
-                    return 'OK: ' + found[pos][1]
-                else:
-                    return 'ERROR: NOT FOUND'
-            # parametros del mensaje UNREGISTER = 'ID'
-            elif messtype == 'UNREGISTER':
-                serid = messparam
-                if serid in directory:
-                    del directory[serid]
-                    return 'OK: UNREGISTER SUCCESS'
-                else:
-                    return 'ERROR: NOT REGISTERED'
-
-
-@app.route('/info')
+@app.route('/Info')
 def info():
     """
     Entrada que da informacion sobre el agente a traves de una pagina web
@@ -332,60 +271,40 @@ def info():
     return render_template('info.html', nmess=mss_cnt, graph=dsgraph.serialize(format='turtle'))
 
 
-@app.route("/stop")
+@app.route("/Stop")
 def stop():
     """
     Entrada que para el agente
     """
+    tidyup()
     shutdown_server()
     return "Parando Servidor"
 
-def DirectoryTransportistesBehavior(queue):
+
+def tidyup():
+    """
+    Acciones previas a parar el agente
+
+    """
+
+
+def CentroLogisticoDirectoryBehaviour():
 
     """
     Agent Behaviour in a concurrent thread.
     :param queue: the queue
     :return: something
     """
-    registerAgent(DirectoryAgentTransportistes, DirectoryAgent, DirectoryAgentTransportistes.uri, getMessageCount())
+    register_message()
 
 
 if __name__ == '__main__':
-    parser = argparse.ArgumentParser()
-    parser.add_argument('--open', help="Define si el servidor esta abierto al exterior o no", action='store_true',
-                        default=False)
-    parser.add_argument('--verbose', help="Genera un log de la comunicacion del servidor web", action='store_true',
-                        default=False)
-    parser.add_argument('--port', type=int, help="Puerto de comunicacion del agente")
-    parser.add_argument('--schedule', default='random', choices=['equaljobs', 'random'],
-                        help="Algoritmo de reparto de carga")
-
-    # parsing de los parametros de la linea de comandos
-    args = parser.parse_args()
-
-    if not args.verbose:
-        log = logging.getLogger('werkzeug')
-        log.setLevel(logging.ERROR)
-
-    # Configuration stuff
-    if args.port is None:
-        port = 9006
-    else:
-        port = args.port
-
-    if args.open:
-        hostname = '0.0.0.0'
-        hostaddr = gethostname()
-    else:
-        hostaddr = hostname = socket.gethostname()
-
-    schedule = args.schedule
-
-    queue = Queue()
-
-    print('DS Hostname =', hostaddr)
-
-    ab1 = Process(target=DirectoryTransportistesBehavior, args=(queue,))
+    # Ponemos en marcha los behaviours como procesos
+    ab1 = Process(target=CentroLogisticoDirectoryBehaviour)
     ab1.start()
+
     # Ponemos en marcha el servidor Flask
-    app.run(host=hostname, port=port, debug=False, use_reloader=False)
+    app.run(host=hostname, port=port, debug=False)
+
+    ab1.join()
+    logger.info('The End')
