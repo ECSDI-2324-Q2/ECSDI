@@ -149,7 +149,7 @@ def register():
 
         graphC.serialize(destination="../data/CentrosLogisticosBD.owl", format='turtle')
 
-        logger.info('Registrado agente: ' + agn_name + ' - tipus:' + agn_type)
+        logger.info('Registrado agente: ' + agn_name)
 
         # Generamos un mensaje de respuesta
         return build_message(Graph(),

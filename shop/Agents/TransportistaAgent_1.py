@@ -9,8 +9,10 @@ Asume que el agente de registro esta en el puerto 9000
 """
 import argparse
 from datetime import datetime, timedelta
+import random
 import socket
 import sys
+
 sys.path.append('../')
 from multiprocessing import Queue, Process
 from threading import Thread
@@ -100,7 +102,17 @@ def getMessageCount():
 
 def realizarTransporte(grafoEntrada, content):
     logger.info('Recibida Peticion Envio Lote')
-    logger.info('Su pedido llegara el dia:' + str(datetime.now() + timedelta(days=1)))
+    delote = None
+    for s, p, o in grafoEntrada.triples((None, RDF.type, ECSDI.DeLote)):
+        delote = s
+    prioridad = grafoEntrada.value(subject=delote, predicate=ECSDI.Prioridad)
+    dias = 1
+    if int(prioridad) == 2:
+        dias = random.randint(3, 5)
+    elif int(prioridad) == 3:
+        dias = random.randint(1, 20)
+
+    logger.info('Su pedido llegara el dia:' + str(datetime.now() + timedelta(days=dias)))
     logger.info('Soy el transportista:' + TransportistaAgent.name)
 
 def realizarOfertaTransporte(grafoEntrada, content):

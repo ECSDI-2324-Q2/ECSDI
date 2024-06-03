@@ -107,15 +107,15 @@ def getMessageCount():
     return mss_cnt
 
 def find_existing_lote(graph, codigo_postal, prioridad):
-    for lote in graph.subjects(RDF.type, ECSDI.Lote):
+    for lote in graph.subjects(RDF.type, ECSDI.DeLote):
         if (graph.value(lote, ECSDI.Prioridad) == Literal(prioridad, datatype=XSD.int) and
             graph.value(lote, ECSDI.CodigoPostal) == Literal(codigo_postal, datatype=XSD.int)):
             return lote
     return None
 
 def create_new_lote(graph, codigo_postal, prioridad):
-    content_lote = ECSDI['Lote' + str(getMessageCount())]
-    graph.add((content_lote, RDF.type, ECSDI.Lote))
+    content_lote = ECSDI['DeLote' + str(getMessageCount())]
+    graph.add((content_lote, RDF.type, ECSDI.DeLote))
     graph.add((content_lote, ECSDI.CodigoPostal, Literal(codigo_postal, datatype=XSD.int)))
     graph.add((content_lote, ECSDI.Prioridad, Literal(prioridad, datatype=XSD.int)))
     return content_lote, 0
@@ -327,7 +327,7 @@ def crear_grafo_lote(lote_info):
     
     # Añadir el lote al nuevo grafo
     lote_uri = lote_info['lote']
-    nuevo_grafo.add((lote_uri, RDF.type, ECSDI.Lote))
+    nuevo_grafo.add((lote_uri, RDF.type, ECSDI.DeLote))
     nuevo_grafo.add((lote_uri, ECSDI.Prioridad, Literal(lote_info['prioridad'], datatype=XSD.int)))
     nuevo_grafo.add((lote_uri, ECSDI.CodigoPostal, Literal(lote_info['codigo_postal'], datatype=XSD.int)))
     nuevo_grafo.add((lote_uri, ECSDI.Peso, Literal(lote_info['peso'], datatype=XSD.float)))
@@ -441,6 +441,7 @@ def communication():
                     grafoEntrada.remove((item, None, None))
 
                 faltan = responderPeticionEnvio(grafoEntrada, subject)
+                escoger_lotes()
                 res = faltan
 
     serialize = res.serialize(format='xml')

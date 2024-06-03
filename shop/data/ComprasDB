@@ -25,8 +25,10 @@ default:PeticionCompra119 a default:PeticionCompra ;
 
 default:PeticionCompra12 a default:PeticionCompra ;
     default:De default:Compra14 ;
-    default:Prioridad "1"^^xsd:int ;
-    default:Tarjeta "132"^^xsd:int .
+    default:Prioridad "1"^^xsd:int,
+        "3"^^xsd:int ;
+    default:Tarjeta "132"^^xsd:int,
+        "123321321"^^xsd:int .
 
 default:PeticionCompra127 a default:PeticionCompra ;
     default:De default:Compra129 ;
@@ -93,8 +95,10 @@ default:PeticionCompra199 a default:PeticionCompra ;
 
 default:PeticionCompra20 a default:PeticionCompra ;
     default:De default:Compra22 ;
-    default:Prioridad "1"^^xsd:int ;
-    default:Tarjeta "132"^^xsd:int .
+    default:Prioridad "1"^^xsd:int,
+        "2"^^xsd:int ;
+    default:Tarjeta "132"^^xsd:int,
+        "123321321"^^xsd:int .
 
 default:PeticionCompra207 a default:PeticionCompra ;
     default:De default:Compra209 ;
@@ -174,9 +178,11 @@ default:PeticionCompra35 a default:PeticionCompra ;
 
 default:PeticionCompra4 a default:PeticionCompra ;
     default:De default:Compra6 ;
-    default:Prioridad "1"^^xsd:int ;
+    default:Prioridad "1"^^xsd:int,
+        "3"^^xsd:int ;
     default:Tarjeta "132"^^xsd:int,
-        "12312"^^xsd:int .
+        "12312"^^xsd:int,
+        "123321321"^^xsd:int .
 
 default:PeticionCompra41 a default:PeticionCompra ;
     default:De default:Compra43 ;
@@ -497,8 +503,10 @@ default:Direccion128 a default:Direccion ;
     default:Direccion "adw"^^xsd:string .
 
 default:Direccion13 a default:Direccion ;
-    default:CodigoPostal "123"^^xsd:int ;
-    default:Direccion "adw"^^xsd:string .
+    default:CodigoPostal "123"^^xsd:int,
+        "21323"^^xsd:int ;
+    default:Direccion "adsdsa"^^xsd:string,
+        "adw"^^xsd:string .
 
 default:Direccion136 a default:Direccion ;
     default:CodigoPostal "123"^^xsd:int ;
@@ -554,8 +562,10 @@ default:Direccion208 a default:Direccion ;
     default:Direccion "adw"^^xsd:string .
 
 default:Direccion21 a default:Direccion ;
-    default:CodigoPostal "123"^^xsd:int ;
-    default:Direccion "adw"^^xsd:string .
+    default:CodigoPostal "123"^^xsd:int,
+        "21323"^^xsd:int ;
+    default:Direccion "adsdsa"^^xsd:string,
+        "adw"^^xsd:string .
 
 default:Direccion216 a default:Direccion ;
     default:CodigoPostal "123"^^xsd:int ;
@@ -625,8 +635,10 @@ default:Direccion44 a default:Direccion ;
 
 default:Direccion5 a default:Direccion ;
     default:CodigoPostal "123"^^xsd:int,
-        "3029"^^xsd:int ;
-    default:Direccion "adw"^^xsd:string,
+        "3029"^^xsd:int,
+        "21323"^^xsd:int ;
+    default:Direccion "adsdsa"^^xsd:string,
+        "adw"^^xsd:string,
         "casita"^^xsd:string .
 
 default:Direccion51 a default:Direccion ;
