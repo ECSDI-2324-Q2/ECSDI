@@ -191,7 +191,12 @@ def registerCentroLogistico(agent, directoryAgent, typeOfAgent, messageCount,cod
     for s, p, o in products.triples((None, RDF.type, ECSDI.Producto)):
         id = products.value(subject=s, predicate = ECSDI.Id)
         if id:
-            gmess.add((reg_obj, ECSDI.Producto, id))    
+            gmess.add((reg_obj, ECSDI.Producto, id))  
+
+    for s, p, o in products.triples((None, RDF.type, ECSDI.ProductoExterno)):
+        id = 'Externo' + str(s).split('#')[-1].split('ProductoExterno')[-1]
+        if id:
+            gmess.add((reg_obj, ECSDI.Producto, Literal(id)))
 
     # Lo metemos en un envoltorio FIPA-ACL y lo enviamos
     gr = send_message(build_message(gmess, perf=ACL.request,

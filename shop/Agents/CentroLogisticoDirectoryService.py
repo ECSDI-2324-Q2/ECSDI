@@ -125,8 +125,8 @@ def register():
         agn_uri = gm.value(subject=content, predicate=DSO.Uri)
         agn_type = gm.value(subject=content, predicate=DSO.AgentType)
         agn_cp = gm.value(subject=content,predicate=ECSDI.CodigoPostal)
-        agn_prods = gm.value(subject=content,predicate=ECSDI.Producto)
-
+        agn_prods = gm.objects(subject=content, predicate=ECSDI.Producto)
+        agn_prods = list(agn_prods)
 
         # Añadimos la informacion en el grafo de registro vinculandola a la URI
         # del agente y registrandola como tipo FOAF.Agent
@@ -136,10 +136,8 @@ def register():
         dsgraph.add((agn_uri, DSO.AgentType, agn_type))
         dsgraph.add((agn_uri, ECSDI.CodigoPostal,agn_cp))
 
-        print(agn_prods)
-
         for prod in agn_prods:
-            dsgraph.add((agn_uri, ECSDI.Producto, Literal(prod, datatype=XSD.int)))
+            dsgraph.add((agn_uri, ECSDI.Producto, Literal(prod, datatype=XSD.string)))
 
         BDCentros = open("../data/CentrosLogisticosBD.owl")
         graphC = Graph()

@@ -111,7 +111,7 @@ def addProducto(request):
     logger.info("Haciendo petición de agregar producto")
     sujeto = ECSDI["PeticionAgregarProductoExterno" + str(getMessageCount())]
     graph = Graph()
-    graph.add((sujeto, RDF.type, ECSDI.PeticionAgregarProducto))
+    graph.add((sujeto, RDF.type, ECSDI.PeticionAgregarProductoExterno))
     graph.add((sujeto, ECSDI.Nombre, Literal(nombreProducto, datatype=XSD.string)))
     graph.add((sujeto, ECSDI.Precio, Literal(precio, datatype=XSD.float)))
     graph.add((sujeto, ECSDI.Descripcion, Literal(descripcion, datatype=XSD.string)))
