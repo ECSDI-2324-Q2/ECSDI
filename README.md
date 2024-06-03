@@ -1,6 +1,7 @@
 # ECSDI 2023/2024
 Pràctica ECSDI 2023-2024 Q2.
 Enunciat pràctica: [ECSDIPractica.pdf](https://github.com/ECSDI-2324-Q2/ECSDI/blob/main/ECSDIPractica.pdf)
+Documentación final: [Documentación final.pdf](https://github.com/ECSDI-2324-Q2/ECSDI/blob/main/Documentación%20final.pdf)
 
 ## 🫂 Integrants
 - Amorín Díaz, Miquel
