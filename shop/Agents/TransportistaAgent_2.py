@@ -134,7 +134,7 @@ def realizarOfertaTransporte(grafoEntrada, content):
 def calcularPrecio(peso):
     logger.info("Calculando oferta")
     #int random = random.randint(1, 10)
-    oferta = 3.0 + peso*2
+    oferta = 3.0 + peso*3
     logger.info("Oferta calculada: " + str(oferta))
     return oferta
 
