@@ -13,12 +13,14 @@ default:PeticionCompra14 a default:PeticionCompra ;
     default:Prioridad "1"^^xsd:int ;
     default:Tarjeta "13"^^xsd:int,
         "123"^^xsd:int,
+        "132"^^xsd:int,
         "213"^^xsd:int .
 
 default:PeticionCompra23 a default:PeticionCompra ;
     default:De default:Compra25 ;
     default:Prioridad "1"^^xsd:int ;
-    default:Tarjeta "312"^^xsd:int .
+    default:Tarjeta "312"^^xsd:int,
+        "234234"^^xsd:int .
 
 default:PeticionCompra26 a default:PeticionCompra ;
     default:De default:Compra28 ;
@@ -40,6 +42,7 @@ default:PeticionCompra5 a default:PeticionCompra ;
     default:Prioridad "1"^^xsd:int ;
     default:Tarjeta "123"^^xsd:int,
         "132"^^xsd:int,
+        "213"^^xsd:int,
         "2222"^^xsd:int,
         "123123"^^xsd:int,
         "12332312"^^xsd:int,
@@ -140,12 +143,15 @@ default:Direccion15 a default:Direccion ;
         "123"^^xsd:int,
         "132"^^xsd:int ;
     default:Direccion "daw"^^xsd:string,
+        "dsa"^^xsd:string,
         "dsf"^^xsd:string,
         "qwe"^^xsd:string .
 
 default:Direccion24 a default:Direccion ;
-    default:CodigoPostal "123"^^xsd:int ;
-    default:Direccion "fea"^^xsd:string .
+    default:CodigoPostal "123"^^xsd:int,
+        "1234"^^xsd:int ;
+    default:Direccion "awdaw"^^xsd:string,
+        "fea"^^xsd:string .
 
 default:Direccion27 a default:Direccion ;
     default:CodigoPostal "123"^^xsd:int ;
@@ -170,12 +176,14 @@ default:Direccion6 a default:Direccion ;
         "213"^^xsd:int,
         "321"^^xsd:int,
         "89500"^^xsd:int,
+        "1231213"^^xsd:int,
         "1234434"^^xsd:int ;
     default:Direccion "123"^^xsd:string,
         "abc"^^xsd:string,
         "ad"^^xsd:string,
         "adb"^^xsd:string,
         "adw"^^xsd:string,
+        "awd"^^xsd:string,
         "casitaaaa"^^xsd:string,
         "rgs"^^xsd:string,
         "wadad"^^xsd:string,

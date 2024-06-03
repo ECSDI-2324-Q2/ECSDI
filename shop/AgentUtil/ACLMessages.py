@@ -10,6 +10,7 @@ Created on 08/02/2014 ###
 """
 __author__ = 'javier'
 
+from io import StringIO
 from typing import Literal
 from xml.parsers.expat import ExpatError
 import requests
@@ -167,11 +168,12 @@ def getCentroLogisticoMasCercano(agentType, directoryAgent, sender, messageCount
 
     return sorted(agents, key=lambda agent2: agent2.diference)
 
-def registerCentroLogistico(agent, directoryAgent, typeOfAgent, messageCount,codigoPostal):
+def registerCentroLogistico(agent, directoryAgent, typeOfAgent, messageCount,codigoPostal, DB):
     gmess = Graph()
 
     gmess.bind('foaf', FOAF)
     gmess.bind('dso', DSO)
+    gmess.bind('default', ECSDI)
     reg_obj = agn[agent.name + '-Register']
     gmess.add((reg_obj, RDF.type, DSO.Register))
     gmess.add((reg_obj, DSO.Uri, agent.uri))
@@ -179,6 +181,18 @@ def registerCentroLogistico(agent, directoryAgent, typeOfAgent, messageCount,cod
     gmess.add((reg_obj, DSO.Address, Literal(agent.address)))
     gmess.add((reg_obj, DSO.AgentType, typeOfAgent))
     gmess.add((reg_obj, ECSDI.CodigoPostal,Literal(codigoPostal,datatype=XSD.int)))
+
+    with open(DB, 'r') as file:
+        data = file.read()
+
+    products = Graph()
+    products.parse(data=data, format='turtle')
+
+    for s, p, o in products.triples((None, RDF.type, ECSDI.Producto)):
+        id = products.value(subject=s, predicate = ECSDI.Id)
+        if id:
+            gmess.add((reg_obj, ECSDI.Producto, id))    
+
     # Lo metemos en un envoltorio FIPA-ACL y lo enviamos
     gr = send_message(build_message(gmess, perf=ACL.request,
                       sender=agent.uri,

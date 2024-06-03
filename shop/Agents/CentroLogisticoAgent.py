@@ -112,9 +112,14 @@ def responderPeticionEnvio(grafoEntrada, content):
 
 
     relacion = grafoEntrada.value(subject=content, predicate=ECSDI.EnvioDe)
-    direccion = grafoEntrada.value(subject=relacion, predicate=ECSDI.Destino)
     direccion2 = grafoEntrada.value(subject=direccion, predicate=ECSDI.Direccion)
     codigopostal = grafoEntrada.value(subject=direccion, predicate=ECSDI.CodigoPostal)
+
+    direccion_node = grafoEntrada.value(subject=relacion, predicate=ECSDI.Destino)
+    direccion = grafoEntrada.value(subject=direccion_node, predicate=ECSDI.Direccion)
+
+
+    print(grafoEntrada.serialize(format='turtle'))
 
     logger.info("Haciendo respuesta a envio desde centro logistico")
     grafoFaltan = Graph()
@@ -370,7 +375,7 @@ def register_message():
     """
 
     logger.info('Nos registramos')
-    registerCentroLogistico(CentroLogisticoAgent, CentroLogisticoDirectoryAgent, CentroLogisticoAgent.uri, getMessageCount(),8028)
+    registerCentroLogistico(CentroLogisticoAgent, CentroLogisticoDirectoryAgent, CentroLogisticoAgent.uri, getMessageCount(),8028, '../data/ProductosCL1.owl')
     #registerAgent(CentroLogisticoAgent, DirectoryAgent, CentroLogisticoAgent.uri, getMessageCount())
 
 @app.route("/comm")

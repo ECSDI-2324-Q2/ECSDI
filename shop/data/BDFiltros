@@ -416,11 +416,14 @@ default:ProductoFiltrado58 a default:Producto ;
 
 default:ProductoFiltrado6 a default:Producto ;
     default:Descripcion "Esto es un Ordenador"^^xsd:string,
-        "Esto son Patatas"^^xsd:string ;
+        "Esto son Patatas"^^xsd:string,
+        "macbook"^^xsd:string ;
     default:Nombre "Ordenador"^^xsd:string,
-        "Patatas"^^xsd:string ;
+        "Patatas"^^xsd:string,
+        "pc"^^xsd:string ;
     default:Precio "308.0"^^xsd:float,
-        "1000.0"^^xsd:float .
+        "1000.0"^^xsd:float,
+        "2000.0"^^xsd:float .
 
 default:ProductoFiltrado60 a default:Producto ;
     default:Descripcion "Esto son Patatas"^^xsd:string ;

@@ -8,6 +8,24 @@ ns1:message--1475597233197073418-0002 a ns1:FipaAclMessage ;
     ns1:receiver <http://www.agentes.org#FinancieroAgent> ;
     ns1:sender <http://www.agentes.org#ComercianteAgent> .
 
+ns1:message--2223349382479317022-0002 a ns1:FipaAclMessage ;
+    ns1:content default:PeticionCompra5 ;
+    ns1:performative ns1:request ;
+    ns1:receiver <http://www.agentes.org#FinancieroAgent> ;
+    ns1:sender <http://www.agentes.org#ComercianteAgent> .
+
+ns1:message--2223349382479317022-0009 a ns1:FipaAclMessage ;
+    ns1:content default:PeticionCompra14 ;
+    ns1:performative ns1:request ;
+    ns1:receiver <http://www.agentes.org#FinancieroAgent> ;
+    ns1:sender <http://www.agentes.org#ComercianteAgent> .
+
+ns1:message--2223349382479317022-0016 a ns1:FipaAclMessage ;
+    ns1:content default:PeticionCompra23 ;
+    ns1:performative ns1:request ;
+    ns1:receiver <http://www.agentes.org#FinancieroAgent> ;
+    ns1:sender <http://www.agentes.org#ComercianteAgent> .
+
 ns1:message--3090505097449465825-0002 a ns1:FipaAclMessage ;
     ns1:content default:PeticionCompra5 ;
     ns1:performative ns1:request ;
@@ -15,6 +33,12 @@ ns1:message--3090505097449465825-0002 a ns1:FipaAclMessage ;
     ns1:sender <http://www.agentes.org#ComercianteAgent> .
 
 ns1:message--5619215762375910943-0002 a ns1:FipaAclMessage ;
+    ns1:content default:PeticionCompra5 ;
+    ns1:performative ns1:request ;
+    ns1:receiver <http://www.agentes.org#FinancieroAgent> ;
+    ns1:sender <http://www.agentes.org#ComercianteAgent> .
+
+ns1:message--5664665716082482216-0002 a ns1:FipaAclMessage ;
     ns1:content default:PeticionCompra5 ;
     ns1:performative ns1:request ;
     ns1:receiver <http://www.agentes.org#FinancieroAgent> ;
@@ -32,17 +56,37 @@ ns1:message-3928708127615668516-0002 a ns1:FipaAclMessage ;
     ns1:receiver <http://www.agentes.org#FinancieroAgent> ;
     ns1:sender <http://www.agentes.org#ComercianteAgent> .
 
+default:PeticionEnvio10 a default:GenerarFactura,
+        default:PeticionEnvio ;
+    default:De default:Compra16 ;
+    default:FechaEntrega "2024-06-04T00:00:00"^^xsd:dateTime ;
+    default:Pagado false ;
+    default:PrecioTotal "2000.0"^^xsd:float ;
+    default:Prioridad "1"^^xsd:int ;
+    default:Tarjeta "132"^^xsd:int .
+
+default:PeticionEnvio17 a default:GenerarFactura,
+        default:PeticionEnvio ;
+    default:De default:Compra25 ;
+    default:FechaEntrega "2024-06-04T00:00:00"^^xsd:dateTime ;
+    default:Pagado false ;
+    default:PrecioTotal "2000.0"^^xsd:float ;
+    default:Prioridad "1"^^xsd:int ;
+    default:Tarjeta "234234"^^xsd:int .
+
 default:PeticionEnvio3 a default:GenerarFactura,
         default:PeticionEnvio ;
     default:De default:Compra13,
         default:Compra7 ;
-    default:FechaEntrega "2024-06-02T00:00:00"^^xsd:dateTime ;
+    default:FechaEntrega "2024-06-02T00:00:00"^^xsd:dateTime,
+        "2024-06-04T00:00:00"^^xsd:dateTime ;
     default:Pagado false ;
     default:PrecioTotal "309.0"^^xsd:float,
         "2000.0"^^xsd:float ;
     default:Prioridad "1"^^xsd:int ;
     default:Tarjeta "123"^^xsd:int,
         "132"^^xsd:int,
+        "213"^^xsd:int,
         "2222"^^xsd:int,
         "12332312"^^xsd:int .
 
@@ -58,16 +102,19 @@ default:Producto8 a default:Producto ;
     default:Peso "0.5"^^xsd:float ;
     default:Precio "1.0"^^xsd:float .
 
-default:ProductoExterno1 a default:Producto ;
-    default:Descripcion "macbook"^^xsd:string ;
-    default:Nombre "pc"^^xsd:string ;
-    default:Peso "100.0"^^xsd:float ;
-    default:Precio "2000.0"^^xsd:float .
-
 default:Compra13 a default:Compra ;
     default:Destino default:Direccion12 .
 
+default:Compra16 a default:Compra ;
+    default:Contiene default:ProductoExterno1 ;
+    default:Destino default:Direccion15 .
+
+default:Compra25 a default:Compra ;
+    default:Contiene default:ProductoExterno1 ;
+    default:Destino default:Direccion24 .
+
 default:Compra7 a default:Compra ;
+    default:Contiene default:ProductoExterno1 ;
     default:Destino default:Direccion6 .
 
 default:Direccion12 a default:Direccion ;
@@ -77,9 +124,27 @@ default:Direccion12 a default:Direccion ;
         "qwad"^^xsd:string,
         "wqe"^^xsd:string .
 
+default:Direccion15 a default:Direccion ;
+    default:CodigoPostal "123"^^xsd:int ;
+    default:Direccion "dsa"^^xsd:string .
+
+default:Direccion24 a default:Direccion ;
+    default:CodigoPostal "1234"^^xsd:int ;
+    default:Direccion "awdaw"^^xsd:string .
+
 default:Direccion6 a default:Direccion ;
     default:CodigoPostal "13"^^xsd:int,
+        "123"^^xsd:int,
+        "1231213"^^xsd:int,
         "1234434"^^xsd:int ;
     default:Direccion "123"^^xsd:string,
-        "ad"^^xsd:string .
+        "ad"^^xsd:string,
+        "adb"^^xsd:string,
+        "awd"^^xsd:string .
+
+default:ProductoExterno1 a default:Producto ;
+    default:Descripcion "macbook"^^xsd:string ;
+    default:Nombre "pc"^^xsd:string ;
+    default:Peso "100.0"^^xsd:float ;
+    default:Precio "2000.0"^^xsd:float .
 

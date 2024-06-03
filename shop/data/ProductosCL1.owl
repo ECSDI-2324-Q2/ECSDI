@@ -1,0 +1,9 @@
+@prefix default: <http://www.owl-ontologies.com/ECSDIstore#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+default:Producto5 a default:Producto ;
+    default:Descripcion "Esto es un Ordenador" ;
+    default:Id 5 ;
+    default:Nombre "Ordenador" ;
+    default:Peso "2.0"^^xsd:float ;
+    default:Precio "1000.0"^^xsd:float .
