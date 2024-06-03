@@ -149,8 +149,20 @@ def procesarProductoExterno(graph):
     graph.serialize(destination='../data/BDProductos.owl', format='turtle')
     logger.info("Registro de nuevo producto finalizado")
 
-def notificarVendedorExterno(content, grafoEntrada):
-    print('OOOOOOKKKKKK')
+def notificarVendedorExterno(grafoEntrada):
+    for product_subject in grafoEntrada.subjects(predicate=RDF.type, object=ECSDI['ProductoExterno']):
+        # Get the product name
+        product_name = grafoEntrada.value(subject=product_subject, predicate=ECSDI['Nombre'])
+        # Print the product name
+        logger.info("Peticion de envío recibida para el producto externo: " + product_name)
+
+    # Create the graph response
+    graph = Graph()
+    # Add the message to the graph
+    message = ECSDI['MensajeEnviado' + str(getMessageCount())]
+    graph.add((message, RDF.type, ECSDI.MensajeEnviado))
+    # Serialize the graph
+    return graph
 
 #funcion llamada en /comm
 @app.route("/comm")
@@ -175,14 +187,15 @@ def communication():
                                                   sender=DirectoryAgent.uri, msgcnt=getMessageCount())
         else:
             # Extraemos el contenido que ha de ser una accion de la ontologia definida en Protege
-            content = messageProperties['content']
-            accion = grafoEntrada.value(subject=content, predicate=RDF.type)
-            # Si la acción es de tipo busqueda emprendemos las acciones consequentes
-            if accion == ECSDI.PeticionAgregarProductoExterno:
-                resultadoComunicacion = añadirProducto(content, grafoEntrada)
+            if 'content' in messageProperties:
+                content = messageProperties['content']
+                accion = grafoEntrada.value(subject=content, predicate=RDF.type)
+                # Si la acción es de tipo busqueda emprendemos las acciones consequentes
+                if accion == ECSDI.PeticionAgregarProductoExterno:
+                    resultadoComunicacion = añadirProducto(content, grafoEntrada)
 
-            elif accion == ECSDI.NotificarVendedorExterno:
-                resultadoComunicacion = notificarVendedorExterno(content, grafoEntrada)
+            else:
+                resultadoComunicacion = notificarVendedorExterno(grafoEntrada)
 
 
     serialize = resultadoComunicacion.serialize(format='xml')
