@@ -1,0 +1,529 @@
+<?xml version="1.0"?>
+<Ontology xmlns="http://www.w3.org/2002/07/owl#"
+     xml:base="http://www.semanticweb.org/arnaut/ontologies/2024/4/ECSDIShop"
+     xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+     xmlns:xml="http://www.w3.org/XML/1998/namespace"
+     xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+     xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+     ontologyIRI="http://www.semanticweb.org/arnaut/ontologies/2024/4/ECSDIShop">
+    <Prefix name="" IRI="http://www.semanticweb.org/arnaut/ontologies/2024/4/ECSDIShop/"/>
+    <Prefix name="owl" IRI="http://www.w3.org/2002/07/owl#"/>
+    <Prefix name="rdf" IRI="http://www.w3.org/1999/02/22-rdf-syntax-ns#"/>
+    <Prefix name="xml" IRI="http://www.w3.org/XML/1998/namespace"/>
+    <Prefix name="xsd" IRI="http://www.w3.org/2001/XMLSchema#"/>
+    <Prefix name="rdfs" IRI="http://www.w3.org/2000/01/rdf-schema#"/>
+    <Annotation>
+        <AnnotationProperty abbreviatedIRI="rdfs:comment"/>
+        <Literal>Ontologia de la tienda online de la practica de ECSDI</Literal>
+    </Annotation>
+    <Declaration>
+        <Class IRI="#Accion"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#BuscarProducto"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Compra"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Direccion"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#EnviarLote"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Factura"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Filtro"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#FiltroPorNombre"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#FiltroPorPrecio"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#FiltroPorValoracion"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#LoteProductos"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#OfertaTransportista"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#PeticionCompra"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#PeticionEnvioCentroLogistico"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Producto"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#ProductoExterno"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#ProductoPendiente"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#PropuestaEnvioTransportista"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Respuesta"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#RespuestaDeBusqueda"/>
+    </Declaration>
+    <Declaration>
+        <ObjectProperty IRI="#Contiene"/>
+    </Declaration>
+    <Declaration>
+        <ObjectProperty IRI="#De"/>
+    </Declaration>
+    <Declaration>
+        <ObjectProperty IRI="#DestinadaA"/>
+    </Declaration>
+    <Declaration>
+        <ObjectProperty IRI="#Destino"/>
+    </Declaration>
+    <Declaration>
+        <ObjectProperty IRI="#EnviarA"/>
+    </Declaration>
+    <Declaration>
+        <ObjectProperty IRI="#EnvioDe"/>
+    </Declaration>
+    <Declaration>
+        <ObjectProperty IRI="#Facturando"/>
+    </Declaration>
+    <Declaration>
+        <ObjectProperty IRI="#FiltradoPor"/>
+    </Declaration>
+    <Declaration>
+        <ObjectProperty IRI="#FormadoPor"/>
+    </Declaration>
+    <Declaration>
+        <ObjectProperty IRI="#Muestra"/>
+    </Declaration>
+    <Declaration>
+        <ObjectProperty IRI="#Para"/>
+    </Declaration>
+    <Declaration>
+        <ObjectProperty IRI="#PendienteDeEnvio"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="#codigoPostal"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="#descripcion"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="#direccion"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="#fechaEntrega"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="#id"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="#nombre"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="#peso"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="#precio"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="#precioMaximo"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="#precioMinimo"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="#precioTotal"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="#prioridad"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="#puntuacionMaxima"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="#puntuacionMinima"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="#tarjeta"/>
+    </Declaration>
+    <SubClassOf>
+        <Class IRI="#BuscarProducto"/>
+        <Class IRI="#Accion"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#EnviarLote"/>
+        <Class IRI="#Accion"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#FiltroPorNombre"/>
+        <Class IRI="#Filtro"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#FiltroPorPrecio"/>
+        <Class IRI="#Filtro"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#FiltroPorValoracion"/>
+        <Class IRI="#Filtro"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#PeticionCompra"/>
+        <Class IRI="#Accion"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#PeticionEnvioCentroLogistico"/>
+        <Class IRI="#Accion"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#ProductoExterno"/>
+        <Class IRI="#Producto"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#ProductoPendiente"/>
+        <Class IRI="#Producto"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#PropuestaEnvioTransportista"/>
+        <Class IRI="#Accion"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#RespuestaDeBusqueda"/>
+        <Class IRI="#Respuesta"/>
+    </SubClassOf>
+    <DisjointClasses>
+        <Class IRI="#BuscarProducto"/>
+        <Class IRI="#EnviarLote"/>
+        <Class IRI="#PeticionCompra"/>
+        <Class IRI="#PeticionEnvioCentroLogistico"/>
+        <Class IRI="#PropuestaEnvioTransportista"/>
+    </DisjointClasses>
+    <DisjointClasses>
+        <Class IRI="#FiltroPorNombre"/>
+        <Class IRI="#FiltroPorPrecio"/>
+        <Class IRI="#FiltroPorValoracion"/>
+    </DisjointClasses>
+    <DisjointClasses>
+        <Class IRI="#ProductoExterno"/>
+        <Class IRI="#ProductoPendiente"/>
+    </DisjointClasses>
+    <ObjectPropertyDomain>
+        <ObjectProperty IRI="#Contiene"/>
+        <Class IRI="#Compra"/>
+    </ObjectPropertyDomain>
+    <ObjectPropertyDomain>
+        <ObjectProperty IRI="#De"/>
+        <Class IRI="#PeticionCompra"/>
+    </ObjectPropertyDomain>
+    <ObjectPropertyDomain>
+        <ObjectProperty IRI="#DestinadaA"/>
+        <Class IRI="#PropuestaEnvioTransportista"/>
+    </ObjectPropertyDomain>
+    <ObjectPropertyDomain>
+        <ObjectProperty IRI="#Destino"/>
+        <Class IRI="#Compra"/>
+    </ObjectPropertyDomain>
+    <ObjectPropertyDomain>
+        <ObjectProperty IRI="#EnviarA"/>
+        <Class IRI="#ProductoPendiente"/>
+    </ObjectPropertyDomain>
+    <ObjectPropertyDomain>
+        <ObjectProperty IRI="#EnvioDe"/>
+        <Class IRI="#PeticionEnvioCentroLogistico"/>
+    </ObjectPropertyDomain>
+    <ObjectPropertyDomain>
+        <ObjectProperty IRI="#Facturando"/>
+        <Class IRI="#Factura"/>
+    </ObjectPropertyDomain>
+    <ObjectPropertyDomain>
+        <ObjectProperty IRI="#FiltradoPor"/>
+        <Class IRI="#BuscarProducto"/>
+    </ObjectPropertyDomain>
+    <ObjectPropertyDomain>
+        <ObjectProperty IRI="#FormadoPor"/>
+        <Class IRI="#LoteProductos"/>
+    </ObjectPropertyDomain>
+    <ObjectPropertyDomain>
+        <ObjectProperty IRI="#Muestra"/>
+        <Class IRI="#RespuestaDeBusqueda"/>
+    </ObjectPropertyDomain>
+    <ObjectPropertyDomain>
+        <ObjectProperty IRI="#Para"/>
+        <Class IRI="#PropuestaEnvioTransportista"/>
+    </ObjectPropertyDomain>
+    <ObjectPropertyDomain>
+        <ObjectProperty IRI="#PendienteDeEnvio"/>
+        <Class IRI="#EnviarLote"/>
+    </ObjectPropertyDomain>
+    <ObjectPropertyRange>
+        <ObjectProperty IRI="#Contiene"/>
+        <Class IRI="#Producto"/>
+    </ObjectPropertyRange>
+    <ObjectPropertyRange>
+        <ObjectProperty IRI="#De"/>
+        <Class IRI="#Compra"/>
+    </ObjectPropertyRange>
+    <ObjectPropertyRange>
+        <ObjectProperty IRI="#DestinadaA"/>
+        <Class IRI="#Direccion"/>
+    </ObjectPropertyRange>
+    <ObjectPropertyRange>
+        <ObjectProperty IRI="#Destino"/>
+        <Class IRI="#Direccion"/>
+    </ObjectPropertyRange>
+    <ObjectPropertyRange>
+        <ObjectProperty IRI="#EnviarA"/>
+        <Class IRI="#Direccion"/>
+    </ObjectPropertyRange>
+    <ObjectPropertyRange>
+        <ObjectProperty IRI="#EnvioDe"/>
+        <Class IRI="#Compra"/>
+    </ObjectPropertyRange>
+    <ObjectPropertyRange>
+        <ObjectProperty IRI="#Facturando"/>
+        <Class IRI="#Producto"/>
+    </ObjectPropertyRange>
+    <ObjectPropertyRange>
+        <ObjectProperty IRI="#FiltradoPor"/>
+        <Class IRI="#Filtro"/>
+    </ObjectPropertyRange>
+    <ObjectPropertyRange>
+        <ObjectProperty IRI="#FormadoPor"/>
+        <Class IRI="#ProductoPendiente"/>
+    </ObjectPropertyRange>
+    <ObjectPropertyRange>
+        <ObjectProperty IRI="#Muestra"/>
+        <Class IRI="#Producto"/>
+    </ObjectPropertyRange>
+    <ObjectPropertyRange>
+        <ObjectProperty IRI="#Para"/>
+        <Class IRI="#LoteProductos"/>
+    </ObjectPropertyRange>
+    <ObjectPropertyRange>
+        <ObjectProperty IRI="#PendienteDeEnvio"/>
+        <Class IRI="#LoteProductos"/>
+    </ObjectPropertyRange>
+    <SubDataPropertyOf>
+        <DataProperty IRI="#codigoPostal"/>
+        <DataProperty abbreviatedIRI="owl:topDataProperty"/>
+    </SubDataPropertyOf>
+    <SubDataPropertyOf>
+        <DataProperty IRI="#descripcion"/>
+        <DataProperty abbreviatedIRI="owl:topDataProperty"/>
+    </SubDataPropertyOf>
+    <SubDataPropertyOf>
+        <DataProperty IRI="#direccion"/>
+        <DataProperty abbreviatedIRI="owl:topDataProperty"/>
+    </SubDataPropertyOf>
+    <SubDataPropertyOf>
+        <DataProperty IRI="#fechaEntrega"/>
+        <DataProperty abbreviatedIRI="owl:topDataProperty"/>
+    </SubDataPropertyOf>
+    <SubDataPropertyOf>
+        <DataProperty IRI="#id"/>
+        <DataProperty abbreviatedIRI="owl:topDataProperty"/>
+    </SubDataPropertyOf>
+    <SubDataPropertyOf>
+        <DataProperty IRI="#nombre"/>
+        <DataProperty abbreviatedIRI="owl:topDataProperty"/>
+    </SubDataPropertyOf>
+    <SubDataPropertyOf>
+        <DataProperty IRI="#peso"/>
+        <DataProperty abbreviatedIRI="owl:topDataProperty"/>
+    </SubDataPropertyOf>
+    <SubDataPropertyOf>
+        <DataProperty IRI="#precio"/>
+        <DataProperty abbreviatedIRI="owl:topDataProperty"/>
+    </SubDataPropertyOf>
+    <SubDataPropertyOf>
+        <DataProperty IRI="#precioMaximo"/>
+        <DataProperty abbreviatedIRI="owl:topDataProperty"/>
+    </SubDataPropertyOf>
+    <SubDataPropertyOf>
+        <DataProperty IRI="#precioMinimo"/>
+        <DataProperty abbreviatedIRI="owl:topDataProperty"/>
+    </SubDataPropertyOf>
+    <SubDataPropertyOf>
+        <DataProperty IRI="#precioTotal"/>
+        <DataProperty abbreviatedIRI="owl:topDataProperty"/>
+    </SubDataPropertyOf>
+    <SubDataPropertyOf>
+        <DataProperty IRI="#prioridad"/>
+        <DataProperty abbreviatedIRI="owl:topDataProperty"/>
+    </SubDataPropertyOf>
+    <SubDataPropertyOf>
+        <DataProperty IRI="#puntuacionMaxima"/>
+        <DataProperty abbreviatedIRI="owl:topDataProperty"/>
+    </SubDataPropertyOf>
+    <SubDataPropertyOf>
+        <DataProperty IRI="#puntuacionMinima"/>
+        <DataProperty abbreviatedIRI="owl:topDataProperty"/>
+    </SubDataPropertyOf>
+    <SubDataPropertyOf>
+        <DataProperty IRI="#tarjeta"/>
+        <DataProperty abbreviatedIRI="owl:topDataProperty"/>
+    </SubDataPropertyOf>
+    <DataPropertyDomain>
+        <DataProperty IRI="#codigoPostal"/>
+        <Class IRI="#Direccion"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="#descripcion"/>
+        <Class IRI="#Producto"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="#direccion"/>
+        <Class IRI="#Direccion"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="#fechaEntrega"/>
+        <Class IRI="#OfertaTransportista"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="#id"/>
+        <Class IRI="#Producto"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="#nombre"/>
+        <Class IRI="#FiltroPorNombre"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="#nombre"/>
+        <Class IRI="#Producto"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="#peso"/>
+        <Class IRI="#LoteProductos"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="#peso"/>
+        <Class IRI="#Producto"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="#precio"/>
+        <Class IRI="#OfertaTransportista"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="#precio"/>
+        <Class IRI="#Producto"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="#precioMaximo"/>
+        <Class IRI="#FiltroPorPrecio"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="#precioMinimo"/>
+        <Class IRI="#FiltroPorPrecio"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="#precioTotal"/>
+        <Class IRI="#Factura"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="#precioTotal"/>
+        <Class IRI="#PeticionCompra"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="#prioridad"/>
+        <Class IRI="#LoteProductos"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="#prioridad"/>
+        <Class IRI="#PeticionCompra"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="#prioridad"/>
+        <Class IRI="#ProductoPendiente"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="#puntuacionMaxima"/>
+        <Class IRI="#FiltroPorValoracion"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="#puntuacionMinima"/>
+        <Class IRI="#FiltroPorValoracion"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="#tarjeta"/>
+        <Class IRI="#Factura"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="#tarjeta"/>
+        <Class IRI="#PeticionCompra"/>
+    </DataPropertyDomain>
+    <DataPropertyRange>
+        <DataProperty IRI="#codigoPostal"/>
+        <Datatype abbreviatedIRI="xsd:string"/>
+    </DataPropertyRange>
+    <DataPropertyRange>
+        <DataProperty IRI="#descripcion"/>
+        <Datatype abbreviatedIRI="xsd:string"/>
+    </DataPropertyRange>
+    <DataPropertyRange>
+        <DataProperty IRI="#direccion"/>
+        <Datatype abbreviatedIRI="xsd:string"/>
+    </DataPropertyRange>
+    <DataPropertyRange>
+        <DataProperty IRI="#fechaEntrega"/>
+        <Datatype abbreviatedIRI="xsd:dateTime"/>
+    </DataPropertyRange>
+    <DataPropertyRange>
+        <DataProperty IRI="#id"/>
+        <Datatype abbreviatedIRI="xsd:int"/>
+    </DataPropertyRange>
+    <DataPropertyRange>
+        <DataProperty IRI="#nombre"/>
+        <Datatype abbreviatedIRI="xsd:string"/>
+    </DataPropertyRange>
+    <DataPropertyRange>
+        <DataProperty IRI="#peso"/>
+        <Datatype abbreviatedIRI="xsd:double"/>
+    </DataPropertyRange>
+    <DataPropertyRange>
+        <DataProperty IRI="#precio"/>
+        <Datatype abbreviatedIRI="xsd:double"/>
+    </DataPropertyRange>
+    <DataPropertyRange>
+        <DataProperty IRI="#precioMaximo"/>
+        <Datatype abbreviatedIRI="xsd:double"/>
+    </DataPropertyRange>
+    <DataPropertyRange>
+        <DataProperty IRI="#precioMinimo"/>
+        <Datatype abbreviatedIRI="xsd:double"/>
+    </DataPropertyRange>
+    <DataPropertyRange>
+        <DataProperty IRI="#precioTotal"/>
+        <Datatype abbreviatedIRI="xsd:double"/>
+    </DataPropertyRange>
+    <DataPropertyRange>
+        <DataProperty IRI="#prioridad"/>
+        <Datatype abbreviatedIRI="xsd:int"/>
+    </DataPropertyRange>
+    <DataPropertyRange>
+        <DataProperty IRI="#puntuacionMaxima"/>
+        <Datatype abbreviatedIRI="xsd:int"/>
+    </DataPropertyRange>
+    <DataPropertyRange>
+        <DataProperty IRI="#puntuacionMinima"/>
+        <Datatype abbreviatedIRI="xsd:int"/>
+    </DataPropertyRange>
+    <DataPropertyRange>
+        <DataProperty IRI="#tarjeta"/>
+        <Datatype abbreviatedIRI="xsd:string"/>
+    </DataPropertyRange>
+</Ontology>
+
+
+
+<!-- Generated by the OWL API (version 4.5.26.2023-07-17T20:34:13Z) https://github.com/owlcs/owlapi -->
+

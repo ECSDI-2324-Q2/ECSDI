@@ -1,1 +1,9 @@
 .DS_Store
+.vscode/
+.Python
+bin/
+lib/
+pyvenv.cfg
+/shop/AgentUtil/__pycache__/
+/share
+Scripts/

@@ -1,0 +1,819 @@
+@prefix default: <http://www.owl-ontologies.com/ECSDIstore#> .
+@prefix ns1: <http://www.nuin.org/ontology/fipa/acl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+ns1:message--1155180279612732425-0002 a ns1:FipaAclMessage ;
+    ns1:content default:PeticionCompra223 ;
+    ns1:performative ns1:request ;
+    ns1:receiver <http://www.agentes.org#FinancieroAgent> ;
+    ns1:sender <http://www.agentes.org#ComercianteAgent> .
+
+ns1:message--1155180279612732425-0008 a ns1:FipaAclMessage ;
+    ns1:content default:PeticionCompra231 ;
+    ns1:performative ns1:request ;
+    ns1:receiver <http://www.agentes.org#FinancieroAgent> ;
+    ns1:sender <http://www.agentes.org#ComercianteAgent> .
+
+ns1:message--1155180279612732425-0014 a ns1:FipaAclMessage ;
+    ns1:content default:PeticionCompra239 ;
+    ns1:performative ns1:request ;
+    ns1:receiver <http://www.agentes.org#FinancieroAgent> ;
+    ns1:sender <http://www.agentes.org#ComercianteAgent> .
+
+ns1:message--1155180279612732425-0020 a ns1:FipaAclMessage ;
+    ns1:content default:PeticionCompra247 ;
+    ns1:performative ns1:request ;
+    ns1:receiver <http://www.agentes.org#FinancieroAgent> ;
+    ns1:sender <http://www.agentes.org#ComercianteAgent> .
+
+ns1:message--1155180279612732425-0026 a ns1:FipaAclMessage ;
+    ns1:content default:PeticionCompra255 ;
+    ns1:performative ns1:request ;
+    ns1:receiver <http://www.agentes.org#FinancieroAgent> ;
+    ns1:sender <http://www.agentes.org#ComercianteAgent> .
+
+ns1:message--1155180279612732425-0032 a ns1:FipaAclMessage ;
+    ns1:content default:PeticionCompra263 ;
+    ns1:performative ns1:request ;
+    ns1:receiver <http://www.agentes.org#FinancieroAgent> ;
+    ns1:sender <http://www.agentes.org#ComercianteAgent> .
+
+ns1:message--1155180279612732425-0038 a ns1:FipaAclMessage ;
+    ns1:content default:PeticionCompra271 ;
+    ns1:performative ns1:request ;
+    ns1:receiver <http://www.agentes.org#FinancieroAgent> ;
+    ns1:sender <http://www.agentes.org#ComercianteAgent> .
+
+ns1:message--1463758783978132958-0002 a ns1:FipaAclMessage ;
+    ns1:content default:PeticionCompra24 ;
+    ns1:performative ns1:request ;
+    ns1:receiver <http://www.agentes.org#FinancieroAgent> ;
+    ns1:sender <http://www.agentes.org#ComercianteAgent> .
+
+ns1:message--1475597233197073418-0002 a ns1:FipaAclMessage ;
+    ns1:content default:PeticionCompra11 ;
+    ns1:performative ns1:request ;
+    ns1:receiver <http://www.agentes.org#FinancieroAgent> ;
+    ns1:sender <http://www.agentes.org#ComercianteAgent> .
+
+ns1:message--1485659587083087400-0002 a ns1:FipaAclMessage ;
+    ns1:content default:PeticionCompra159 ;
+    ns1:performative ns1:request ;
+    ns1:receiver <http://www.agentes.org#FinancieroAgent> ;
+    ns1:sender <http://www.agentes.org#ComercianteAgent> .
+
+ns1:message--1886855251477527711-0002 a ns1:FipaAclMessage ;
+    ns1:content default:PeticionCompra4 ;
+    ns1:performative ns1:request ;
+    ns1:receiver <http://www.agentes.org#FinancieroAgent> ;
+    ns1:sender <http://www.agentes.org#ComercianteAgent> .
+
+ns1:message--1886855251477527711-0008 a ns1:FipaAclMessage ;
+    ns1:content default:PeticionCompra12 ;
+    ns1:performative ns1:request ;
+    ns1:receiver <http://www.agentes.org#FinancieroAgent> ;
+    ns1:sender <http://www.agentes.org#ComercianteAgent> .
+
+ns1:message--1886855251477527711-0014 a ns1:FipaAclMessage ;
+    ns1:content default:PeticionCompra20 ;
+    ns1:performative ns1:request ;
+    ns1:receiver <http://www.agentes.org#FinancieroAgent> ;
+    ns1:sender <http://www.agentes.org#ComercianteAgent> .
+
+ns1:message--1886855251477527711-0020 a ns1:FipaAclMessage ;
+    ns1:content default:PeticionCompra28 ;
+    ns1:performative ns1:request ;
+    ns1:receiver <http://www.agentes.org#FinancieroAgent> ;
+    ns1:sender <http://www.agentes.org#ComercianteAgent> .
+
+ns1:message--2210253665435953550-0002 a ns1:FipaAclMessage ;
+    ns1:content default:PeticionCompra51 ;
+    ns1:performative ns1:request ;
+    ns1:receiver <http://www.agentes.org#FinancieroAgent> ;
+    ns1:sender <http://www.agentes.org#ComercianteAgent> .
+
+ns1:message--2223349382479317022-0002 a ns1:FipaAclMessage ;
+    ns1:content default:PeticionCompra5 ;
+    ns1:performative ns1:request ;
+    ns1:receiver <http://www.agentes.org#FinancieroAgent> ;
+    ns1:sender <http://www.agentes.org#ComercianteAgent> .
+
+ns1:message--2223349382479317022-0009 a ns1:FipaAclMessage ;
+    ns1:content default:PeticionCompra14 ;
+    ns1:performative ns1:request ;
+    ns1:receiver <http://www.agentes.org#FinancieroAgent> ;
+    ns1:sender <http://www.agentes.org#ComercianteAgent> .
+
+ns1:message--2223349382479317022-0016 a ns1:FipaAclMessage ;
+    ns1:content default:PeticionCompra23 ;
+    ns1:performative ns1:request ;
+    ns1:receiver <http://www.agentes.org#FinancieroAgent> ;
+    ns1:sender <http://www.agentes.org#ComercianteAgent> .
+
+ns1:message--2748329925954592232-0002 a ns1:FipaAclMessage ;
+    ns1:content default:PeticionCompra67 ;
+    ns1:performative ns1:request ;
+    ns1:receiver <http://www.agentes.org#FinancieroAgent> ;
+    ns1:sender <http://www.agentes.org#ComercianteAgent> .
+
+ns1:message--2748329925954592232-0008 a ns1:FipaAclMessage ;
+    ns1:content default:PeticionCompra75 ;
+    ns1:performative ns1:request ;
+    ns1:receiver <http://www.agentes.org#FinancieroAgent> ;
+    ns1:sender <http://www.agentes.org#ComercianteAgent> .
+
+ns1:message--279652887992893100-0002 a ns1:FipaAclMessage ;
+    ns1:content default:PeticionCompra5 ;
+    ns1:performative ns1:request ;
+    ns1:receiver <http://www.agentes.org#FinancieroAgent> ;
+    ns1:sender <http://www.agentes.org#ComercianteAgent> .
+
+ns1:message--279652887992893100-0009 a ns1:FipaAclMessage ;
+    ns1:content default:PeticionCompra13 ;
+    ns1:performative ns1:request ;
+    ns1:receiver <http://www.agentes.org#FinancieroAgent> ;
+    ns1:sender <http://www.agentes.org#ComercianteAgent> .
+
+ns1:message--3090505097449465825-0002 a ns1:FipaAclMessage ;
+    ns1:content default:PeticionCompra5 ;
+    ns1:performative ns1:request ;
+    ns1:receiver <http://www.agentes.org#FinancieroAgent> ;
+    ns1:sender <http://www.agentes.org#ComercianteAgent> .
+
+ns1:message--3111360247670411843-0002 a ns1:FipaAclMessage ;
+    ns1:content default:PeticionCompra151 ;
+    ns1:performative ns1:request ;
+    ns1:receiver <http://www.agentes.org#FinancieroAgent> ;
+    ns1:sender <http://www.agentes.org#ComercianteAgent> .
+
+ns1:message--332847364907577623-0002 a ns1:FipaAclMessage ;
+    ns1:content default:PeticionCompra143 ;
+    ns1:performative ns1:request ;
+    ns1:receiver <http://www.agentes.org#FinancieroAgent> ;
+    ns1:sender <http://www.agentes.org#ComercianteAgent> .
+
+ns1:message--4481061316212381626-0002 a ns1:FipaAclMessage ;
+    ns1:content default:PeticionCompra95 ;
+    ns1:performative ns1:request ;
+    ns1:receiver <http://www.agentes.org#FinancieroAgent> ;
+    ns1:sender <http://www.agentes.org#ComercianteAgent> .
+
+ns1:message--5531874555935575937-0002 a ns1:FipaAclMessage ;
+    ns1:content default:PeticionCompra119 ;
+    ns1:performative ns1:request ;
+    ns1:receiver <http://www.agentes.org#FinancieroAgent> ;
+    ns1:sender <http://www.agentes.org#ComercianteAgent> .
+
+ns1:message--5619215762375910943-0002 a ns1:FipaAclMessage ;
+    ns1:content default:PeticionCompra5 ;
+    ns1:performative ns1:request ;
+    ns1:receiver <http://www.agentes.org#FinancieroAgent> ;
+    ns1:sender <http://www.agentes.org#ComercianteAgent> .
+
+ns1:message--5664665716082482216-0002 a ns1:FipaAclMessage ;
+    ns1:content default:PeticionCompra5 ;
+    ns1:performative ns1:request ;
+    ns1:receiver <http://www.agentes.org#FinancieroAgent> ;
+    ns1:sender <http://www.agentes.org#ComercianteAgent> .
+
+ns1:message--5672024462515761896-0002 a ns1:FipaAclMessage ;
+    ns1:content default:PeticionCompra103 ;
+    ns1:performative ns1:request ;
+    ns1:receiver <http://www.agentes.org#FinancieroAgent> ;
+    ns1:sender <http://www.agentes.org#ComercianteAgent> .
+
+ns1:message--5800733615128076282-0002 a ns1:FipaAclMessage ;
+    ns1:content default:PeticionCompra191 ;
+    ns1:performative ns1:request ;
+    ns1:receiver <http://www.agentes.org#FinancieroAgent> ;
+    ns1:sender <http://www.agentes.org#ComercianteAgent> .
+
+ns1:message--5800733615128076282-0008 a ns1:FipaAclMessage ;
+    ns1:content default:PeticionCompra199 ;
+    ns1:performative ns1:request ;
+    ns1:receiver <http://www.agentes.org#FinancieroAgent> ;
+    ns1:sender <http://www.agentes.org#ComercianteAgent> .
+
+ns1:message--5800733615128076282-0014 a ns1:FipaAclMessage ;
+    ns1:content default:PeticionCompra207 ;
+    ns1:performative ns1:request ;
+    ns1:receiver <http://www.agentes.org#FinancieroAgent> ;
+    ns1:sender <http://www.agentes.org#ComercianteAgent> .
+
+ns1:message--5800733615128076282-0020 a ns1:FipaAclMessage ;
+    ns1:content default:PeticionCompra215 ;
+    ns1:performative ns1:request ;
+    ns1:receiver <http://www.agentes.org#FinancieroAgent> ;
+    ns1:sender <http://www.agentes.org#ComercianteAgent> .
+
+ns1:message--7266775634979101892-0002 a ns1:FipaAclMessage ;
+    ns1:content default:PeticionCompra11 ;
+    ns1:performative ns1:request ;
+    ns1:receiver <http://www.agentes.org#FinancieroAgent> ;
+    ns1:sender <http://www.agentes.org#ComercianteAgent> .
+
+ns1:message--7482104937077077757-0002 a ns1:FipaAclMessage ;
+    ns1:content default:PeticionCompra167 ;
+    ns1:performative ns1:request ;
+    ns1:receiver <http://www.agentes.org#FinancieroAgent> ;
+    ns1:sender <http://www.agentes.org#ComercianteAgent> .
+
+ns1:message--769732556547395473-0002 a ns1:FipaAclMessage ;
+    ns1:content default:PeticionCompra62 ;
+    ns1:performative ns1:request ;
+    ns1:receiver <http://www.agentes.org#FinancieroAgent> ;
+    ns1:sender <http://www.agentes.org#ComercianteAgent> .
+
+ns1:message--781911139742630409-0002 a ns1:FipaAclMessage ;
+    ns1:content default:PeticionCompra4 ;
+    ns1:performative ns1:request ;
+    ns1:receiver <http://www.agentes.org#FinancieroAgent> ;
+    ns1:sender <http://www.agentes.org#ComercianteAgent> .
+
+ns1:message--9027783859556741593-0002 a ns1:FipaAclMessage ;
+    ns1:content default:PeticionCompra80 ;
+    ns1:performative ns1:request ;
+    ns1:receiver <http://www.agentes.org#FinancieroAgent> ;
+    ns1:sender <http://www.agentes.org#ComercianteAgent> .
+
+ns1:message-1052736659705417471-0002 a ns1:FipaAclMessage ;
+    ns1:content default:PeticionCompra90 ;
+    ns1:performative ns1:request ;
+    ns1:receiver <http://www.agentes.org#FinancieroAgent> ;
+    ns1:sender <http://www.agentes.org#ComercianteAgent> .
+
+ns1:message-1989202311339890072-0002 a ns1:FipaAclMessage ;
+    ns1:content default:PeticionCompra35 ;
+    ns1:performative ns1:request ;
+    ns1:receiver <http://www.agentes.org#FinancieroAgent> ;
+    ns1:sender <http://www.agentes.org#ComercianteAgent> .
+
+ns1:message-3928708127615668516-0002 a ns1:FipaAclMessage ;
+    ns1:content default:PeticionCompra11 ;
+    ns1:performative ns1:request ;
+    ns1:receiver <http://www.agentes.org#FinancieroAgent> ;
+    ns1:sender <http://www.agentes.org#ComercianteAgent> .
+
+ns1:message-4114483659630143472-0002 a ns1:FipaAclMessage ;
+    ns1:content default:PeticionCompra135 ;
+    ns1:performative ns1:request ;
+    ns1:receiver <http://www.agentes.org#FinancieroAgent> ;
+    ns1:sender <http://www.agentes.org#ComercianteAgent> .
+
+ns1:message-6728272942404724256-0002 a ns1:FipaAclMessage ;
+    ns1:content default:PeticionCompra183 ;
+    ns1:performative ns1:request ;
+    ns1:receiver <http://www.agentes.org#FinancieroAgent> ;
+    ns1:sender <http://www.agentes.org#ComercianteAgent> .
+
+ns1:message-7325602830423538228-0002 a ns1:FipaAclMessage ;
+    ns1:content default:PeticionCompra127 ;
+    ns1:performative ns1:request ;
+    ns1:receiver <http://www.agentes.org#FinancieroAgent> ;
+    ns1:sender <http://www.agentes.org#ComercianteAgent> .
+
+ns1:message-7529023454608573999-0002 a ns1:FipaAclMessage ;
+    ns1:content default:PeticionCompra85 ;
+    ns1:performative ns1:request ;
+    ns1:receiver <http://www.agentes.org#FinancieroAgent> ;
+    ns1:sender <http://www.agentes.org#ComercianteAgent> .
+
+ns1:message-773981292945220919-0002 a ns1:FipaAclMessage ;
+    ns1:content default:PeticionCompra175 ;
+    ns1:performative ns1:request ;
+    ns1:receiver <http://www.agentes.org#FinancieroAgent> ;
+    ns1:sender <http://www.agentes.org#ComercianteAgent> .
+
+ns1:message-7943000723289313501-0002 a ns1:FipaAclMessage ;
+    ns1:content default:PeticionCompra111 ;
+    ns1:performative ns1:request ;
+    ns1:receiver <http://www.agentes.org#FinancieroAgent> ;
+    ns1:sender <http://www.agentes.org#ComercianteAgent> .
+
+ns1:message-984670049742633469-0002 a ns1:FipaAclMessage ;
+    ns1:content default:PeticionCompra43 ;
+    ns1:performative ns1:request ;
+    ns1:receiver <http://www.agentes.org#FinancieroAgent> ;
+    ns1:sender <http://www.agentes.org#ComercianteAgent> .
+
+default:PeticionEnvio10 a default:GenerarFactura,
+        default:PeticionEnvio ;
+    default:De default:Compra15,
+        default:Compra16 ;
+    default:FechaEntrega "2024-06-04T00:00:00"^^xsd:dateTime ;
+    default:Pagado false ;
+    default:PrecioTotal "395.0"^^xsd:float,
+        "2000.0"^^xsd:float ;
+    default:Prioridad "1"^^xsd:int ;
+    default:Tarjeta "123"^^xsd:int,
+        "132"^^xsd:int .
+
+default:PeticionEnvio15 a default:GenerarFactura,
+        default:PeticionEnvio ;
+    default:De default:Compra209,
+        default:Compra22,
+        default:Compra241 ;
+    default:FechaEntrega "2024-06-04T00:00:00"^^xsd:dateTime ;
+    default:Pagado false ;
+    default:PrecioTotal "1000.0"^^xsd:float ;
+    default:Prioridad "1"^^xsd:int ;
+    default:Tarjeta "132"^^xsd:int .
+
+default:PeticionEnvio17 a default:GenerarFactura,
+        default:PeticionEnvio ;
+    default:De default:Compra25 ;
+    default:FechaEntrega "2024-06-04T00:00:00"^^xsd:dateTime ;
+    default:Pagado false ;
+    default:PrecioTotal "2000.0"^^xsd:float ;
+    default:Prioridad "1"^^xsd:int ;
+    default:Tarjeta "234234"^^xsd:int .
+
+default:PeticionEnvio21 a default:GenerarFactura,
+        default:PeticionEnvio ;
+    default:De default:Compra217,
+        default:Compra249,
+        default:Compra30 ;
+    default:FechaEntrega "2024-06-04T00:00:00"^^xsd:dateTime ;
+    default:Pagado false ;
+    default:PrecioTotal "1000.0"^^xsd:float,
+        "1032.0"^^xsd:float ;
+    default:Prioridad "1"^^xsd:int ;
+    default:Tarjeta "132"^^xsd:int,
+        "12312"^^xsd:int .
+
+default:PeticionEnvio27 a default:GenerarFactura,
+        default:PeticionEnvio ;
+    default:De default:Compra257 ;
+    default:FechaEntrega "2024-06-04T00:00:00"^^xsd:dateTime ;
+    default:Pagado false ;
+    default:PrecioTotal "1000.0"^^xsd:float ;
+    default:Prioridad "1"^^xsd:int ;
+    default:Tarjeta "132"^^xsd:int .
+
+default:PeticionEnvio3 a default:GenerarFactura,
+        default:PeticionEnvio ;
+    default:De default:Compra105,
+        default:Compra113,
+        default:Compra121,
+        default:Compra129,
+        default:Compra13,
+        default:Compra137,
+        default:Compra145,
+        default:Compra153,
+        default:Compra161,
+        default:Compra169,
+        default:Compra177,
+        default:Compra185,
+        default:Compra193,
+        default:Compra225,
+        default:Compra26,
+        default:Compra37,
+        default:Compra45,
+        default:Compra53,
+        default:Compra6,
+        default:Compra64,
+        default:Compra69,
+        default:Compra7,
+        default:Compra82,
+        default:Compra87,
+        default:Compra92,
+        default:Compra97 ;
+    default:FechaEntrega "2024-06-02T00:00:00"^^xsd:dateTime,
+        "2024-06-04T00:00:00"^^xsd:dateTime ;
+    default:Pagado false ;
+    default:PrecioTotal "309.0"^^xsd:float,
+        "395.0"^^xsd:float,
+        "1000.0"^^xsd:float,
+        "1032.0"^^xsd:float,
+        "2000.0"^^xsd:float ;
+    default:Prioridad "1"^^xsd:int ;
+    default:Tarjeta "123"^^xsd:int,
+        "132"^^xsd:int,
+        "213"^^xsd:int,
+        "231"^^xsd:int,
+        "312"^^xsd:int,
+        "2222"^^xsd:int,
+        "4321"^^xsd:int,
+        "12312"^^xsd:int,
+        "12332312"^^xsd:int .
+
+default:PeticionEnvio33 a default:GenerarFactura,
+        default:PeticionEnvio ;
+    default:De default:Compra265 ;
+    default:FechaEntrega "2024-06-04T00:00:00"^^xsd:dateTime ;
+    default:Pagado false ;
+    default:PrecioTotal "1000.0"^^xsd:float ;
+    default:Prioridad "1"^^xsd:int ;
+    default:Tarjeta "132"^^xsd:int .
+
+default:PeticionEnvio39 a default:GenerarFactura,
+        default:PeticionEnvio ;
+    default:De default:Compra273 ;
+    default:FechaEntrega "2024-06-04T00:00:00"^^xsd:dateTime ;
+    default:Pagado false ;
+    default:PrecioTotal "1000.0"^^xsd:float ;
+    default:Prioridad "1"^^xsd:int ;
+    default:Tarjeta "132"^^xsd:int .
+
+default:PeticionEnvio9 a default:GenerarFactura,
+        default:PeticionEnvio ;
+    default:De default:Compra14,
+        default:Compra201,
+        default:Compra233,
+        default:Compra77 ;
+    default:FechaEntrega "2024-06-04T00:00:00"^^xsd:dateTime ;
+    default:Pagado false ;
+    default:PrecioTotal "1000.0"^^xsd:float ;
+    default:Prioridad "1"^^xsd:int ;
+    default:Tarjeta "132"^^xsd:int .
+
+default:Producto8 a default:Producto ;
+    default:Descripcion "Esto es un Platano"^^xsd:string ;
+    default:Nombre "Platano"^^xsd:string ;
+    default:Peso "0.5"^^xsd:float ;
+    default:Precio "1.0"^^xsd:float .
+
+default:Compra105 a default:Compra ;
+    default:Contiene default:Producto5 ;
+    default:Destino default:Direccion104 .
+
+default:Compra113 a default:Compra ;
+    default:Contiene default:Producto5 ;
+    default:Destino default:Direccion112 .
+
+default:Compra121 a default:Compra ;
+    default:Contiene default:Producto5 ;
+    default:Destino default:Direccion120 .
+
+default:Compra129 a default:Compra ;
+    default:Contiene default:Producto5 ;
+    default:Destino default:Direccion128 .
+
+default:Compra13 a default:Compra ;
+    default:Destino default:Direccion12 .
+
+default:Compra137 a default:Compra ;
+    default:Contiene default:Producto5 ;
+    default:Destino default:Direccion136 .
+
+default:Compra14 a default:Compra ;
+    default:Contiene default:Producto5 ;
+    default:Destino default:Direccion13 .
+
+default:Compra145 a default:Compra ;
+    default:Contiene default:Producto5 ;
+    default:Destino default:Direccion144 .
+
+default:Compra15 a default:Compra ;
+    default:Contiene default:Producto1,
+        default:Producto2,
+        default:Producto3 ;
+    default:Destino default:Direccion14 .
+
+default:Compra153 a default:Compra ;
+    default:Contiene default:Producto5 ;
+    default:Destino default:Direccion152 .
+
+default:Compra16 a default:Compra ;
+    default:Contiene default:ProductoExterno1 ;
+    default:Destino default:Direccion15 .
+
+default:Compra161 a default:Compra ;
+    default:Contiene default:Producto5 ;
+    default:Destino default:Direccion160 .
+
+default:Compra169 a default:Compra ;
+    default:Contiene default:Producto5 ;
+    default:Destino default:Direccion168 .
+
+default:Compra177 a default:Compra ;
+    default:Contiene default:Producto5 ;
+    default:Destino default:Direccion176 .
+
+default:Compra185 a default:Compra ;
+    default:Contiene default:Producto5 ;
+    default:Destino default:Direccion184 .
+
+default:Compra193 a default:Compra ;
+    default:Contiene default:Producto5 ;
+    default:Destino default:Direccion192 .
+
+default:Compra201 a default:Compra ;
+    default:Contiene default:Producto5 ;
+    default:Destino default:Direccion200 .
+
+default:Compra209 a default:Compra ;
+    default:Contiene default:Producto5 ;
+    default:Destino default:Direccion208 .
+
+default:Compra217 a default:Compra ;
+    default:Contiene default:Producto5 ;
+    default:Destino default:Direccion216 .
+
+default:Compra22 a default:Compra ;
+    default:Contiene default:Producto5 ;
+    default:Destino default:Direccion21 .
+
+default:Compra225 a default:Compra ;
+    default:Contiene default:Producto5 ;
+    default:Destino default:Direccion224 .
+
+default:Compra233 a default:Compra ;
+    default:Contiene default:Producto5 ;
+    default:Destino default:Direccion232 .
+
+default:Compra241 a default:Compra ;
+    default:Contiene default:Producto5 ;
+    default:Destino default:Direccion240 .
+
+default:Compra249 a default:Compra ;
+    default:Contiene default:Producto5 ;
+    default:Destino default:Direccion248 .
+
+default:Compra25 a default:Compra ;
+    default:Contiene default:ProductoExterno1 ;
+    default:Destino default:Direccion24 .
+
+default:Compra257 a default:Compra ;
+    default:Contiene default:Producto5 ;
+    default:Destino default:Direccion256 .
+
+default:Compra26 a default:Compra ;
+    default:Contiene default:Producto1,
+        default:Producto2,
+        default:Producto3 ;
+    default:Destino default:Direccion25 .
+
+default:Compra265 a default:Compra ;
+    default:Contiene default:Producto5 ;
+    default:Destino default:Direccion264 .
+
+default:Compra273 a default:Compra ;
+    default:Contiene default:Producto5 ;
+    default:Destino default:Direccion272 .
+
+default:Compra30 a default:Compra ;
+    default:Contiene default:Producto2,
+        default:Producto5 ;
+    default:Destino default:Direccion29 .
+
+default:Compra37 a default:Compra ;
+    default:Contiene default:Producto5 ;
+    default:Destino default:Direccion36 .
+
+default:Compra45 a default:Compra ;
+    default:Contiene default:Producto5 ;
+    default:Destino default:Direccion44 .
+
+default:Compra53 a default:Compra ;
+    default:Contiene default:Producto5 ;
+    default:Destino default:Direccion52 .
+
+default:Compra6 a default:Compra ;
+    default:Contiene default:Producto2,
+        default:Producto5 ;
+    default:Destino default:Direccion5 .
+
+default:Compra64 a default:Compra ;
+    default:Contiene default:Producto5 ;
+    default:Destino default:Direccion63 .
+
+default:Compra69 a default:Compra ;
+    default:Contiene default:Producto5 ;
+    default:Destino default:Direccion68 .
+
+default:Compra7 a default:Compra ;
+    default:Contiene default:ProductoExterno1 ;
+    default:Destino default:Direccion6 .
+
+default:Compra77 a default:Compra ;
+    default:Contiene default:Producto5 ;
+    default:Destino default:Direccion76 .
+
+default:Compra82 a default:Compra ;
+    default:Contiene default:Producto5 ;
+    default:Destino default:Direccion81 .
+
+default:Compra87 a default:Compra ;
+    default:Contiene default:Producto5 ;
+    default:Destino default:Direccion86 .
+
+default:Compra92 a default:Compra ;
+    default:Contiene default:Producto5 ;
+    default:Destino default:Direccion91 .
+
+default:Compra97 a default:Compra ;
+    default:Contiene default:Producto5 ;
+    default:Destino default:Direccion96 .
+
+default:Direccion104 a default:Direccion ;
+    default:CodigoPostal "123"^^xsd:int ;
+    default:Direccion "adw"^^xsd:string .
+
+default:Direccion112 a default:Direccion ;
+    default:CodigoPostal "123"^^xsd:int ;
+    default:Direccion "adw"^^xsd:string .
+
+default:Direccion12 a default:Direccion ;
+    default:CodigoPostal "13"^^xsd:int,
+        "123"^^xsd:int ;
+    default:Direccion "awd"^^xsd:string,
+        "qwad"^^xsd:string,
+        "wqe"^^xsd:string .
+
+default:Direccion120 a default:Direccion ;
+    default:CodigoPostal "123"^^xsd:int ;
+    default:Direccion "adw"^^xsd:string .
+
+default:Direccion128 a default:Direccion ;
+    default:CodigoPostal "123"^^xsd:int ;
+    default:Direccion "adw"^^xsd:string .
+
+default:Direccion13 a default:Direccion ;
+    default:CodigoPostal "123"^^xsd:int ;
+    default:Direccion "adw"^^xsd:string .
+
+default:Direccion136 a default:Direccion ;
+    default:CodigoPostal "123"^^xsd:int ;
+    default:Direccion "adw"^^xsd:string .
+
+default:Direccion14 a default:Direccion ;
+    default:CodigoPostal "132"^^xsd:int ;
+    default:Direccion "wda"^^xsd:string .
+
+default:Direccion144 a default:Direccion ;
+    default:CodigoPostal "123"^^xsd:int ;
+    default:Direccion "adw"^^xsd:string .
+
+default:Direccion15 a default:Direccion ;
+    default:CodigoPostal "123"^^xsd:int ;
+    default:Direccion "dsa"^^xsd:string .
+
+default:Direccion152 a default:Direccion ;
+    default:CodigoPostal "123"^^xsd:int ;
+    default:Direccion "adw"^^xsd:string .
+
+default:Direccion160 a default:Direccion ;
+    default:CodigoPostal "123"^^xsd:int ;
+    default:Direccion "adw"^^xsd:string .
+
+default:Direccion168 a default:Direccion ;
+    default:CodigoPostal "123"^^xsd:int ;
+    default:Direccion "adw"^^xsd:string .
+
+default:Direccion176 a default:Direccion ;
+    default:CodigoPostal "123"^^xsd:int ;
+    default:Direccion "adw"^^xsd:string .
+
+default:Direccion184 a default:Direccion ;
+    default:CodigoPostal "123"^^xsd:int ;
+    default:Direccion "adw"^^xsd:string .
+
+default:Direccion192 a default:Direccion ;
+    default:CodigoPostal "123"^^xsd:int ;
+    default:Direccion "adw"^^xsd:string .
+
+default:Direccion200 a default:Direccion ;
+    default:CodigoPostal "123"^^xsd:int ;
+    default:Direccion "adw"^^xsd:string .
+
+default:Direccion208 a default:Direccion ;
+    default:CodigoPostal "123"^^xsd:int ;
+    default:Direccion "adw"^^xsd:string .
+
+default:Direccion21 a default:Direccion ;
+    default:CodigoPostal "123"^^xsd:int ;
+    default:Direccion "adw"^^xsd:string .
+
+default:Direccion216 a default:Direccion ;
+    default:CodigoPostal "123"^^xsd:int ;
+    default:Direccion "adw"^^xsd:string .
+
+default:Direccion224 a default:Direccion ;
+    default:CodigoPostal "123"^^xsd:int ;
+    default:Direccion "adw"^^xsd:string .
+
+default:Direccion232 a default:Direccion ;
+    default:CodigoPostal "123"^^xsd:int ;
+    default:Direccion "adw"^^xsd:string .
+
+default:Direccion24 a default:Direccion ;
+    default:CodigoPostal "1234"^^xsd:int ;
+    default:Direccion "awdaw"^^xsd:string .
+
+default:Direccion240 a default:Direccion ;
+    default:CodigoPostal "123"^^xsd:int ;
+    default:Direccion "adw"^^xsd:string .
+
+default:Direccion248 a default:Direccion ;
+    default:CodigoPostal "123"^^xsd:int ;
+    default:Direccion "adw"^^xsd:string .
+
+default:Direccion25 a default:Direccion ;
+    default:CodigoPostal "123"^^xsd:int ;
+    default:Direccion "awd"^^xsd:string .
+
+default:Direccion256 a default:Direccion ;
+    default:CodigoPostal "123"^^xsd:int ;
+    default:Direccion "adw"^^xsd:string .
+
+default:Direccion264 a default:Direccion ;
+    default:CodigoPostal "123"^^xsd:int ;
+    default:Direccion "adw"^^xsd:string .
+
+default:Direccion272 a default:Direccion ;
+    default:CodigoPostal "123"^^xsd:int ;
+    default:Direccion "adw"^^xsd:string .
+
+default:Direccion29 a default:Direccion ;
+    default:CodigoPostal "3029"^^xsd:int ;
+    default:Direccion "casita"^^xsd:string .
+
+default:Direccion36 a default:Direccion ;
+    default:CodigoPostal "312"^^xsd:int ;
+    default:Direccion "aed"^^xsd:string .
+
+default:Direccion44 a default:Direccion ;
+    default:CodigoPostal "132"^^xsd:int ;
+    default:Direccion "ad"^^xsd:string .
+
+default:Direccion5 a default:Direccion ;
+    default:CodigoPostal "123"^^xsd:int,
+        "3029"^^xsd:int ;
+    default:Direccion "adw"^^xsd:string,
+        "casita"^^xsd:string .
+
+default:Direccion52 a default:Direccion ;
+    default:CodigoPostal "123"^^xsd:int ;
+    default:Direccion "dwa"^^xsd:string .
+
+default:Direccion6 a default:Direccion ;
+    default:CodigoPostal "13"^^xsd:int,
+        "123"^^xsd:int,
+        "312"^^xsd:int,
+        "1231213"^^xsd:int,
+        "1234434"^^xsd:int ;
+    default:Direccion "123"^^xsd:string,
+        "ad"^^xsd:string,
+        "adb"^^xsd:string,
+        "awd"^^xsd:string,
+        "da"^^xsd:string .
+
+default:Direccion63 a default:Direccion ;
+    default:CodigoPostal "31"^^xsd:int ;
+    default:Direccion "da"^^xsd:string .
+
+default:Direccion68 a default:Direccion ;
+    default:CodigoPostal "31"^^xsd:int ;
+    default:Direccion "da"^^xsd:string .
+
+default:Direccion76 a default:Direccion ;
+    default:CodigoPostal "123"^^xsd:int ;
+    default:Direccion "adw"^^xsd:string .
+
+default:Direccion81 a default:Direccion ;
+    default:CodigoPostal "123"^^xsd:int ;
+    default:Direccion "adw"^^xsd:string .
+
+default:Direccion86 a default:Direccion ;
+    default:CodigoPostal "123"^^xsd:int ;
+    default:Direccion "adw"^^xsd:string .
+
+default:Direccion91 a default:Direccion ;
+    default:CodigoPostal "123"^^xsd:int ;
+    default:Direccion "adw"^^xsd:string .
+
+default:Direccion96 a default:Direccion ;
+    default:CodigoPostal "123"^^xsd:int ;
+    default:Direccion "adw"^^xsd:string .
+
+default:Producto1 a default:Producto ;
+    default:Descripcion "Esto son Patatas"^^xsd:string ;
+    default:Nombre "Patatas"^^xsd:string ;
+    default:Peso "23.0"^^xsd:float ;
+    default:Precio "308.0"^^xsd:float .
+
+default:Producto3 a default:Producto ;
+    default:Descripcion "Esto es un Teclado"^^xsd:string ;
+    default:Nombre "Teclado"^^xsd:string ;
+    default:Peso "2.0"^^xsd:float ;
+    default:Precio "55.0"^^xsd:float .
+
+default:ProductoExterno1 a default:Producto ;
+    default:Descripcion "macbook"^^xsd:string ;
+    default:Nombre "pc"^^xsd:string ;
+    default:Peso "100.0"^^xsd:float ;
+    default:Precio "2000.0"^^xsd:float .
+
+default:Producto2 a default:Producto ;
+    default:Descripcion "Esto es un Mouse"^^xsd:string ;
+    default:Nombre "Mouse"^^xsd:string ;
+    default:Peso "1.0"^^xsd:float ;
+    default:Precio "32.0"^^xsd:float .
+
+default:Producto5 a default:Producto ;
+    default:Descripcion "Esto es un Ordenador"^^xsd:string ;
+    default:Nombre "Ordenador"^^xsd:string ;
+    default:Peso "2.0"^^xsd:float ;
+    default:Precio "1000.0"^^xsd:float .
+

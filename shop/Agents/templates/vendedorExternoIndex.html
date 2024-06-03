@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>ECSDIShop</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f0f0f0;
+        }
+        form {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.1);
+            margin: 20px; /* Add this line */
+        }
+        input[type="number"], input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 4px;
+            border: 1px solid #ddd;
+        }
+        input[type="submit"] {
+            background-color: #1387c6;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            float: right;
+        }
+        input[type="submit"]:hover {
+            background-color: #1387c6;
+        }
+    </style>
+</head>
+<body>
+    <form method="post">
+        <input type="number" name="tarjeta" placeholder="Tarjeta..."/><br>
+        <input type="text" name="nombreProducto" placeholder="Nombre de producto..."/><br>
+        <input type="text" name="descripcionProducto" placeholder="Descripcion de producto..."/><br>
+        <input type="number" name="peso" placeholder="Peso del producto..."/><br>
+        <input type="number" name="precio" placeholder="Precio de venta..."/><br>
+        ¿Quiere que gestionemos sus productos? <input type="checkbox" name="gestionExterna" value="envio"/><br><br>
+        <input type="submit" name="submit" value="Submit">
+    </form>
+</body>
+</html>
