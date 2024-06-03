@@ -10,6 +10,7 @@ default:Factura1 a default:Factura ;
         default:ProductoExterno3 ;
     default:PrecioTotal "0.0"^^xsd:float,
         "2.0"^^xsd:float,
+        "32.0"^^xsd:float,
         "308.0"^^xsd:float,
         "309.0"^^xsd:float,
         "1000.0"^^xsd:float,
@@ -26,6 +27,7 @@ default:Factura1 a default:Factura ;
         "123123"^^xsd:int,
         "1231232"^^xsd:int,
         "12332312"^^xsd:int,
+        "123321321"^^xsd:int,
         "123456789"^^xsd:int .
 
 default:Factura10 a default:Factura ;
@@ -97,7 +99,8 @@ default:Factura2 a default:Factura ;
         "13"^^xsd:int,
         "123"^^xsd:int,
         "132"^^xsd:int,
-        "213"^^xsd:int .
+        "213"^^xsd:int,
+        "123321321"^^xsd:int .
 
 default:Factura20 a default:Factura ;
     default:Facturando default:Producto5 ;
@@ -160,7 +163,8 @@ default:Factura3 a default:Factura ;
         "2000.0"^^xsd:float ;
     default:Tarjeta "132"^^xsd:int,
         "312"^^xsd:int,
-        "234234"^^xsd:int .
+        "234234"^^xsd:int,
+        "123321321"^^xsd:int .
 
 default:Factura30 a default:Factura ;
     default:Facturando default:Producto5 ;
