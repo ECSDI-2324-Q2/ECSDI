@@ -105,6 +105,7 @@ def realizarTransporte(grafoEntrada, content):
     for s, p, o in grafoEntrada.triples((None, RDF.type, ECSDI.DeLote)):
         delote = s
     prioridad = grafoEntrada.value(subject=delote, predicate=ECSDI.Prioridad)
+    print (prioridad)
     dias = 1
     if int(prioridad) == 2:
         dias = random.randint(3, 5)

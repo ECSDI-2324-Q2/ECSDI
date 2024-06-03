@@ -57,27 +57,19 @@ default:Producto8 a default:Producto ;
     default:Peso "0.5"^^xsd:float ;
     default:Precio "1.0"^^xsd:float .
 
-default:ProductoExterno1 a default:ProductoExterno ;
-    default:Descripcion "macbook"^^xsd:string ;
-    default:GestionExterna true ;
-    default:Nombre "pc"^^xsd:string ;
-    default:Peso "100.0"^^xsd:float ;
-    default:Precio "2000.0"^^xsd:float ;
-    default:Tarjeta "34131"^^xsd:string .
-
 default:ProductoExterno2 a default:ProductoExterno ;
-    default:Descripcion "123"^^xsd:string ;
+    default:Descripcion "werf"^^xsd:string ;
     default:GestionExterna true ;
-    default:Nombre "312"^^xsd:string ;
-    default:Peso "132.0"^^xsd:float ;
-    default:Precio "132.0"^^xsd:float ;
-    default:Tarjeta "213"^^xsd:string .
+    default:Nombre "ipad"^^xsd:string ;
+    default:Peso "324.0"^^xsd:float ;
+    default:Precio "13.0"^^xsd:float ;
+    default:Tarjeta "31"^^xsd:string .
 
 default:ProductoExterno3 a default:ProductoExterno ;
-    default:Descripcion "gafas"^^xsd:string ;
-    default:GestionExterna true ;
-    default:Nombre "gafas"^^xsd:string ;
-    default:Peso "200.0"^^xsd:float ;
-    default:Precio "2.0"^^xsd:float ;
-    default:Tarjeta "123"^^xsd:string .
+    default:Descripcion "werf"^^xsd:string ;
+    default:GestionExterna false ;
+    default:Nombre "iphone"^^xsd:string ;
+    default:Peso "324.0"^^xsd:float ;
+    default:Precio "13.0"^^xsd:float ;
+    default:Tarjeta "31"^^xsd:string .
 

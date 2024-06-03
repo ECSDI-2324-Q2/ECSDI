@@ -18,7 +18,7 @@ from multiprocessing import Queue, Process
 from threading import Thread
 
 from flask import Flask, request
-from rdflib import URIRef, XSD, Namespace, Literal
+from rdflib import BNode, URIRef, XSD, Namespace, Literal
 
 from AgentUtil.ACLMessages import *
 from AgentUtil.Agent import Agent
@@ -183,32 +183,29 @@ def solicitarEnvio(grafo,contenido):
     productos_centrologistico.parse(ontologyFile, format='turtle')
 
     # Define the Producto URI
-    producto_uri = URIRef("http://www.owl-ontologies.com/ECSDIstore#Producto")    
+    producto_uri = URIRef("http://www.owl-ontologies.com/ECSDIstore#Producto")   
 
-    while productosVendidos < compraSize:
-        for ag in agentesCL:
-            # Get the product IDs related to the CentroLogistico through the ECSDI.Producto predicate
-            product_ids_centrologistico = [int(o.split('#Producto')[-1]) for o in productos_centrologistico.objects(subject=URIRef(ag.uri), predicate=producto_uri)]
+    print(grafoCopia.serialize(format='turtle')) 
 
-            prod_vender = []
+    for ag in agentesCL:
+        if productosVendidos == compraSize:
+            break
+        # Get the product IDs related to the CentroLogistico through the ECSDI.Producto predicate
+        product_ids_centrologistico = [str(o) for o in productos_centrologistico.objects(subject=URIRef(ag.uri), predicate=producto_uri)]
 
-            for prod in grafoCopia.objects(subject=compra, predicate=ECSDI.Contiene):
-                # Extract the product ID from the URI
-                prod_id = int(prod.split('#Producto')[-1])
+        prod_vender = []
 
-                if prod_id in product_ids_centrologistico:
-                    prod_vender.append(prod)
-                    productosVendidos += 1
-                    grafoCopia.add((sujeto, ECSDI.Envia, Literal(prod_id)))
-                    grafoCopia.remove((compra, ECSDI.Contiene, prod))
+        for prod in grafoCopia.objects(subject=compra, predicate=ECSDI.Contiene):
+            prod_id_str = prod.split('#Producto')[-1]
+            if prod_id_str in product_ids_centrologistico:
+                prod_vender.append(prod)
+                productosVendidos += 1
+                grafoCopia.add((sujeto, ECSDI.Envia, Literal(prod_id_str)))
+                grafoCopia.remove((compra, ECSDI.Contiene, prod))
 
-                    print(f'Producto {prod} vendido by {ag.uri}')
-
-            print(grafoCopia.value(subject=sujeto, predicate=RDF.type))
-
-            send_message(
-                        build_message(grafoCopia, perf=ACL.request, sender=ComercianteAgent.uri, receiver=ag.uri,
-                                    msgcnt=mss_cnt), ag.address)
+        send_message(
+                    build_message(grafoCopia, perf=ACL.request, sender=ComercianteAgent.uri, receiver=ag.uri,
+                                msgcnt=mss_cnt), ag.address)
                 
     logger.info("Enviada peticion envio a Centro Logistico")
 
@@ -237,10 +234,35 @@ def vender(grafoEntrada, content):
     suj = grafoEntrada.value(predicate=RDF.type, object=ECSDI.GenerarFactura)
     grafoEntrada.add((suj, ECSDI.PrecioTotal, Literal(precioTotal, datatype=XSD.float)))
 
+    grafoProductoExterno = Graph()
+    grafoProductoExterno.add((content, RDF.type, ECSDI.NotificarVendedorExterno))
+    for s in grafoEntrada.subjects(predicate=RDF.type, object=ECSDI.ProductoExterno):
+        if grafoEntrada.value(subject=s, predicate=ECSDI.GestionExterna).toPython() is True:
+            # Iterate over all triples with the subject
+            for p, o in grafoEntrada.predicate_objects(subject=s):
+                # Add the triple to grafoProductoExterno
+                grafoProductoExterno.add((s, p, o))
+                # Remove the triple from grafoEntrada
+                grafoEntrada.remove((s, p, o))
+            for compra in grafoEntrada.subjects(predicate=ECSDI.Contiene, object=s):
+                grafoEntrada.remove((compra, ECSDI.Contiene, s))
+
     # Enviar compra
     Thread(target=enviarCompra, args=(grafoEntrada, content)).start()
+    
+    #Notificar vendedor externo
+    #Thread(target=notificarVendedorExterno, args=(grafoProductoExterno, content)).start()
 
     return grafoFactura
+
+
+def notificarVendedorExterno(grafo, content): 
+    agent = getAgentInfo(agn.GestorExterno, DirectoryAgent, ComercianteAgent, getMessageCount())
+    logger.info("Notificando al vendedor externo")
+    send_message(
+        build_message(grafo, perf=ACL.request, sender=ComercianteAgent.uri, receiver=agent.uri, msgcnt=mss_cnt), 
+        agent.address
+    )
 
 def enviarCompra(grafoEntrada, content):
     logger.info("Haciendo peticion envio")

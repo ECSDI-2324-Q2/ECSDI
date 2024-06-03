@@ -13,6 +13,7 @@ import argparse
 import socket
 import sys
 
+import rdflib
 from requests import get
 sys.path.append('../')
 from multiprocessing import Queue, Process
@@ -28,6 +29,7 @@ from AgentUtil.Logging import config_logger
 from AgentUtil.OntoNamespaces import ECSDI
 from AgentUtil.OntoNamespaces import ACL, DSO
 from rdflib.namespace import RDF, FOAF
+from rdflib import term
 
 
 __author__ = 'Marc'
@@ -122,10 +124,18 @@ def procesarVenta(listaDeCompra, prioridad, numTarjeta, direccion, codigoPostal)
     grafoCompra.add((sujetoCompra, RDF.type, ECSDI.Compra))
     grafoCompra.add((sujetoCompra, ECSDI.Destino, URIRef(sujetoDireccion)))
 
-    # Añadimos los productos
     for producto in listaDeCompra:
         sujetoProducto = producto['Sujeto']
-        grafoCompra.add((sujetoProducto, RDF.type, ECSDI.Producto))
+        sujetoProducto2 = str(producto['Sujeto'])
+        if 'ProductoExterno' in sujetoProducto2:
+            print("This is an external product")
+            grafoCompra.add((sujetoProducto, RDF.type, ECSDI.ProductoExterno))
+            grafoCompra.add((sujetoProducto, ECSDI.GestionExterna, producto['GestionExterna']))
+            grafoCompra.add((sujetoProducto, ECSDI.Tarjeta, producto['Tarjeta']))
+        else:
+            print("This is not an external product")
+            grafoCompra.add((sujetoProducto, RDF.type, ECSDI.Producto))
+        
         grafoCompra.add((sujetoProducto,ECSDI.Descripcion,producto['Descripcion']))
         grafoCompra.add((sujetoProducto,ECSDI.Nombre,producto['Nombre']))
         grafoCompra.add((sujetoProducto,ECSDI.Precio,producto['Precio']))
@@ -159,6 +169,7 @@ def buy(request):
     prioridad = int(request.form['prioridad'])
     direccion = request.form['direccion']
     codigoPostal = int(request.form['codigoPostal'])
+
     respuestaVenta = procesarVenta(listaDeCompra, prioridad, numTarjeta, direccion, codigoPostal)
     factura = respuestaVenta.value(predicate=RDF.type, object=ECSDI.Factura)
     tarjeta = respuestaVenta.value(subject=factura, predicate=ECSDI.Tarjeta)
@@ -227,6 +238,7 @@ def verProductosRetorno(request):
     listaDeProductos = []
     posicionDeSujetos = {}
     indice = 0
+    
     for s, p, o in grafoBusqueda:
         if s not in posicionDeSujetos:
             posicionDeSujetos[s] = indice
@@ -378,6 +390,11 @@ def enviarPeticionBusqueda(request):
                 producto["Peso"] = o
             elif p == RDF.type:
                 producto["Sujeto"] = s
+            # Add conditions for ProductoExterno properties
+            elif p == ECSDI.GestionExterna:
+                producto["GestionExterna"] = o
+            elif p == ECSDI.Tarjeta:
+                producto["Tarjeta"] = o
             listaDeProductos[posicionDeSujetos[s]] = producto
     
     # Mostramos los productos filtrados
