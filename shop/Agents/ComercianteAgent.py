@@ -138,7 +138,10 @@ def registrarEnvio(grafo, contenido):
     with open('../data/EnviosDB') as ontologyFile:
         grafoEnvios.parse(ontologyFile, format='turtle')
 
-    grafoEnvios += grafo
+    for s, p, o in grafo:
+        # Only add the triple if it's not in grafoEnvios and doesn't contain 'ns1'
+        if (s, p, o) not in grafoEnvios and 'ns1' not in str(s) and 'ns1' not in str(p) and 'ns1' not in str(o):
+            grafoEnvios.add((s, p, o))
 
     # Guardem el graf
     grafoEnvios.serialize(destination='../data/EnviosDB', format='turtle')
