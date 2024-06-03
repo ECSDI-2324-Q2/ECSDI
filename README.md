@@ -8,7 +8,7 @@ Enunciat pràctica: [ECSDIPractica.pdf](https://github.com/ECSDI-2324-Q2/ECSDI/b
 - Miquel Amorín Díaz
 
 ## Instruccions
-> EXECUTAR TOTES LES COMANDES AL DIRECTORI ./shop/Agents
+> EXECUTAR TOTES LES COMANDES AL DIRECTORI `./shop/Agents`
 
 Per instalar les dependencies:
 ```sh
