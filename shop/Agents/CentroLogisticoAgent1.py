@@ -441,7 +441,6 @@ def communication():
                     grafoEntrada.remove((item, None, None))
 
                 faltan = responderPeticionEnvio(grafoEntrada, subject)
-                escoger_lotes()
                 res = faltan
 
     serialize = res.serialize(format='xml')

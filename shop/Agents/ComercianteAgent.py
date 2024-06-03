@@ -201,9 +201,10 @@ def solicitarEnvio(grafo,contenido):
                 grafoCopia.add((sujeto, ECSDI.Envia, Literal(prod_id_str)))
                 grafoCopia.remove((compra, ECSDI.Contiene, prod))
 
-        send_message(
-                    build_message(grafoCopia, perf=ACL.request, sender=ComercianteAgent.uri, receiver=ag.uri,
-                                msgcnt=mss_cnt), ag.address)
+        if len(prod_vender) > 0:
+            send_message(
+                        build_message(grafoCopia, perf=ACL.request, sender=ComercianteAgent.uri, receiver=ag.uri,
+                                    msgcnt=mss_cnt), ag.address)
                 
     logger.info("Enviada peticion envio a Centro Logistico")
 
