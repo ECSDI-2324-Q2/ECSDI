@@ -179,8 +179,13 @@ default:PeticionCompra35 a default:PeticionCompra ;
 default:PeticionCompra4 a default:PeticionCompra ;
     default:De default:Compra6 ;
     default:Prioridad "1"^^xsd:int,
+        "2"^^xsd:int,
         "3"^^xsd:int ;
-    default:Tarjeta "132"^^xsd:int,
+    default:Tarjeta "123"^^xsd:int,
+        "132"^^xsd:int,
+        "231"^^xsd:int,
+        "321"^^xsd:int,
+        "2134"^^xsd:int,
         "12312"^^xsd:int,
         "123321321"^^xsd:int .
 
@@ -235,6 +240,15 @@ default:PeticionCompra68 a default:PeticionCompra ;
     default:De default:Compra70 ;
     default:Prioridad "1"^^xsd:int ;
     default:Tarjeta "132"^^xsd:int .
+
+default:PeticionCompra7 a default:PeticionCompra ;
+    default:De default:Compra9 ;
+    default:Prioridad "1"^^xsd:int ;
+    default:Tarjeta "132"^^xsd:int,
+        "231"^^xsd:int,
+        "312"^^xsd:int,
+        "321"^^xsd:int,
+        "2134"^^xsd:int .
 
 default:PeticionCompra75 a default:PeticionCompra ;
     default:De default:Compra77 ;
@@ -427,7 +441,11 @@ default:Compra53 a default:Compra ;
 
 default:Compra6 a default:Compra ;
     default:Contiene default:Producto2,
-        default:Producto5 ;
+        default:Producto4,
+        default:Producto5,
+        default:ProductoExterno1,
+        default:ProductoExterno2,
+        default:ProductoExterno3 ;
     default:Destino default:Direccion5 .
 
 default:Compra61 a default:Compra ;
@@ -469,6 +487,15 @@ default:Compra87 a default:Compra ;
 default:Compra88 a default:Compra ;
     default:Contiene default:ProductoExterno1 ;
     default:Destino default:Direccion87 .
+
+default:Compra9 a default:Compra ;
+    default:Contiene default:Producto2,
+        default:Producto4,
+        default:Producto5,
+        default:ProductoExterno1,
+        default:ProductoExterno2,
+        default:ProductoExterno3 ;
+    default:Destino default:Direccion8 .
 
 default:Compra92 a default:Compra ;
     default:Contiene default:Producto5 ;
@@ -634,12 +661,18 @@ default:Direccion44 a default:Direccion ;
     default:Direccion "ad"^^xsd:string .
 
 default:Direccion5 a default:Direccion ;
-    default:CodigoPostal "123"^^xsd:int,
+    default:CodigoPostal "23"^^xsd:int,
+        "123"^^xsd:int,
+        "132"^^xsd:int,
         "3029"^^xsd:int,
         "21323"^^xsd:int ;
-    default:Direccion "adsdsa"^^xsd:string,
+    default:Direccion "ads"^^xsd:string,
+        "adsdsa"^^xsd:string,
         "adw"^^xsd:string,
-        "casita"^^xsd:string .
+        "casita"^^xsd:string,
+        "df"^^xsd:string,
+        "wad"^^xsd:string,
+        "wda"^^xsd:string .
 
 default:Direccion51 a default:Direccion ;
     default:CodigoPostal "123"^^xsd:int ;
@@ -695,6 +728,16 @@ default:Direccion78 a default:Direccion ;
     default:CodigoPostal "123"^^xsd:int ;
     default:Direccion "adw"^^xsd:string .
 
+default:Direccion8 a default:Direccion ;
+    default:CodigoPostal "23"^^xsd:int,
+        "123"^^xsd:int,
+        "132"^^xsd:int,
+        "231"^^xsd:int ;
+    default:Direccion "ads"^^xsd:string,
+        "awd"^^xsd:string,
+        "df"^^xsd:string,
+        "wda"^^xsd:string .
+
 default:Direccion81 a default:Direccion ;
     default:CodigoPostal "123"^^xsd:int ;
     default:Direccion "adw"^^xsd:string .
@@ -723,17 +766,40 @@ default:Producto8 a default:Producto ;
     default:Peso "0.5"^^xsd:float ;
     default:Precio "1.0"^^xsd:float .
 
-default:ProductoExterno3 a default:Producto ;
-    default:Descripcion "gafas"^^xsd:string ;
-    default:Nombre "gafas"^^xsd:string ;
-    default:Peso "200.0"^^xsd:float ;
-    default:Precio "2.0"^^xsd:float .
-
 default:Producto3 a default:Producto ;
     default:Descripcion "Esto es un Teclado"^^xsd:string ;
     default:Nombre "Teclado"^^xsd:string ;
     default:Peso "2.0"^^xsd:float ;
     default:Precio "55.0"^^xsd:float .
+
+default:Producto4 a default:Producto ;
+    default:Descripcion "Esto es un Barco"^^xsd:string ;
+    default:Nombre "Barco"^^xsd:string ;
+    default:Peso "1000.0"^^xsd:float ;
+    default:Precio "20000.0"^^xsd:float .
+
+default:ProductoExterno2 a default:Producto,
+        default:ProductoExterno ;
+    default:Descripcion "werf"^^xsd:string ;
+    default:GestionExterna true ;
+    default:Nombre "ipad"^^xsd:string,
+        "iphone"^^xsd:string ;
+    default:Peso "324.0"^^xsd:float ;
+    default:Precio "13.0"^^xsd:float ;
+    default:Tarjeta "31"^^xsd:string .
+
+default:ProductoExterno3 a default:Producto,
+        default:ProductoExterno ;
+    default:Descripcion "gafas"^^xsd:string,
+        "werf"^^xsd:string ;
+    default:GestionExterna false ;
+    default:Nombre "gafas"^^xsd:string,
+        "iphone"^^xsd:string ;
+    default:Peso "200.0"^^xsd:float,
+        "324.0"^^xsd:float ;
+    default:Precio "2.0"^^xsd:float,
+        "13.0"^^xsd:float ;
+    default:Tarjeta "31"^^xsd:string .
 
 default:Producto1 a default:Producto ;
     default:Descripcion "Esto son Patatas"^^xsd:string ;
@@ -748,10 +814,14 @@ default:Producto2 a default:Producto ;
     default:Precio "32.0"^^xsd:float .
 
 default:ProductoExterno1 a default:Producto ;
-    default:Descripcion "macbook"^^xsd:string ;
-    default:Nombre "pc"^^xsd:string ;
-    default:Peso "100.0"^^xsd:float ;
-    default:Precio "2000.0"^^xsd:float .
+    default:Descripcion "macbook"^^xsd:string,
+        "oqbef"^^xsd:string ;
+    default:Nombre "iphone"^^xsd:string,
+        "pc"^^xsd:string ;
+    default:Peso "100.0"^^xsd:float,
+        "83124.0"^^xsd:float ;
+    default:Precio "1823.0"^^xsd:float,
+        "2000.0"^^xsd:float .
 
 default:Producto5 a default:Producto ;
     default:Descripcion "Esto es un Ordenador"^^xsd:string ;

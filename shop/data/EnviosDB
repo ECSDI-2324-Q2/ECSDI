@@ -164,12 +164,6 @@ ns1:message--2460917230788979190-0002 a ns1:FipaAclMessage ;
     ns1:receiver <http://www.agentes.org#FinancieroAgent> ;
     ns1:sender <http://www.agentes.org#ComercianteAgent> .
 
-ns1:message--2484714170454919089-0002 a ns1:FipaAclMessage ;
-    ns1:content default:PeticionCompra4 ;
-    ns1:performative ns1:request ;
-    ns1:receiver <http://www.agentes.org#FinancieroAgent> ;
-    ns1:sender <http://www.agentes.org#ComercianteAgent> .
-
 ns1:message--254849080002387651-0002 a ns1:FipaAclMessage ;
     ns1:content default:PeticionCompra4 ;
     ns1:performative ns1:request ;

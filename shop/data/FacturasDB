@@ -4,9 +4,11 @@
 default:Factura1 a default:Factura ;
     default:Facturando default:Producto1,
         default:Producto2,
+        default:Producto4,
         default:Producto5,
         default:Producto8,
         default:ProductoExterno1,
+        default:ProductoExterno2,
         default:ProductoExterno3 ;
     default:PrecioTotal "0.0"^^xsd:float,
         "2.0"^^xsd:float,
@@ -14,14 +16,24 @@ default:Factura1 a default:Factura ;
         "308.0"^^xsd:float,
         "309.0"^^xsd:float,
         "1000.0"^^xsd:float,
+        "1013.0"^^xsd:float,
+        "1026.0"^^xsd:float,
         "1032.0"^^xsd:float,
-        "2000.0"^^xsd:float ;
+        "1855.0"^^xsd:float,
+        "2000.0"^^xsd:float,
+        "3000.0"^^xsd:float,
+        "20013.0"^^xsd:float,
+        "21823.0"^^xsd:float,
+        "22000.0"^^xsd:float ;
     default:Tarjeta "12"^^xsd:int,
         "123"^^xsd:int,
         "132"^^xsd:int,
         "213"^^xsd:int,
         "231"^^xsd:int,
+        "312"^^xsd:int,
+        "321"^^xsd:int,
         "1234"^^xsd:int,
+        "2134"^^xsd:int,
         "2222"^^xsd:int,
         "12312"^^xsd:int,
         "123123"^^xsd:int,
@@ -244,13 +256,24 @@ default:Factura9 a default:Factura ;
     default:Tarjeta "123"^^xsd:int,
         "132"^^xsd:int .
 
+default:Producto4 a default:Producto ;
+    default:Nombre "Barco"^^xsd:string ;
+    default:Precio "20000.0"^^xsd:float .
+
 default:Producto8 a default:Producto ;
     default:Nombre "Platano"^^xsd:string ;
     default:Precio "1.0"^^xsd:float .
 
+default:ProductoExterno2 a default:Producto ;
+    default:Nombre "ipad"^^xsd:string,
+        "iphone"^^xsd:string ;
+    default:Precio "13.0"^^xsd:float .
+
 default:ProductoExterno3 a default:Producto ;
-    default:Nombre "gafas"^^xsd:string ;
-    default:Precio "2.0"^^xsd:float .
+    default:Nombre "gafas"^^xsd:string,
+        "iphone"^^xsd:string ;
+    default:Precio "2.0"^^xsd:float,
+        "13.0"^^xsd:float .
 
 default:Producto3 a default:Producto ;
     default:Nombre "Teclado"^^xsd:string ;
@@ -265,8 +288,10 @@ default:Producto2 a default:Producto ;
     default:Precio "32.0"^^xsd:float .
 
 default:ProductoExterno1 a default:Producto ;
-    default:Nombre "pc"^^xsd:string ;
-    default:Precio "2000.0"^^xsd:float .
+    default:Nombre "iphone"^^xsd:string,
+        "pc"^^xsd:string ;
+    default:Precio "1823.0"^^xsd:float,
+        "2000.0"^^xsd:float .
 
 default:Producto5 a default:Producto ;
     default:Nombre "Ordenador"^^xsd:string ;
