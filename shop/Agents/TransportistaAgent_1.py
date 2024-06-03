@@ -133,7 +133,7 @@ def realizarOfertaTransporte(grafoEntrada, content):
 
 def calcularPrecio(peso):
     logger.info("Calculando oferta")
-    oferta = 5.0 + peso*2
+    oferta = 100.0 + peso
     logger.info("Oferta calculada: " + str(oferta))
     return oferta
 
